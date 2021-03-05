@@ -1,0 +1,12 @@
+version = 0.1
+[default]
+[default.deploy]
+[default.deploy.parameters]
+stack_name = "glasspolish0-triggers"
+s3_prefix = "glasspolish0-triggers"
+region = "ap-southeast-1"
+confirm_changeset = true
+capabilities = "CAPABILITY_IAM"
+parameter_overrides = "GlasspolishTriggersAPIName=\"glasspolish-triggers\" GlassPolishUserPoolName=\"gp0-pool\" GlassPolishUserPoolClientName=\"react-dashboard\" SSMParamRootPath=\"/applications/GlassPolish\""
+s3_bucket = "aws-sam-cli-managed-default-samclisourcebucket-1u0228n3js511"
+

@@ -1,0 +1,203 @@
+AWSTemplateFormatVersion: '2010-09-09'
+Transform: AWS::Serverless-2016-10-31
+
+Parameters:
+  GPTriggersAPIName:
+    Type: String
+    Default: glasspolish-triggers
+  GPUserPoolName:
+    Type: String
+    Default: gp0-pool
+  GPUserPoolClientName:
+    Type: String
+    Default: react-dashboard
+  SSMParamRootPath:
+    Type: String
+    Default: /applications/GlassPolish
+
+# More info about Globals: https://github.com/awslabs/serverless-application-model/blob/master/docs/globals.rst
+Globals:
+  Function:
+    MemorySize: 256
+    Runtime: go1.x
+    Timeout: 10
+    Tracing: Active
+
+Resources:
+  GPTriggersAPI:
+    Type: AWS::Serverless::Api
+    Properties:
+      Name: !Ref GPTriggersAPIName
+      StageName: prod
+      Auth:
+        ApiKeyRequired: true
+      TracingEnabled: true
+      MethodSettings:
+        - ResourcePath: '/*'
+          HttpMethod: '*'
+          LoggingLevel: INFO
+          MetricsEnabled: true
+          ThrottlingRateLimit: 5
+          ThrottlingBurstLimit: 10
+      Cors:
+        AllowOrigin: "'*'"
+        AllowMethods: "'GET,POST,PUT,DELETE,OPTIONS'"
+        AllowHeaders: "'Content-Type,Authorization,X-Amz-Date,X-Api-Key'"
+
+  GPCognitoPool:
+    Type: AWS::Cognito::UserPool
+    Properties:
+      UserPoolName: !Ref GPUserPoolName
+      Policies:
+        PasswordPolicy:
+          MinimumLength: 8
+      UsernameAttributes:
+        - email
+      Schema:
+        - AttributeDataType: String
+          Name: email
+          Required: true
+
+  GPCognitoPoolClient:
+    Type: AWS::Cognito::UserPoolClient
+    Properties:
+      UserPoolId: !Ref GPCognitoPool
+      ClientName: !Ref GPUserPoolClientName
+      GenerateSecret: false
+
+  GPDeleteAccountFunction:
+    Type: 'AWS::Serverless::Function' # More info about Function Resource: https://github.com/awslabs/serverless-application-model/blob/master/versions/2016-10-31.md#awsserverlessfunction
+    Properties:
+      CodeUri: ./bin/delete-acc/
+      Handler: delete-acc
+      Policies:
+        - AmazonCognitoPowerUser
+        - SSMParameterReadPolicy:
+            ParameterName: 'applications/GP/*'
+      Events:
+        DeleteAccountAPI:
+          Type: Api # More info about API Event Source: https://github.com/awslabs/serverless-application-model/blob/master/versions/2016-10-31.md#api
+          Properties:
+            RestApiId: !Ref GPTriggersAPI
+            Path: /delete
+            Method: POST
+
+  GPUpdateAccountRoleFunction:
+    Type: 'AWS::Serverless::Function' # More info about Function Resource: https://github.com/awslabs/serverless-application-model/blob/master/versions/2016-10-31.md#awsserverlessfunction
+    Properties:
+      CodeUri: ./bin/update-acc/
+      Handler: update-acc
+      Policies:
+        - AmazonCognitoPowerUser
+        - SSMParameterReadPolicy:
+            ParameterName: 'applications/GP/*'
+      Events:
+        UpdateAccountRoleAPI:
+          Type: Api # More info about API Event Source: https://github.com/awslabs/serverless-application-model/blob/master/versions/2016-10-31.md#api
+          Properties:
+            RestApiId: !Ref GPTriggersAPI
+            Path: /update
+            Method: POST
+
+  GPDisableAccountFunction:
+    Type: 'AWS::Serverless::Function' # More info about Function Resource: https://github.com/awslabs/serverless-application-model/blob/master/versions/2016-10-31.md#awsserverlessfunction
+    Properties:
+      CodeUri: ./bin/disable-acc/
+      Handler: disable-acc
+      Policies:
+        - AmazonCognitoPowerUser
+        - SSMParameterReadPolicy:
+            ParameterName: 'applications/GP/*'
+      Events:
+        DisableAccountAPI:
+          Type: Api # More info about API Event Source: https://github.com/awslabs/serverless-application-model/blob/master/versions/2016-10-31.md#api
+          Properties:
+            RestApiId: !Ref GPTriggersAPI
+            Path: /disable
+            Method: POST
+
+  GPPretokenAuth:
+    Type: 'AWS::Serverless::Function'
+    Properties:
+      CodeUri: ./bin/pretoken/
+      Handler: pretoken
+      Policies:
+        - AmazonCognitoPowerUser
+        - SSMParameterReadPolicy:
+            ParameterName: 'applications/GP/*'
+      Events:
+        CognitoUserPoolPreToken:
+          Type: Cognito
+          Properties:
+            UserPool: !Ref GPCognitoPool
+            Trigger: PreTokenGeneration
+
+  GPPostAuth:
+    Type: 'AWS::Serverless::Function'
+    Properties:
+      CodeUri: ./bin/postauth/
+      Handler: postauth
+      Policies:
+        - AmazonCognitoPowerUser
+        - SSMParameterReadPolicy:
+            ParameterName: 'applications/GP/*'
+      Events:
+        CognitoUserPoolPostAuth:
+          Type: Cognito
+          Properties:
+            UserPool: !Ref GPCognitoPool
+            Trigger: PostAuthentication
+
+  GPTriggersAPIKey:
+    Type: AWS::ApiGateway::ApiKey
+    Properties:
+      Description: !Sub ${AWS::StackName}-api-key
+      Enabled: true
+      StageKeys:
+        - RestApiId: !Ref GPTriggersAPI
+          StageName: prod
+
+  GPTriggersUsagePlan:
+    Type: AWS::ApiGateway::UsagePlan
+    Properties:
+      ApiStages:
+        - ApiId: !Ref GPTriggersAPI
+          Stage: prod
+      Description: Usage Plan for GPTriggersAPI
+      Quota:
+        Limit: 5000
+        Period: MONTH
+      Throttle:
+        BurstLimit: 200
+        RateLimit: 100
+      UsagePlanName: !Sub ${AWS::StackName}-usageplan
+
+  GPTriggersUsagePlanKey:
+    Type: 'AWS::ApiGateway::UsagePlanKey'
+    Properties:
+      KeyId: !Ref GPTriggersAPIKey
+      KeyType: API_KEY
+      UsagePlanId: !Ref GPTriggersUsagePlan
+
+Outputs:
+  GPTriggersAPI:
+    Description: "API Gateway endpoint URL for Hasura Account Event Triggers"
+    Value: !Sub "https://${GPTriggersAPI}.execute-api.${AWS::Region}.amazonaws.com/prod/"
+  GPDeleteAccountFunction:
+    Description: "Delete Account event trigger"
+    Value: !GetAtt GPDeleteAccountFunction.Arn
+  GPDeleteAccountFunctionIamRole:
+    Description: "Implicit IAM Role created for DeleteAccount function"
+    Value: !GetAtt GPDeleteAccountFunctionRole.Arn
+  GPUpdateAccountRoleFunction:
+    Description: "Update Account Role event trigger"
+    Value: !GetAtt GPUpdateAccountRoleFunction.Arn
+  GPUpdateAccountRoleFunctionIamRole:
+    Description: "Implicit IAM Role created for UpdateAccountRole function"
+    Value: !GetAtt GPUpdateAccountRoleFunctionRole.Arn
+  GPDisableAccountFunction:
+    Description: "Disable Account event trigger"
+    Value: !GetAtt GPDisableAccountFunction.Arn
+  GPDisableAccountFunctionIamRole:
+    Description: "Implicit IAM Role created for DisableAccount function"
+    Value: !GetAtt GPDisableAccountFunctionRole.Arn

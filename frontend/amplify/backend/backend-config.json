@@ -1,0 +1,11 @@
+{
+  "auth": {
+    "gp0frontend2807f451": {
+      "service": "Cognito",
+      "serviceType": "imported",
+      "providerPlugin": "awscloudformation",
+      "dependsOn": [],
+      "customAuth": false
+    }
+  }
+}
