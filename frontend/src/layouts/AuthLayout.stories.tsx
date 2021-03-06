@@ -1,16 +1,16 @@
 import React from 'react'
 import {Story, Meta} from '@storybook/react/types-6-0'
-import {Layout, LayoutProps} from './Layout'
+import {AuthLayout, AuthLayoutProps} from "./AuthLayout";
 
 export default {
-    title: 'Layout',
-    component: Layout,
+    title: 'AuthLayout',
+    component: AuthLayout,
 } as Meta
 
-const Template: Story<LayoutProps> = (args) => <Layout {...args}/>
+const Template: Story<AuthLayoutProps> = (args) => <AuthLayout {...args}/>
 
-export const FooterTest = Template.bind({});
-FooterTest.args = {
+export const AuthLayoutTest = Template.bind({});
+AuthLayoutTest.args = {
     title: 'Hello Alex',
     children: <div>
         <ul>

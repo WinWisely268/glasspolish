@@ -1,7 +1,7 @@
 import React, {useEffect} from 'react'
 
 import Themer from '../providers/Themer'
-import Footer from './Footer'
+import Footer from '../components/Footer'
 
 import Container from '@material-ui/core/Container'
 import {createStyles, makeStyles} from '@material-ui/core/styles'

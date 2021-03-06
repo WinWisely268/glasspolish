@@ -1,8 +1,8 @@
 import React, {useEffect} from 'react'
 
 import Themer from '../providers/Themer'
-import Footer from './Footer'
-import Header from './Header'
+import Footer from '../components/Footer'
+import Header from '../components/Header'
 
 import CssBaseline from '@material-ui/core/CssBaseline'
 import Container from '@material-ui/core/Container'

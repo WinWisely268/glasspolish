@@ -9,8 +9,8 @@ export default {
 
 const Template: Story<HomeLayoutProps> = (args) => <HomeLayout {...args}/>
 
-export const FooterTest = Template.bind({});
-FooterTest.args = {
+export const HomeLayoutTest = Template.bind({});
+HomeLayoutTest.args = {
     title: 'Hello Alex',
     children: <div>
         <ul>
