@@ -8,7 +8,7 @@ export interface AuthButtonProps {
   disabled: boolean
 }
 
-const AuthButton: React.FunctionComponent<AuthButtonProps> = ({ children, disabled }) => {
+export const AuthButton: React.FunctionComponent<AuthButtonProps> = ({ children, disabled }) => {
   const classes = useStyles()
 
   return (

@@ -1,4 +1,5 @@
 import ky from 'ky'
+
 import { getIdToken } from './ApolloClient'
 
 const httpClient = ky.extend({

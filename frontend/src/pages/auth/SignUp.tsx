@@ -1,20 +1,21 @@
 import React, {useState, useEffect, useContext, useCallback} from 'react'
 import {useHistory} from 'react-router-dom'
 import {Link, Grid} from '@material-ui/core'
-import Layout from '../layouts/Layout'
-import Snackbar from '../components/shared/Snackbar'
+import Layout from '../../layouts/Layout'
+import Snackbar from '../../components/shared/Snackbar'
 
-import {AuthContext} from '../providers/AuthProvider'
-import AuthLayout from '../layouts/AuthLayout'
-import AuthEmailField from '../components/auth/AuthEmailField'
-import AuthPasswordField from '../components/auth/AuthPasswordField'
-import AuthButton from '../components/auth/AuthButton'
-import {useStyles} from '../components/auth/styles'
+import {AuthContext} from '../../providers/AuthProvider'
+import AuthLayout from '../../layouts/AuthLayout'
+import AuthEmailField from '../../components/auth/AuthEmailField'
+import AuthPasswordField from '../../components/auth/AuthPasswordField'
+import AuthButton from '../../components/auth/AuthButton'
+import {useStyles} from '../../components/auth/styles'
+import {AllRoutesStr} from "../../routes/constants";
 
 export interface AuthSignUpProps {
 }
 
-const AuthSignUp: React.FunctionComponent<AuthSignUpProps> = () => {
+export const AuthSignUp: React.FunctionComponent<AuthSignUpProps> = () => {
     const authContext = useContext(AuthContext)
     const [email, setEmail] = useState<string>('')
     const [password, setPassword] = useState<string>('')
@@ -71,7 +72,7 @@ const AuthSignUp: React.FunctionComponent<AuthSignUpProps> = () => {
                         <Grid item className={classes.links}>
                             <Link
                                 href='#'
-                                onClick={() => history.push('/auth/signup/confirmemail')}
+                                onClick={() => history.push(AllRoutesStr.Auth.signUp.confirmEmail)}
                                 variant='body2'>
                                 {'Confirm Sign Up'}
                             </Link>

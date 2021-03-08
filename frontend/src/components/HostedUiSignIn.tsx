@@ -12,7 +12,7 @@ const HostedUiSignIn: React.FunctionComponent<HostedUiSignInProps> = () => {
     const signInHandler = () => {
         Auth.federatedSignIn({
             provider: CognitoHostedUIIdentityProvider.Google
-        })
+        }).then(r => "")
     }
 
     const classes = useStyles()

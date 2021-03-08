@@ -2,14 +2,14 @@ import React, {useState, useContext, useEffect, useCallback} from 'react'
 import {useHistory} from 'react-router-dom'
 import {Link, Grid} from '@material-ui/core'
 
-import Layout from '../layouts/Layout'
-import AuthLayout from '../layouts/AuthLayout'
-import Snackbar from '../components/shared/Snackbar'
+import Layout from '../../layouts/Layout'
+import AuthLayout from '../../layouts/AuthLayout'
+import Snackbar from '../../components/shared/Snackbar'
 
-import {AuthContext} from '../providers/AuthProvider'
-import AuthCodeField from '../components/auth/AuthCodeField'
-import AuthButton from '../components/auth/AuthButton'
-import {useStyles} from '../components/auth/styles'
+import {AuthContext} from '../../providers/AuthProvider'
+import AuthCodeField from '../../components/auth/AuthCodeField'
+import AuthButton from '../../components/auth/AuthButton'
+import {useStyles} from '../../components/auth/styles'
 
 
 export interface AuthConfirmSignUpProps {
@@ -34,11 +34,11 @@ const AuthConfirmSignUp: React.FunctionComponent<AuthConfirmSignUpProps> = props
         authContext
             .confirmSignUp(email, code)
             .then(data => {
-                console.log(data)
+                // console.log(data)
                 history.push('/')
             })
             .catch(err => {
-                console.error('error:', err)
+                // console.error('error:', err)
                 setError(err)
             })
     }
@@ -50,7 +50,7 @@ const AuthConfirmSignUp: React.FunctionComponent<AuthConfirmSignUpProps> = props
                 setMessage('Code resent to your email.')
             })
             .catch(err => {
-                console.error('error:', err)
+                // console.error('error:', err)
                 setError(err)
             })
     }

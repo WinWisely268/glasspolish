@@ -4,6 +4,7 @@ import {useHistory} from 'react-router-dom'
 import EmailIcon from '@material-ui/icons/Email'
 import Button from '@material-ui/core/Button'
 import {useStyles} from './auth/styles'
+import {AllRoutesStr} from "../routes/constants";
 
 export interface HostedUiSignInProps {
 }
@@ -16,7 +17,7 @@ const HostedUiSignIn: React.FunctionComponent<HostedUiSignInProps> = () => {
         <Button
             variant='contained'
             color='primary'
-            onClick={() => history.push('/auth')}
+            onClick={() => history.push(AllRoutesStr.Auth.signIn)}
             className={classes.btn}
             size='large'>
             <div className={classes.btnElems}>

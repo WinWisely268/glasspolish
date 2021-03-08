@@ -1,20 +1,21 @@
 import React, {useContext, useState, useEffect, useCallback} from 'react'
 import {useHistory} from 'react-router-dom'
 import {Link, Grid} from '@material-ui/core'
-import Layout from '../layouts/Layout'
-import Snackbar from '../components/shared/Snackbar'
+import Layout from '../../layouts/Layout'
+import Snackbar from '../../components/shared/Snackbar'
 
-import {AuthContext} from '../providers/AuthProvider'
-import AuthButton from '../components/auth/AuthButton'
-import AuthEmailField from '../components/auth/AuthEmailField'
-import AuthPasswordField from '../components/auth/AuthPasswordField'
-import AuthLayout from '../layouts/AuthLayout'
-import {useStyles} from '../components/auth/styles'
+import {AuthContext} from '../../providers/AuthProvider'
+import AuthButton from '../../components/auth/AuthButton'
+import AuthEmailField from '../../components/auth/AuthEmailField'
+import AuthPasswordField from '../../components/auth/AuthPasswordField'
+import AuthLayout from '../../layouts/AuthLayout'
+import {useStyles} from '../../components/auth/styles'
+import {AllRoutesStr} from "../../routes/constants";
 
 export interface AuthSignInProps {
 }
 
-const AuthSignIn: React.FunctionComponent<AuthSignInProps> = () => {
+export const AuthSignIn: React.FunctionComponent<AuthSignInProps> = () => {
     const authContext = useContext(AuthContext)
     const [email, setEmail] = useState<string>('')
     const [password, setPassword] = useState<string>('')
@@ -67,7 +68,7 @@ const AuthSignIn: React.FunctionComponent<AuthSignInProps> = () => {
                         <Grid item xs className={classes.links}>
                             <Link
                                 href='#'
-                                onClick={() => history.push('/auth/resetpassword')}
+                                onClick={() => history.push(AllRoutesStr.Auth.resetPassword.root)}
                                 variant='body2'
                             >
                                 Forgot password?
@@ -76,7 +77,7 @@ const AuthSignIn: React.FunctionComponent<AuthSignInProps> = () => {
                         <Grid item className={classes.links}>
                             <Link
                                 href='#'
-                                onClick={() => history.push('/auth/signup')}
+                                onClick={() => history.push(AllRoutesStr.Auth.signUp.root)}
                                 variant='body2'
                             >
                                 Sign Up
