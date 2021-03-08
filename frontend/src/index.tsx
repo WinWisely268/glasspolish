@@ -20,15 +20,15 @@ const AwsConfig = {
         scope: ['phone', 'email', 'openid', 'profile'],
         // eslint-disable-next-line max-len
         redirectSignIn:
-            'http://localhost:3000/',
+            'http://localhost:3000/,https://dev.glasspolish.store/',
         redirectSignOut:
-            'http://localhost:3000/',
+            'http://localhost:3000/,https://dev.glasspolish.store/',
         responseType: 'token',
     },
     federationTarget: 'COGNITO_USER_POOLS',
 }
 
-AwsConfig.oauth.domain = 'localhost:3000'
+AwsConfig.oauth.domain = 'dev.glasspolish.store'
 AwsConfig.oauth.responseType = 'code'
 Amplify.configure(AwsConfig)
 

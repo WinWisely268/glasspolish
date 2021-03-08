@@ -11,6 +11,9 @@ Parameters:
   GPUserPoolClientName:
     Type: String
     Default: react-dashboard
+  ResizeAPIName:
+    Type: String
+    Default: resize-api
   SSMParamRootPath:
     Type: String
     Default: /applications/GlassPolish
@@ -73,7 +76,7 @@ Resources:
       Policies:
         - AmazonCognitoPowerUser
         - SSMParameterReadPolicy:
-            ParameterName: 'applications/GP/*'
+            ParameterName: 'applications/GlassPolish/*'
       Events:
         DeleteAccountAPI:
           Type: Api # More info about API Event Source: https://github.com/awslabs/serverless-application-model/blob/master/versions/2016-10-31.md#api
@@ -90,7 +93,7 @@ Resources:
       Policies:
         - AmazonCognitoPowerUser
         - SSMParameterReadPolicy:
-            ParameterName: 'applications/GP/*'
+            ParameterName: 'applications/GlassPolish/*'
       Events:
         UpdateAccountRoleAPI:
           Type: Api # More info about API Event Source: https://github.com/awslabs/serverless-application-model/blob/master/versions/2016-10-31.md#api
@@ -107,7 +110,7 @@ Resources:
       Policies:
         - AmazonCognitoPowerUser
         - SSMParameterReadPolicy:
-            ParameterName: 'applications/GP/*'
+            ParameterName: 'applications/GlassPolish/*'
       Events:
         DisableAccountAPI:
           Type: Api # More info about API Event Source: https://github.com/awslabs/serverless-application-model/blob/master/versions/2016-10-31.md#api
@@ -124,7 +127,7 @@ Resources:
       Policies:
         - AmazonCognitoPowerUser
         - SSMParameterReadPolicy:
-            ParameterName: 'applications/GP/*'
+            ParameterName: 'applications/GlassPolish/*'
       Events:
         CognitoUserPoolPreToken:
           Type: Cognito
@@ -140,7 +143,7 @@ Resources:
       Policies:
         - AmazonCognitoPowerUser
         - SSMParameterReadPolicy:
-            ParameterName: 'applications/GP/*'
+            ParameterName: 'applications/GlassPolish/*'
       Events:
         CognitoUserPoolPostAuth:
           Type: Cognito
@@ -178,6 +181,201 @@ Resources:
       KeyId: !Ref GPTriggersAPIKey
       KeyType: API_KEY
       UsagePlanId: !Ref GPTriggersUsagePlan
+
+  ApiGatewayAccount:
+    Type: AWS::ApiGateway::Account
+    Properties:
+      CloudWatchRoleArn: !GetAtt ApiGatewayCloudWatchRole.Arn
+
+  ApiGatewayCloudWatchRole:
+    Type: AWS::IAM::Role
+    Properties:
+      Path: '/'
+      ManagedPolicyArns:
+        - !Sub 'arn:${AWS::Partition}:iam::aws:policy/service-role/AmazonAPIGatewayPushToCloudWatchLogs'
+      AssumeRolePolicyDocument:
+        Version: 2012-10-17
+        Statement:
+          - Effect: Allow
+            Action: sts:AssumeRole
+            Principal:
+              Service:
+                - apigateway.amazonaws.com
+  ResizeAPI:
+    Type: AWS::Serverless::Api
+    Properties:
+      Name: !Ref ResizeAPIName
+      StageName: Prod
+      TracingEnabled: true
+      Auth:
+        DefaultAuthorizer: SFUserPoolAuth
+        Authorizers:
+          SFUserPoolAuth:
+            UserPoolArn:
+              Fn::Join:
+                - ''
+                - - !Sub ''
+                  - !GetAtt GPCognitoPool.Arn
+        AddDefaultAuthorizerToCorsPreflight: false
+      MethodSettings:
+        - ResourcePath: '/*'
+          HttpMethod: '*'
+          LoggingLevel: INFO
+          MetricsEnabled: true
+          ThrottlingRateLimit: 5
+          ThrottlingBurstLimit: 10
+      Cors:
+        AllowOrigin: "'*'"
+        AllowMethods: "'GET,POST,PUT,DELETE,OPTIONS'"
+        AllowHeaders: "'Content-Type,Authorization,X-Amz-Date,X-Api-Key'"
+      GatewayResponses:
+        DEFAULT_4xx:
+          ResponseParameters:
+            Headers:
+              Access-Control-Allow-Origin: "'*'"
+              Access-Control-Allow-Methods: "'GET,POST,PUT,DELETE,OPTIONS'"
+              Access-Control-Allow-Headers: "'Content-Type,Authorization,X-Amz-Date,X-Api-Key'"
+        DEFAULT_5xx:
+          ResponseParameters:
+            Headers:
+              Access-Control-Allow-Origin: "'*'"
+              Access-Control-Allow-Methods: "'GET,POST,PUT,DELETE,OPTIONS'"
+              Access-Control-Allow-Headers: "'Content-Type,Authorization,X-Amz-Date,X-Api-Key'"
+
+  UploadUrlFunction:
+    Type: AWS::Serverless::Function
+    Properties:
+      CodeUri: bin/upload-url/
+      Handler: upload-url
+      Policies:
+        - S3WritePolicy:
+            BucketName: !Ref ImageBucket
+        - SSMParameterReadPolicy:
+            ParameterName: 'applications/GlassPolish/*'
+      Environment:
+        Variables:
+          AWS_S3_BUCKET: !Ref ImageBucket
+      Events:
+        UploadUrl:
+          Type: Api
+          Properties:
+            RestApiId: !Ref ResizeAPI
+            Path: /upload-url
+            Method: POST
+
+  DownloadUrlFunction:
+    Type: AWS::Serverless::Function
+    Properties:
+      CodeUri: bin/download-url/
+      Handler: download-url
+      Policies:
+        - SSMParameterReadPolicy:
+            ParameterName: 'applications/GlassPolish/*'
+      Environment:
+        Variables:
+          CF_DOMAIN_NAME: !GetAtt CloudfrontDistribution.DomainName
+      Events:
+        DownloadUrl:
+          Type: Api
+          Properties:
+            RestApiId: !Ref ResizeAPI
+            Path: /download-url
+            Method: POST
+
+  ResizeImageFunction:
+    Type: AWS::Serverless::Function
+    Properties:
+      CodeUri: bin/resize-img/
+      Handler: resize-img
+      # cannot specify ImageBucket because of circular dependency
+      Policies:
+        - AmazonS3FullAccess
+        - SSMParameterReadPolicy:
+            ParameterName: 'applications/GlassPolish/*'
+      Events:
+        OnObjectCreated:
+          Type: S3
+          Properties:
+            Bucket: !Ref ImageBucket
+            Events:
+              - s3:ObjectCreated:*
+            Filter:
+              S3Key:
+                Rules:
+                  - Name: prefix
+                    Value: 'raw-images'
+
+  # To display S3 trigger on Lambda console only
+  LambdaInvokePermission:
+    Type: 'AWS::Lambda::Permission'
+    Properties:
+      FunctionName: !GetAtt ResizeImageFunction.Arn
+      Action: 'lambda:InvokeFunction'
+      Principal: 's3.amazonaws.com'
+      SourceAccount: !Sub ${AWS::AccountId}
+      SourceArn: !GetAtt ImageBucket.Arn
+
+  ImageBucket:
+    Type: AWS::S3::Bucket
+    Properties:
+      CorsConfiguration:
+        CorsRules:
+          - AllowedOrigins:
+              - '*'
+            AllowedHeaders:
+              - '*'
+            AllowedMethods:
+              - GET
+              - PUT
+              - POST
+              - DELETE
+              - HEAD
+            MaxAge: 3000
+
+  ImageBucketPolicy:
+    Type: AWS::S3::BucketPolicy
+    Properties:
+      Bucket: !Ref ImageBucket
+      PolicyDocument:
+        Statement:
+          - Effect: Allow
+            Action: s3:GetObject
+            Resource:
+              - !Sub 'arn:aws:s3:::${ImageBucket}/*'
+            Principal:
+              CanonicalUser: !GetAtt CloudFrontOriginAccessIdentity.S3CanonicalUserId
+
+  CloudFrontOriginAccessIdentity:
+    Type: AWS::CloudFront::CloudFrontOriginAccessIdentity
+    Properties:
+      CloudFrontOriginAccessIdentityConfig:
+        Comment: "Serverless image download"
+
+  CloudfrontDistribution:
+    Type: AWS::CloudFront::Distribution
+    Properties:
+      DistributionConfig:
+        Comment: "Cloudfront distribution for image download"
+        Enabled: true
+        HttpVersion: http2
+        Origins:
+          - Id: imageBucketOrigin
+            DomainName: !GetAtt ImageBucket.DomainName
+            S3OriginConfig:
+              OriginAccessIdentity: !Sub 'origin-access-identity/cloudfront/${CloudFrontOriginAccessIdentity}'
+        DefaultCacheBehavior:
+          AllowedMethods:
+            - GET
+            - HEAD
+            - OPTIONS
+          Compress: true
+          ForwardedValues:
+            QueryString: true
+          TargetOriginId: imageBucketOrigin
+          TrustedSigners:
+            - self
+          ViewerProtocolPolicy: redirect-to-https
+
 
 Outputs:
   GPTriggersAPI:

@@ -29,6 +29,7 @@ const Auth: React.FunctionComponent<AuthProps> = () => {
     const routes = authContext.isAuthenticated() ? null : (
         <Switch>
             <Route exact path={AllRoutesStr.Auth.root} component={SignIn}/>
+            <Route exact path={AllRoutesStr.Auth.signIn} component={SignIn}/>
             <Route exact path={AllRoutesStr.Auth.signUp.root} component={SignUp}/>
             <Route exact path={AllRoutesStr.Auth.signUp.confirm} component={ConfirmSignUp}/>
             <Route

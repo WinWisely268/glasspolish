@@ -5,7 +5,7 @@ import (
 	"errors"
 	cip "github.com/aws/aws-sdk-go-v2/service/cognitoidentityprovider"
 	"github.com/aws/aws-sdk-go-v2/service/cognitoidentityprovider/types"
-	"github.com/winwisely268/glasspolish-triggers/pkg/models"
+	"github.com/winwisely268/glasspolish-triggers/pkg/constants"
 )
 
 var (
@@ -19,7 +19,7 @@ func GetUserPrimaryGroup(userPoolID, username string, client *cip.Client) (*type
 		UserPoolId: &userPoolID,
 		Username:   &username,
 	}
-	ctx, cancel := context.WithTimeout(context.Background(), models.ContextTimeoutSeconds)
+	ctx, cancel := context.WithTimeout(context.Background(), constants.ContextTimeoutSeconds)
 	defer cancel()
 	userGroups, err := client.AdminListGroupsForUser(ctx, userAdminListInput)
 	if err != nil {
@@ -32,7 +32,7 @@ func GetUserPrimaryGroup(userPoolID, username string, client *cip.Client) (*type
 }
 
 func GetUser(userPoolID, username string, client *cip.Client) (*cip.AdminGetUserOutput, error) {
-	ctx, cancel := context.WithTimeout(context.Background(), models.ContextTimeoutSeconds)
+	ctx, cancel := context.WithTimeout(context.Background(), constants.ContextTimeoutSeconds)
 	defer cancel()
 	return client.AdminGetUser(ctx, &cip.AdminGetUserInput{
 		UserPoolId: &userPoolID,
