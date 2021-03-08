@@ -1,4 +1,5 @@
 deployments
 frontend/.env
 frontend/node_modules
+frontend/gql_codegen.js
 /backend/bin/
