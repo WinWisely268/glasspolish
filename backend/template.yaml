@@ -67,6 +67,19 @@ Resources:
       UserPoolId: !Ref GPCognitoPool
       ClientName: !Ref GPUserPoolClientName
       GenerateSecret: false
+      AllowedOAuthFlows:
+        - implicit
+      AllowedOAuthScopes:
+        - phone
+        - email
+        - openid
+        - profile
+      CallbackURLs:
+        - http://localhost:3000/
+        - https://dev.glasspolish.store/
+      LogoutURLs:
+        - http://localhost:3000/
+        - https://dev.glasspolish.store/
 
   GPDeleteAccountFunction:
     Type: 'AWS::Serverless::Function' # More info about Function Resource: https://github.com/awslabs/serverless-application-model/blob/master/versions/2016-10-31.md#awsserverlessfunction
@@ -372,9 +385,11 @@ Resources:
           ForwardedValues:
             QueryString: true
           TargetOriginId: imageBucketOrigin
+#          TrustedKeyGroups:
+#            - glasspolish-keygroup
+          ViewerProtocolPolicy: redirect-to-https
           TrustedSigners:
             - self
-          ViewerProtocolPolicy: redirect-to-https
 
 
 Outputs:
