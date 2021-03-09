@@ -25,6 +25,7 @@ import {
     createStyles,
     Theme
 } from '@material-ui/core/styles'
+import {AllRoutesStr} from "../routes/constants";
 
 const useStyles = makeStyles((theme: Theme) =>
     createStyles({
@@ -77,7 +78,7 @@ const Home: React.FunctionComponent<HomeProps> = () => {
                 color='secondary'
                 variant='outlined'
                 size='large'
-                onClick={() => history.push('/dashboard')}
+                onClick={() => history.push(AllRoutesStr.Dashboard.root)}
                 className={classes.link1}>
                 Go to Dashboard
             </Button>

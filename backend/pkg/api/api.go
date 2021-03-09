@@ -113,7 +113,7 @@ func (a *API) AddClaimHandler(event events.CognitoEventUserPoolsPreTokenGen) (ev
 		return event, err
 	}
 	event.Response.ClaimsOverrideDetails.ClaimsToAddOrOverride = map[string]string{
-		"https://api.glasspolish.store/jwt/claims": string(res),
+		"https://hasura.io/jwt/claims": string(res),
 	}
 	return event, nil
 }

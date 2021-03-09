@@ -40,3 +40,13 @@ export const LIST_ACCOUNTS = gql`
         }
     }
 `
+
+export const GET_USER_AVATAR = gql`
+    query getProfilePicture($id: uuid!) {
+        profile_pictures(where: { account_id: { _eq: $id } }) {
+            id
+            picture_url
+            primary
+        }
+    }
+`

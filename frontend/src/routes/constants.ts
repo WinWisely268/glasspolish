@@ -19,6 +19,12 @@ interface AllRoutes {
             confirm: string,
         },
     },
+    Dashboard: {
+        root: string,
+        profile: string,
+        settings: string,
+        users: string,
+    }
 }
 
 export const AllRoutesStr: AllRoutes = {
@@ -35,5 +41,11 @@ export const AllRoutesStr: AllRoutes = {
             root: ROUTE_AUTH_ROOT + '/reset-password',
             confirm: ROUTE_AUTH_ROOT + '/reset-password/confirm'
         }
+    },
+    Dashboard: {
+        root: ROUTE_DASHBOARD_ROOT,
+        profile: ROUTE_DASHBOARD_ROOT + '/profile',
+        settings: ROUTE_DASHBOARD_ROOT + '/settings',
+        users: ROUTE_DASHBOARD_ROOT + '/users',
     }
 }

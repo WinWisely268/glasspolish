@@ -10,7 +10,7 @@ import (
 
 var (
 	hardLimit     = int32(3)
-	AllowedGroups = []string{"guests", "users", "admins"}
+	AllowedGroups = []string{"guests", "users", "admins", "supers"}
 )
 
 func GetUserPrimaryGroup(userPoolID, username string, client *cip.Client) (*types.GroupType, error) {
