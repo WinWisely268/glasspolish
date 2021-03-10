@@ -198,12 +198,14 @@ export const useS3Upload = ({
             prefix: prefix
         })
         presignedUrl = presignedResp.url
+      console.log("host: "+ presignedResp.headers!['Host'] + "meta-width: " + presignedResp.headers!['X-Amz-Meta-Width'])
         return await ky
             .put(presignedUrl, {
                 body: files[0],
                 headers: {
-                    'x-amz-meta-width': presignedResp.headers!['x-amz-meta-width'],
-                    'x-amz-meta-height': presignedResp.headers!['x-amz-meta-height'],
+                    'host': presignedResp.headers!['Host'],
+                    'x-amz-meta-width': presignedResp.headers!['X-Amz-Meta-Width'],
+                    'x-amz-meta-height': presignedResp.headers!['X-Amz-Meta-Height'],
                     'content-type': fileType
                 }
             })

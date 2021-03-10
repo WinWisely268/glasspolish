@@ -11,9 +11,9 @@ Parameters:
   GPUserPoolClientName:
     Type: String
     Default: react-dashboard
-  ResizeAPIName:
+  GPImageAPIName:
     Type: String
-    Default: resize-api
+    Default: gp-resize-api
   SSMParamRootPath:
     Type: String
     Default: /applications/GlassPolish
@@ -214,11 +214,11 @@ Resources:
             Principal:
               Service:
                 - apigateway.amazonaws.com
-  ResizeAPI:
+  GPImageAPI:
     Type: AWS::Serverless::Api
     Properties:
-      Name: !Ref ResizeAPIName
-      StageName: Prod
+      Name: !Ref GPImageAPIName
+      StageName: prod
       TracingEnabled: true
       Auth:
         DefaultAuthorizer: SFUserPoolAuth
@@ -272,7 +272,7 @@ Resources:
         UploadUrl:
           Type: Api
           Properties:
-            RestApiId: !Ref ResizeAPI
+            RestApiId: !Ref GPImageAPI
             Path: /upload-url
             Method: POST
 
@@ -291,7 +291,7 @@ Resources:
         DownloadUrl:
           Type: Api
           Properties:
-            RestApiId: !Ref ResizeAPI
+            RestApiId: !Ref GPImageAPI
             Path: /download-url
             Method: POST
 

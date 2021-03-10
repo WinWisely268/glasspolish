@@ -1,0 +1,462 @@
+{
+	"info": {
+		"_postman_id": "4bc960e8-bfb4-46fa-9815-ff09a5b8ce1d",
+		"name": "SFUpload",
+		"description": "Upload and Download to S3",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Get Presigned URL for Upload",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "7f69da5a-c225-4040-9a40-e73984a34347/user_pictures/5ab2d92e-0270-4005-9cb2-8380bd24c5d9/picture_url/160047360002",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"prefix\": \"SOME_PREFIX_HERE\", \n    \"file\": \"SOME_FILENAME\",\n    \"contentType\": \"image/png or image/jpg\",\n    \"width\": \"IMAGE_WIDTH\", // optional\n    \"height\": \"IMAGE_HEIGHT\" // optional\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "https://mauocecws3.execute-api.ap-southeast-1.amazonaws.com/Prod/upload-url",
+					"protocol": "https",
+					"host": [
+						"mauocecws3",
+						"execute-api",
+						"ap-southeast-1",
+						"amazonaws",
+						"com"
+					],
+					"path": [
+						"Prod",
+						"upload-url"
+					]
+				},
+				"description": "Get Image presigned URL for upload (pre-upload request)"
+			},
+			"response": [
+				{
+					"name": "Get Presigned URL for Upload",
+					"originalRequest": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"prefix\": \"SOME_PREFIX_HERE\", \n    \"file\": \"SOME_FILENAME.png\",\n    \"contentType\": \"image/png\",\n    \"width\": 300,\n    \"height\": 300\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "https://mauocecws3.execute-api.ap-southeast-1.amazonaws.com/Prod/upload-url",
+							"protocol": "https",
+							"host": [
+								"mauocecws3",
+								"execute-api",
+								"ap-southeast-1",
+								"amazonaws",
+								"com"
+							],
+							"path": [
+								"Prod",
+								"upload-url"
+							]
+						}
+					},
+					"status": "OK",
+					"code": 200,
+					"_postman_previewlanguage": "json",
+					"header": [
+						{
+							"key": "Content-Type",
+							"value": "application/json"
+						},
+						{
+							"key": "Content-Length",
+							"value": "1505"
+						},
+						{
+							"key": "Connection",
+							"value": "keep-alive"
+						},
+						{
+							"key": "Date",
+							"value": "Fri, 25 Sep 2020 14:26:21 GMT"
+						},
+						{
+							"key": "x-amzn-RequestId",
+							"value": "6742e7bd-c76e-4c8f-ba64-cbb0da4b78c6"
+						},
+						{
+							"key": "Access-Control-Allow-Origin",
+							"value": "*"
+						},
+						{
+							"key": "Access-Control-Allow-Headers",
+							"value": "Content-Type,Authorization,X-Amz-Date,X-Api-Key"
+						},
+						{
+							"key": "x-amz-apigw-id",
+							"value": "TbSiGGD_SQ0FnDQ="
+						},
+						{
+							"key": "Access-Control-Allow-Methods",
+							"value": "GET,POST,PUT,DELETE,OPTIONS"
+						},
+						{
+							"key": "X-Amzn-Trace-Id",
+							"value": "Root=1-5f6dfe0d-5dcd1eb04f9a46dad202e638"
+						},
+						{
+							"key": "X-Cache",
+							"value": "Miss from cloudfront"
+						},
+						{
+							"key": "Via",
+							"value": "1.1 25a6a41477f0a4b161961d1300fb0714.cloudfront.net (CloudFront)"
+						},
+						{
+							"key": "X-Amz-Cf-Pop",
+							"value": "SIN2-C1"
+						},
+						{
+							"key": "X-Amz-Cf-Id",
+							"value": "YJVD956jbFJihNCEtWgBW1PgMuBGQI21bwBvUmYR9bYXw6oSbPAkzQ=="
+						}
+					],
+					"cookie": [],
+					"body": "{\n    \"url\": \"https://sfupload-service-imagebucket-17r19skd8xuq4.s3.ap-southeast-1.amazonaws.com/raw-images/SOME_PREFIX_HERE/SOME_FILENAME.png?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Credential=ASIA2NDAPQ2UMTELYWLU%2F20200925%2Fap-southeast-1%2Fs3%2Faws4_request&X-Amz-Date=20200925T142621Z&X-Amz-Expires=600&X-Amz-Security-Token=IQoJb3JpZ2luX2VjEL7%2F%2F%2F%2F%2F%2F%2F%2F%2F%2FwEaDmFwLXNvdXRoZWFzdC0xIkYwRAIgH2ruf%2FN4H2YWwQ%2BlFdmOOSMOW6LRYeBjrxqxVPWlusYCICqDMiNaD%2F4NHvTQ2ED9JdldhwLLEV3LblnkCrTPfhwGKvgBCNf%2F%2F%2F%2F%2F%2F%2F%2F%2F%2FwEQABoMNzE1MzE0Mzk4ODg4IgwMFoLzsl%2FHUkq%2BLW4qzAHjQ3Vh7m%2BWSs5oDaWO5MMJUnm1JekRRqs9lUA4d7TY0MzAgjrVMMCxC4Fksf9qSwz0PXoQ87q552hyNvdzVPenVe47lSTuC86%2FPLVsa4kNyYOWOBeFzWJmeSPjRNBIz%2BVCQbMWk5pdmMGoizo%2Fb9%2FJiOz6NSTRPVS%2BaaLJJIlVlt%2F6UoKziE1pgFhkaR%2BWhb7u1GoHd71ZZ%2Bnz272Uk%2FLEbxxsVUSG9H3AFR5QmJ%2Fdr%2Bp8z9ddeKehaKJNM5QEiwXTxpCv1DMuuW2lUokw0vW3%2BwU64QGDIBjxD4LqZVjBk5MCmMyE%2Fn8dViJtt0ITNww71cNho%2ByFhR73xiaucuN7uzp3cQFbgBMc%2F4Qe01SZoeinSzUABdfZKTlp%2BaGmQyFEHj%2BTlRaN2yNVNun7nd%2FOVe7pSzK0DQL5vy7lwYd8KeRJGAichw2CVkFVj3VCz5H80cR9D9gr6YUOBRHja5wsd4eNyH3ZmekN4TZZsTsN%2BhGSBicM%2FGf6RbgGmDFoJFx%2F9r5XTKr%2BuQye4q3q0fnDNSULpYsd4PFwc%2FLxWPf7iHlwvqeZiJvuY%2BD7c1HF%2FxJE6JAIHr8%3D&X-Amz-SignedHeaders=content-type%3Bhost%3Bx-amz-meta-height%3Bx-amz-meta-width&X-Amz-Signature=a5597b0ab06d3a2f9d50872021d22aaeea859a9990ff6ba4af47c0dd41708b35\",\n    \"headers\": {\n        \"content-type\": \"image/png\",\n        \"x-amz-meta-height\": \"300\",\n        \"x-amz-meta-width\": \"300\"\n    }\n}"
+				},
+				{
+					"name": "Get Presigned URL for Upload",
+					"originalRequest": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							},
+							{
+								"key": "Authorization",
+								"value": "Bearer eyJraWQiOiJnK1V3eGxsdmsxVGtKamhLWStaWmJ3bG5DNEo2VFQ1Z3pYYmpwd2Qrdk9rPSIsImFsZyI6IlJTMjU2In0.eyJzdWIiOiI3ZjY5ZGE1YS1jMjI1LTQwNDAtOWE0MC1lNzM5ODRhMzQzNDciLCJhdWQiOiIxMjk5NzJvY2xxOWRpMzVvNjJydmI4YnFqbyIsImVtYWlsX3ZlcmlmaWVkIjp0cnVlLCJldmVudF9pZCI6ImE4MTZlMGJmLTZlMzEtNGQ0ZC04NjY4LWYxMTg0MWJmNTBkMyIsInRva2VuX3VzZSI6ImlkIiwiaHR0cHM6XC9cL2hhc3VyYS5pb1wvand0XC9jbGFpbXMiOiJ7XCJ4LWhhc3VyYS1hbGxvd2VkLXJvbGVzXCI6W1wiYWNyZml4ZWRcIixcImFjcm1vYmlsZVwiLFwiYWNybGVhZGVyXCIsXCJhc21cIixcImFkbWluXCIsXCJhbm9ueW1vdXNcIixcImV4ZWNcIixcInN0YWZmXCJdLFwieC1oYXN1cmEtZGVmYXVsdC1yb2xlXCI6XCJzdGFmZlwiLFwieC1oYXN1cmEtcm9sZVwiOlwic3RhZmZcIixcIngtaGFzdXJhLXVzZXItaWRcIjpcIjdmNjlkYTVhLWMyMjUtNDA0MC05YTQwLWU3Mzk4NGEzNDM0N1wifSIsImF1dGhfdGltZSI6MTYwMDQxOTA4NCwiaXNzIjoiaHR0cHM6XC9cL2NvZ25pdG8taWRwLmFwLXNvdXRoZWFzdC0xLmFtYXpvbmF3cy5jb21cL2FwLXNvdXRoZWFzdC0xX0FVanh3TnRMTyIsImNvZ25pdG86dXNlcm5hbWUiOiI3ZjY5ZGE1YS1jMjI1LTQwNDAtOWE0MC1lNzM5ODRhMzQzNDciLCJleHAiOjE2MDEwNDUwMjksImlhdCI6MTYwMTA0MTQyOSwiZW1haWwiOiJidXR0aHVydGRldjIwMjBAZ21haWwuY29tIn0.cSHXngpPxjaQ5yFE3QJQmkSa8w043gyZefLydiCQAFFrdkenNoitxaYWWYzB3UuO20bf7cOQMgE-WzUmJC3n7WkBnE2EOIUVC2_TFVO2o1P-oTgfOJVS5a3TBKDj3ShEre_zy1A_aUGj1OrCL2PrGXcn2OxFyZQJd5JsUzWCBnzjPvz4dj6KNPsYEYyqZ7yDGe-Ooio8vFvTPr8wPBxYTkt0Cn8SJ6PXJwtUht7DcSiiBbNi0OZxrLEheebVt0I9yfp7HXs6c5ebqlOF_mFEmGrEAhZaJfV0TZZxtqE3M8BMohNXDZo8OsmSj2-3jfIe-KI2OV-PLGQYKHk_6xAqyg",
+								"type": "text",
+								"disabled": true
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"prefix\": \"7f69da5a-c225-4040-9a40-e73984a34347/user_pictures/5ab2d92e-0270-4005-9cb2-8380bd24c5d9/picture_url/1600473600021\", \n    \"file\": \"Sscrotie.png\",\n    \"contentType\": \"image/png\",\n    \"width\": \"300\", // optional\n    \"height\": \"300\" // optional\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "https://mauocecws3.execute-api.ap-southeast-1.amazonaws.com/Prod/upload-url",
+							"protocol": "https",
+							"host": [
+								"mauocecws3",
+								"execute-api",
+								"ap-southeast-1",
+								"amazonaws",
+								"com"
+							],
+							"path": [
+								"Prod",
+								"upload-url"
+							]
+						}
+					},
+					"_postman_previewlanguage": null,
+					"header": null,
+					"cookie": [],
+					"body": "{\n  \"url\": \"https://sfupload-service-imagebucket-17r19skd8xuq4.s3.ap-southeast-1.amazonaws.com/raw-images/7f69da5a-c225-4040-9a40-e73984a34347/user_pictures/5ab2d92e-0270-4005-9cb2-8380bd24c5d9/picture_url/1600473600021/scrotie.png?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Credential=ASIA2NDAPQ2UP7GVIV4N%2F20200925%2Fap-southeast-1%2Fs3%2Faws4_request&X-Amz-Date=20200925T135533Z&X-Amz-Expires=600&X-Amz-Security-Token=IQoJb3JpZ2luX2VjEL7%2F%2F%2F%2F%2F%2F%2F%2F%2F%2FwEaDmFwLXNvdXRoZWFzdC0xIkcwRQIhAJAiZUsO4g85V7jlVbI1diEMC%2F14IPTJev5q2SbaSDSJAiB%2Fj8RMt%2BAShGEWgVvqV6wWL5W%2FsU2aUKHeYGgxAGizAyr4AQjX%2F%2F%2F%2F%2F%2F%2F%2F%2F%2F8BEAAaDDcxNTMxNDM5ODg4OCIMQnDX9x3H06eqMqH0KswBZ1HuuaJNTE2zOyk4J57jhHTDArv9jMdJwQ%2BfEIXo9IFSbKsa%2F72Y6go02NvNl8vJ2H64tfHqI1EbEli10Z41XLC3H0GWpwg1optXEmgYZiOPDmWNnmJSKCY3F0YCIsIXtaeIzhxfytxC9gra4L%2BSWMttCtFlLmsvOnW3%2FzMzPnpKXuR8gopU3VYul1WBjW89eJxOcLmJBmDAt1NBUwtfNjZ9kvEgMLztRcW1EbLBKxEJx2uFCzNmV97OA5rq%2FPR5hKCm2UucQQc9fMhIMNTtt%2FsFOuABehLsQdYzMm516FO%2FAK%2F%2F0c4hNkon%2F%2Fb7VRIU6GjSjRSzvLdnPMFiZohdkXCA41D3rNzDHWhxdA0nZsTCDPk7KZWGURjrkCyXkWJKQAWYBuZiCzhDmV4Ogvyr5%2FCR2n8N%2BYge3ByO5xE7cXai97PUTkBz3ECEk6QWlp6dYVAE%2BSopnK6X0dxIEc18bdO1d33M1eH0dyQudTQ7DEfor6YXnwpd4qponBBMM9rCi3mhCju8Y4ZnEPPnKiRyJ2bVPHh3rgx7sRszE3sOOLcgClL06Kx51xVz0jHYyPBv0XfPabA%3D&X-Amz-SignedHeaders=content-type%3Bhost%3Bx-amz-meta-height%3Bx-amz-meta-width&X-Amz-Signature=13aa0d2e5f366771936c367d9b3051ffbf4f7d18383cb7287ab5c0bd10a4d5ab\",\n  \"headers\": {\n    \"content-type\": \"image/png\",\n    \"x-amz-meta-height\": \"300\",\n    \"x-amz-meta-width\": \"300\"\n  }\n}"
+				}
+			]
+		},
+		{
+			"name": "PUT / Upload Image",
+			"request": {
+				"method": "PUT",
+				"header": [],
+				"body": {
+					"mode": "file",
+					"file": {}
+				},
+				"url": {
+					"raw": "THE_RESPONSE_OF_GET_PRESIGNED_URL",
+					"host": [
+						"THE_RESPONSE_OF_GET_PRESIGNED_URL"
+					]
+				},
+				"description": "Upload Image from the result of the Get Presigned URL for Upload\n"
+			},
+			"response": [
+				{
+					"name": "PUT / Upload Image",
+					"originalRequest": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "x-amz-meta-height",
+								"value": "300",
+								"type": "text"
+							},
+							{
+								"key": "x-amz-meta-width",
+								"value": "300",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "file",
+							"file": {
+								"src": "/home/franksn/workspace/hasura/sfupload/scrotie.png"
+							}
+						},
+						"url": {
+							"raw": "https://sfupload-service-imagebucket-17r19skd8xuq4.s3.ap-southeast-1.amazonaws.com/raw-images/SOME_PREFIX_HERE/SOME_FILENAME.png?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Credential=ASIA2NDAPQ2UMTELYWLU%2F20200925%2Fap-southeast-1%2Fs3%2Faws4_request&X-Amz-Date=20200925T142621Z&X-Amz-Expires=600&X-Amz-Security-Token=IQoJb3JpZ2luX2VjEL7%2F%2F%2F%2F%2F%2F%2F%2F%2F%2FwEaDmFwLXNvdXRoZWFzdC0xIkYwRAIgH2ruf%2FN4H2YWwQ%2BlFdmOOSMOW6LRYeBjrxqxVPWlusYCICqDMiNaD%2F4NHvTQ2ED9JdldhwLLEV3LblnkCrTPfhwGKvgBCNf%2F%2F%2F%2F%2F%2F%2F%2F%2F%2FwEQABoMNzE1MzE0Mzk4ODg4IgwMFoLzsl%2FHUkq%2BLW4qzAHjQ3Vh7m%2BWSs5oDaWO5MMJUnm1JekRRqs9lUA4d7TY0MzAgjrVMMCxC4Fksf9qSwz0PXoQ87q552hyNvdzVPenVe47lSTuC86%2FPLVsa4kNyYOWOBeFzWJmeSPjRNBIz%2BVCQbMWk5pdmMGoizo%2Fb9%2FJiOz6NSTRPVS%2BaaLJJIlVlt%2F6UoKziE1pgFhkaR%2BWhb7u1GoHd71ZZ%2Bnz272Uk%2FLEbxxsVUSG9H3AFR5QmJ%2Fdr%2Bp8z9ddeKehaKJNM5QEiwXTxpCv1DMuuW2lUokw0vW3%2BwU64QGDIBjxD4LqZVjBk5MCmMyE%2Fn8dViJtt0ITNww71cNho%2ByFhR73xiaucuN7uzp3cQFbgBMc%2F4Qe01SZoeinSzUABdfZKTlp%2BaGmQyFEHj%2BTlRaN2yNVNun7nd%2FOVe7pSzK0DQL5vy7lwYd8KeRJGAichw2CVkFVj3VCz5H80cR9D9gr6YUOBRHja5wsd4eNyH3ZmekN4TZZsTsN%2BhGSBicM%2FGf6RbgGmDFoJFx%2F9r5XTKr%2BuQye4q3q0fnDNSULpYsd4PFwc%2FLxWPf7iHlwvqeZiJvuY%2BD7c1HF%2FxJE6JAIHr8%3D&X-Amz-SignedHeaders=content-type%3Bhost%3Bx-amz-meta-height%3Bx-amz-meta-width&X-Amz-Signature=a5597b0ab06d3a2f9d50872021d22aaeea859a9990ff6ba4af47c0dd41708b35",
+							"protocol": "https",
+							"host": [
+								"sfupload-service-imagebucket-17r19skd8xuq4",
+								"s3",
+								"ap-southeast-1",
+								"amazonaws",
+								"com"
+							],
+							"path": [
+								"raw-images",
+								"SOME_PREFIX_HERE",
+								"SOME_FILENAME.png"
+							],
+							"query": [
+								{
+									"key": "X-Amz-Algorithm",
+									"value": "AWS4-HMAC-SHA256"
+								},
+								{
+									"key": "X-Amz-Credential",
+									"value": "ASIA2NDAPQ2UMTELYWLU%2F20200925%2Fap-southeast-1%2Fs3%2Faws4_request"
+								},
+								{
+									"key": "X-Amz-Date",
+									"value": "20200925T142621Z"
+								},
+								{
+									"key": "X-Amz-Expires",
+									"value": "600"
+								},
+								{
+									"key": "X-Amz-Security-Token",
+									"value": "IQoJb3JpZ2luX2VjEL7%2F%2F%2F%2F%2F%2F%2F%2F%2F%2FwEaDmFwLXNvdXRoZWFzdC0xIkYwRAIgH2ruf%2FN4H2YWwQ%2BlFdmOOSMOW6LRYeBjrxqxVPWlusYCICqDMiNaD%2F4NHvTQ2ED9JdldhwLLEV3LblnkCrTPfhwGKvgBCNf%2F%2F%2F%2F%2F%2F%2F%2F%2F%2FwEQABoMNzE1MzE0Mzk4ODg4IgwMFoLzsl%2FHUkq%2BLW4qzAHjQ3Vh7m%2BWSs5oDaWO5MMJUnm1JekRRqs9lUA4d7TY0MzAgjrVMMCxC4Fksf9qSwz0PXoQ87q552hyNvdzVPenVe47lSTuC86%2FPLVsa4kNyYOWOBeFzWJmeSPjRNBIz%2BVCQbMWk5pdmMGoizo%2Fb9%2FJiOz6NSTRPVS%2BaaLJJIlVlt%2F6UoKziE1pgFhkaR%2BWhb7u1GoHd71ZZ%2Bnz272Uk%2FLEbxxsVUSG9H3AFR5QmJ%2Fdr%2Bp8z9ddeKehaKJNM5QEiwXTxpCv1DMuuW2lUokw0vW3%2BwU64QGDIBjxD4LqZVjBk5MCmMyE%2Fn8dViJtt0ITNww71cNho%2ByFhR73xiaucuN7uzp3cQFbgBMc%2F4Qe01SZoeinSzUABdfZKTlp%2BaGmQyFEHj%2BTlRaN2yNVNun7nd%2FOVe7pSzK0DQL5vy7lwYd8KeRJGAichw2CVkFVj3VCz5H80cR9D9gr6YUOBRHja5wsd4eNyH3ZmekN4TZZsTsN%2BhGSBicM%2FGf6RbgGmDFoJFx%2F9r5XTKr%2BuQye4q3q0fnDNSULpYsd4PFwc%2FLxWPf7iHlwvqeZiJvuY%2BD7c1HF%2FxJE6JAIHr8%3D"
+								},
+								{
+									"key": "X-Amz-SignedHeaders",
+									"value": "content-type%3Bhost%3Bx-amz-meta-height%3Bx-amz-meta-width"
+								},
+								{
+									"key": "X-Amz-Signature",
+									"value": "a5597b0ab06d3a2f9d50872021d22aaeea859a9990ff6ba4af47c0dd41708b35"
+								}
+							]
+						}
+					},
+					"_postman_previewlanguage": null,
+					"header": null,
+					"cookie": [],
+					"body": null
+				}
+			]
+		},
+		{
+			"name": "Get Signed Download URL",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"prefix\": \"7f69da5a-c225-4040-9a40-e73984a34347/user_pictures/5ab2d92e-0270-4005-9cb2-8380bd24c5d9/picture_url/1600473600021\",\n    \"file\": \"scrotie.png\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "https://mauocecws3.execute-api.ap-southeast-1.amazonaws.com/Prod/download-url",
+					"protocol": "https",
+					"host": [
+						"mauocecws3",
+						"execute-api",
+						"ap-southeast-1",
+						"amazonaws",
+						"com"
+					],
+					"path": [
+						"Prod",
+						"download-url"
+					]
+				},
+				"description": "Get Signed Download URL"
+			},
+			"response": [
+				{
+					"name": "Get Signed Download URL",
+					"originalRequest": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"prefix\": \"7f69da5a-c225-4040-9a40-e73984a34347/user_pictures/5ab2d92e-0270-4005-9cb2-8380bd24c5d9/picture_url/1600473600021\",\n    \"file\": \"scrotie.png\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "https://mauocecws3.execute-api.ap-southeast-1.amazonaws.com/Prod/download-url",
+							"protocol": "https",
+							"host": [
+								"mauocecws3",
+								"execute-api",
+								"ap-southeast-1",
+								"amazonaws",
+								"com"
+							],
+							"path": [
+								"Prod",
+								"download-url"
+							]
+						}
+					},
+					"status": "OK",
+					"code": 200,
+					"_postman_previewlanguage": "json",
+					"header": [
+						{
+							"key": "Content-Type",
+							"value": "application/json"
+						},
+						{
+							"key": "Content-Length",
+							"value": "601"
+						},
+						{
+							"key": "Connection",
+							"value": "keep-alive"
+						},
+						{
+							"key": "Date",
+							"value": "Fri, 25 Sep 2020 14:34:01 GMT"
+						},
+						{
+							"key": "x-amzn-RequestId",
+							"value": "634069a0-4ccd-450a-bf90-aa426c5b5b23"
+						},
+						{
+							"key": "Access-Control-Allow-Origin",
+							"value": "*"
+						},
+						{
+							"key": "Access-Control-Allow-Headers",
+							"value": "Content-Type,Authorization,X-Amz-Date,X-Api-Key"
+						},
+						{
+							"key": "x-amz-apigw-id",
+							"value": "TbTp8HV3yQ0FlIQ="
+						},
+						{
+							"key": "Access-Control-Allow-Methods",
+							"value": "GET,POST,PUT,DELETE,OPTIONS"
+						},
+						{
+							"key": "X-Amzn-Trace-Id",
+							"value": "Root=1-5f6dffd9-3b7670548997ce36c3676541"
+						},
+						{
+							"key": "X-Cache",
+							"value": "Miss from cloudfront"
+						},
+						{
+							"key": "Via",
+							"value": "1.1 f5171077d7910626ec3cf65e0c222f3c.cloudfront.net (CloudFront)"
+						},
+						{
+							"key": "X-Amz-Cf-Pop",
+							"value": "SIN2-C1"
+						},
+						{
+							"key": "X-Amz-Cf-Id",
+							"value": "zS4Xyu1L8eHy0NG1HCd_P2d44gLPsSfV98nauHM1X1v_iWy5-xRkOw=="
+						}
+					],
+					"cookie": [],
+					"body": "{\n    \"url\": \"https://d25toe5jlcqu8t.cloudfront.net/raw-images/7f69da5a-c225-4040-9a40-e73984a34347/user_pictures/5ab2d92e-0270-4005-9cb2-8380bd24c5d9/picture_url/1600473600021/scrotie.png?Expires=1603636441&Signature=c9UL07kIN26hErpGyHDzAOkiqrNz0RHB8RSSFA0FPoys~-AJh8UsuJ~JOAujd6GP54wxRznewy2Uqz9UCxnBnwGjMOXFcIqBwlT~eRgohYvvuNTgrNw0kvtzdaA7HY7uUJkZ2IOsab1GgqOi7~OMuyEUli7tRQfod3Z9sl5KKv0Mg2fPNTTVNZJgjwpTjOpjUaxNFmz8tM2hmcsGVnvHk~umdRdN3vs~rP6WOSb7cMneTkqfupTgYbMB66USC7tfz2wRBEGQrikpkuqCDium6LEbfZZYAdfBe~frDvlQrpR0yjIcWgT2Gb2vXPepzv7RktQfVI3bli8eyJBlklr0Vw__&Key-Pair-Id=APKAICOHIBHQLEOZCK6A\"\n}"
+				}
+			]
+		}
+	],
+	"auth": {
+		"type": "bearer",
+		"bearer": [
+			{
+				"key": "token",
+				"value": "eyJraWQiOiJnK1V3eGxsdmsxVGtKamhLWStaWmJ3bG5DNEo2VFQ1Z3pYYmpwd2Qrdk9rPSIsImFsZyI6IlJTMjU2In0.eyJzdWIiOiI3ZjY5ZGE1YS1jMjI1LTQwNDAtOWE0MC1lNzM5ODRhMzQzNDciLCJhdWQiOiIxMjk5NzJvY2xxOWRpMzVvNjJydmI4YnFqbyIsImVtYWlsX3ZlcmlmaWVkIjp0cnVlLCJldmVudF9pZCI6ImE4MTZlMGJmLTZlMzEtNGQ0ZC04NjY4LWYxMTg0MWJmNTBkMyIsInRva2VuX3VzZSI6ImlkIiwiaHR0cHM6XC9cL2hhc3VyYS5pb1wvand0XC9jbGFpbXMiOiJ7XCJ4LWhhc3VyYS1hbGxvd2VkLXJvbGVzXCI6W1wiYWNyZml4ZWRcIixcImFjcm1vYmlsZVwiLFwiYWNybGVhZGVyXCIsXCJhc21cIixcImFkbWluXCIsXCJhbm9ueW1vdXNcIixcImV4ZWNcIixcInN0YWZmXCJdLFwieC1oYXN1cmEtZGVmYXVsdC1yb2xlXCI6XCJzdGFmZlwiLFwieC1oYXN1cmEtcm9sZVwiOlwic3RhZmZcIixcIngtaGFzdXJhLXVzZXItaWRcIjpcIjdmNjlkYTVhLWMyMjUtNDA0MC05YTQwLWU3Mzk4NGEzNDM0N1wifSIsImF1dGhfdGltZSI6MTYwMDQxOTA4NCwiaXNzIjoiaHR0cHM6XC9cL2NvZ25pdG8taWRwLmFwLXNvdXRoZWFzdC0xLmFtYXpvbmF3cy5jb21cL2FwLXNvdXRoZWFzdC0xX0FVanh3TnRMTyIsImNvZ25pdG86dXNlcm5hbWUiOiI3ZjY5ZGE1YS1jMjI1LTQwNDAtOWE0MC1lNzM5ODRhMzQzNDciLCJleHAiOjE2MDEwNDUwMjksImlhdCI6MTYwMTA0MTQyOSwiZW1haWwiOiJidXR0aHVydGRldjIwMjBAZ21haWwuY29tIn0.cSHXngpPxjaQ5yFE3QJQmkSa8w043gyZefLydiCQAFFrdkenNoitxaYWWYzB3UuO20bf7cOQMgE-WzUmJC3n7WkBnE2EOIUVC2_TFVO2o1P-oTgfOJVS5a3TBKDj3ShEre_zy1A_aUGj1OrCL2PrGXcn2OxFyZQJd5JsUzWCBnzjPvz4dj6KNPsYEYyqZ7yDGe-Ooio8vFvTPr8wPBxYTkt0Cn8SJ6PXJwtUht7DcSiiBbNi0OZxrLEheebVt0I9yfp7HXs6c5ebqlOF_mFEmGrEAhZaJfV0TZZxtqE3M8BMohNXDZo8OsmSj2-3jfIe-KI2OV-PLGQYKHk_6xAqyg",
+				"type": "string"
+			}
+		]
+	},
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"id": "2b0bc058-6012-4d53-b95d-2888546bb72c",
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"id": "caf64573-cf2b-4d5a-9486-d1e34c6639fc",
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		}
+	],
+	"protocolProfileBehavior": {}
+}
