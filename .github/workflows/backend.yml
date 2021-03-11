@@ -44,6 +44,7 @@ jobs:
       - name: make ${{ matrix.target }}
         shell: bash
         run: |
+          cd backend
           make $target
         working-directory: ${{ github.workspace }}/go/src/github.com/${{ github.repository }}
         env:
