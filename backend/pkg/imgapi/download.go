@@ -34,7 +34,7 @@ func (d *DownloadSvc) GetDownloadURL(req *models.DownloadURLRequest) (*models.Do
 	u := &url.URL{
 		Scheme: req.Scheme,
 		Host:   req.Domain,
-		Path:   fmt.Sprintf("%s%s%s%s", constants.ResizedDir, req.Prefix, "/", req.File),
+		Path:   fmt.Sprintf("%s%s%s%s", constants.ImageDir, req.Prefix, "/", req.File),
 	}
 	r := &wrapper.CFSignURLRequest{
 		URL: u.String(),

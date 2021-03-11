@@ -23,7 +23,8 @@ build:
 	${BUILDARGS} -o bin/upload-url/upload-url ./cmd/upload-url
 	${BUILDARGS} -o bin/resize-img/resize-img ./cmd/resize-img
 
-	#sam build
+test:
+	go test -v ./...
 
 deploy:
-	sam deploy
+	sam deploy --no-confirm-changeset

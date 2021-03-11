@@ -6,13 +6,26 @@ import (
 )
 
 const (
-	QueryTemplate = `
+	UniqueQueryTemplate = `
 	mutation($id: uuid!, ${{ .TableFieldName | toCamelCase }}: String!, $accountId: uuid! ){
 		insert_{{.TableName}}_one(
 			object: { id: $id, 
 			  		{{.TableFieldName}}: ${{.TableFieldName | toCamelCase }}, 
 			  		account_id: $accountId },
 			on_conflict: { constraint: {{.TableName}}_account_id_key, update_columns: [{{.TableFieldName}}] }
+		) {
+			id
+		}
+	}
+`
+	QueryTemplate = `
+	mutation($id: uuid!, ${{ .TableFieldName | toCamelCase }}: String!, $accountId: uuid! ){
+		insert_{{.TableName}}_one(
+			object: { id: $id, 
+			  		{{.TableFieldName}}: ${{.TableFieldName | toCamelCase }}, 
+			  		account_id: $accountId,
+					primary: false,
+			},
 		) {
 			id
 		}
