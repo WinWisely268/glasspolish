@@ -11,7 +11,7 @@ import {
 } from '@material-ui/core'
 import { CardHeader, Divider } from '@material-ui/core'
 import { useUpsertProfileMutation, Profiles } from '../../service/graphql'
-import { GenericField } from '../GenericFormField'
+import { GenericField } from '../shared/GenericFormField'
 import {
   validateName
 } from '../../utilities/validators'

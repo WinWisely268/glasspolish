@@ -1,5 +1,5 @@
 import React from 'react'
-import {GenericField} from "../GenericFormField";
+import {GenericField} from "../shared/GenericFormField";
 
 export interface AuthCodeFieldProps {
     setCode: (code: string) => void

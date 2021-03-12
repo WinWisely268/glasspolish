@@ -1,5 +1,4 @@
 import {
-  Button,
   Card,
   CardContent,
   Typography,
@@ -9,9 +8,9 @@ import {
   Divider,
   CircularProgress
 } from '@material-ui/core'
-import { createStyles, makeStyles, useTheme } from '@material-ui/styles'
+import { makeStyles } from '@material-ui/styles'
 import cx from 'classnames'
-import React, { useEffect, useState } from 'react'
+import React, { useState } from 'react'
 import { useGetProfilePictureQuery, Profiles, Maybe } from '../../service/graphql'
 import SnackBar from '../shared/Snackbar'
 import UploadButton from '../dashboard/UploadButton'
@@ -47,7 +46,8 @@ const UserProfileDisplay: React.FC<UserProfileDisplayProps> = ({
   const {
     data: avatarData,
     loading: avatarLoading,
-    error: avatarError
+    error: avatarError,
+    refetch
   } = useGetProfilePictureQuery({
     variables: {
       id: accountId
@@ -68,7 +68,7 @@ const UserProfileDisplay: React.FC<UserProfileDisplayProps> = ({
       return (
         <SnackBar
           variant='error'
-          message={avatarError.message}
+          message={avatarErrMsg}
           setMessage={(msg: React.SetStateAction<string>) => setAvatarErrMsg(msg)}
         />
       )
@@ -87,6 +87,7 @@ const UserProfileDisplay: React.FC<UserProfileDisplayProps> = ({
 
           return (
             <UserAvatar
+              avatarClass={classes.avatar}
               prefix={prefix as string}
               fileName={fileName as string}
             />
@@ -97,6 +98,7 @@ const UserProfileDisplay: React.FC<UserProfileDisplayProps> = ({
       }
     }
   }
+
   return (
     <Card className={cx(classes.root)}>
       <CardContent>
@@ -114,6 +116,7 @@ const UserProfileDisplay: React.FC<UserProfileDisplayProps> = ({
       <CardActions>
         {avatarData?.profile_pictures[0] !== undefined ? (
           <UploadButton
+            onUploadDone={() => refetch()}
             accountId={accountUuidStrfied}
             tableName='profile_pictures'
             tableFieldName='picture_url'
@@ -122,6 +125,7 @@ const UserProfileDisplay: React.FC<UserProfileDisplayProps> = ({
           />
         ) : (
           <UploadButton
+            onUploadDone={() => refetch()}
             accountId={accountUuidStrfied}
             id={v4().toString()}
             tableName='profile_pictures'

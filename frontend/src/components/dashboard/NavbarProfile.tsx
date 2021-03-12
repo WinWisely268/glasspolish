@@ -19,6 +19,10 @@ import IconLogout from '@material-ui/icons/ExitToApp'
 import { AuthContext } from '../../providers/AuthProvider'
 import * as H from 'history'
 import { AllRoutesStr } from '../../routes/constants'
+import UserAvatar from './UserAvatar'
+import { Maybe, useGetProfilePictureQuery } from '../../service/graphql'
+import { CircularProgress } from '@material-ui/core'
+import SnackBar from '../shared/Snackbar'
 
 interface NavbarProfileProps {
   history: H.History<H.LocationState>
@@ -28,18 +32,37 @@ const NavbarProfile: React.FC<NavbarProfileProps> = ({ history }) => {
   const classes = useStyles()
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null)
   const [userName, setUserName] = useState<string>()
-  const [userPicture, setUserPicture] = useState<string>()
   const authContext = useContext(AuthContext)
+  const [accountId, setAccountId] = useState<string>('')
+
+  const [avatarErrMsg, setAvatarErrMsg] = useState('')
+  const defaultAvatarSrc =
+    'https://encrypted-tbn0.gstatic.com/images?q=tbn%3AANd9GcQm0wMf5sm27bsD0Z7DF9GsoRNjgLltS32iXQ&usqp=CAU'
+
+
+  const {
+    data: avatarData,
+    loading: avatarLoading,
+    error: avatarError,
+    refetch
+  } = useGetProfilePictureQuery({
+    variables: {
+      id: accountId
+    }
+  })
 
   useEffect(() => {
     if (authContext.user !== null) {
       setUserName(authContext.email.split('@')[0])
+      setAccountId(authContext.user.getUsername())
+      refetch()
     }
   }, [authContext])
 
   if (authContext.user === null) {
     return <div className={cx('headerProfile', classes.headerProfile)} />
   }
+
 
   const signOutHandler = () => {
     authContext
@@ -60,6 +83,48 @@ const NavbarProfile: React.FC<NavbarProfileProps> = ({ history }) => {
     setAnchorEl(null)
   }
 
+  const avatarComponent = () => {
+    if (avatarLoading) {
+      return (
+        <div style={{ display: 'flex', justifyContent: 'center' }}>
+          <CircularProgress className={classes.profileAvatar} />
+        </div>
+      )
+    } else if (avatarError) {
+      return (
+        <SnackBar
+          variant='error'
+          message={avatarError.message}
+          setMessage={(msg: React.SetStateAction<string>) => setAvatarErrMsg(msg)}
+        />
+      )
+    } else {
+      if (avatarData?.profile_pictures === undefined) {
+        return <Avatar className={classes.profileAvatar} src={defaultAvatarSrc} />
+      } else {
+        if (avatarData.profile_pictures.length > 0) {
+          let primary: Maybe<string>
+          avatarData.profile_pictures.forEach((p) =>
+            primary = p.primary ? p.picture_url! : avatarData.profile_pictures[0]!.picture_url!
+          )
+          let splitted = primary!.split('/')
+          let fileName = splitted?.pop()
+          let prefix = splitted?.join('/')
+
+          return (
+            <UserAvatar
+              avatarClass={classes.profileAvatar}
+              prefix={prefix as string}
+              fileName={fileName as string}
+            />
+          )
+        } else {
+          return <Avatar className={classes.profileAvatar} src={defaultAvatarSrc} />
+        }
+      }
+    }
+  }
+
   return (
     <div className={cx('headerProfile', classes.headerProfile)}>
       <IconButton
@@ -71,11 +136,7 @@ const NavbarProfile: React.FC<NavbarProfileProps> = ({ history }) => {
         aria-haspopup='true'
         onClick={handleClick}
       >
-        <Avatar
-          className={classes.profileAvatar}
-          alt={userName}
-          src={userPicture}
-        />
+        {avatarComponent()}
         <span className={classes.profileName}>{userName}</span>
         <IconArrowDropDown />
       </IconButton>

@@ -1,25 +1,15 @@
-import { makeStyles } from '@material-ui/styles'
 import React, { useEffect, useState } from 'react'
 import { useMediaApi } from '../../service/media'
-// import { User_Pictures } from '../../service/graphql'
 import { Config } from '../../providers/Config'
 import { Avatar, CircularProgress } from '@material-ui/core'
 
 export interface UserAvatarProps {
   prefix: string
   fileName: string
+  avatarClass: string
 }
 
-const useStyles = makeStyles(() => ({
-  avatar: {
-    height: 100,
-    width: 100
-  }
-}))
-
-const UserAvatar: React.FC<UserAvatarProps> = ({ prefix, fileName }) => {
-  const classes = useStyles()
-
+const UserAvatar: React.FC<UserAvatarProps> = ({ prefix, fileName, avatarClass }) => {
   const avatarDownloadReq = useMediaApi({
     initialUrl: Config.awsUploadEndpoint + '/download-url',
     initialData: {},
@@ -45,11 +35,11 @@ const UserAvatar: React.FC<UserAvatarProps> = ({ prefix, fileName }) => {
   if (avatarDownloadReq.isLoading) {
     return (
       <div style={{ display: 'flex', justifyContent: 'center' }}>
-        <CircularProgress className={classes.avatar} />
+        <CircularProgress className={avatarClass} />
       </div>
     )
   }
-  return <Avatar className={classes.avatar} src={avatarURL} />
+  return <Avatar className={avatarClass} src={avatarURL} />
 }
 
 export default UserAvatar
