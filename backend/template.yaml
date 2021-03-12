@@ -132,6 +132,22 @@ Resources:
             Path: /disable
             Method: POST
 
+  GPPostConfirmationAuth:
+    Type: 'AWS::Serverless::Function'
+    Properties:
+      CodeUri: ./bin/add-to-group
+      Handler: add-to-group
+      Policies:
+        - AmazonCognitoPowerUser
+        - SSMParameterReadPolicy:
+            ParameterName: 'applications/GlassPolish/*'
+      Events:
+        CognitouserPoolPostConfirmation:
+          Type: Cognito
+          Properties:
+            UserPool: !Ref GPCognitoPool
+            Trigger: PostConfirmation
+
   GPPretokenAuth:
     Type: 'AWS::Serverless::Function'
     Properties:
@@ -385,8 +401,8 @@ Resources:
           ForwardedValues:
             QueryString: true
           TargetOriginId: imageBucketOrigin
-#          TrustedKeyGroups:
-#            - glasspolish-keygroup
+          #          TrustedKeyGroups:
+          #            - glasspolish-keygroup
           ViewerProtocolPolicy: redirect-to-https
           TrustedSigners:
             - self
