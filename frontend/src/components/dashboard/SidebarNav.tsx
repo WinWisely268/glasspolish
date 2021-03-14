@@ -33,8 +33,8 @@ const sidebarMenus = [
     icon: <ProductsIcon />,
     items: [
       {
-        name: 'menu.products.categories',
-        link: '/dashboard/products/categories',
+        name: 'kategori',
+        link: AllRoutesStr.Dashboard.tags,
         hasIcon: false
       },
       {
