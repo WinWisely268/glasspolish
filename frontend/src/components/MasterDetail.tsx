@@ -23,13 +23,23 @@ const masterDetailStyles = makeStyles((theme: Theme = useTheme()) => createStyle
       width: '100%',
       maxWidth: '400px',
       height: '100%',
-      position: 'relative'
+      position: 'relative',
+      touchAction: 'pan-y',
+      overflowY: 'auto',
+      webkitOverflowScrolling: 'touch',
+      willChange: 'scroll-position',
+      overscrollBehavior: 'contain'
     },
     detail: {
       position: 'relative',
       flexGrow: 1,
       width: '100%',
-      height: '100%'
+      height: '100%',
+      touchAction: 'pan-y',
+      overflowY: 'auto',
+      webkitOverflowScrolling: 'touch',
+      willChange: 'scroll-position',
+      overscrollBehavior: 'contain'
     }
   })
 )
@@ -37,7 +47,7 @@ const masterDetailStyles = makeStyles((theme: Theme = useTheme()) => createStyle
 export const MasterDetail: React.FC<MasterDetailProps> = (props) => {
   const styles = masterDetailStyles()
   const thm = useTheme()
-  const matches = useMediaQuery(thm.breakpoints.down('md'))
+  const isMedium = useMediaQuery(thm.breakpoints.down('md'))
   let { path } = useRouteMatch() as any
   const master = (
     <props.MasterType {...props.masterProps}
@@ -47,7 +57,7 @@ export const MasterDetail: React.FC<MasterDetailProps> = (props) => {
                       data-test='Detail' />)
 
   return (
-    matches ? (
+    isMedium ? (
       <Switch>
         <Route exact path={`${path}`}>
           {master}

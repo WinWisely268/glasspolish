@@ -2313,6 +2313,21 @@ export enum Warehouses_Update_Column {
   UpdatedAt = 'updated_at'
 }
 
+export type UpsertProductTagMutationVariables = Exact<{
+  tagId: Scalars['uuid'];
+  name: Scalars['String'];
+  description: Scalars['String'];
+}>;
+
+
+export type UpsertProductTagMutation = (
+  { __typename?: 'mutation_root' }
+  & { insert_product_tags_one?: Maybe<(
+    { __typename?: 'product_tags' }
+    & Pick<Product_Tags, 'name' | 'description' | 'created_at' | 'updated_at'>
+  )> }
+);
+
 export type UpsertProfileMutationVariables = Exact<{
   accountId: Scalars['uuid'];
   name: Scalars['String'];
@@ -2333,6 +2348,19 @@ export type ListProductTagsQueryVariables = Exact<{
 
 
 export type ListProductTagsQuery = (
+  { __typename?: 'query_root' }
+  & { product_tags: Array<(
+    { __typename?: 'product_tags' }
+    & Pick<Product_Tags, 'id' | 'name' | 'description' | 'created_at' | 'updated_at'>
+  )> }
+);
+
+export type GetProductTagQueryVariables = Exact<{
+  tagId: Scalars['uuid'];
+}>;
+
+
+export type GetProductTagQuery = (
   { __typename?: 'query_root' }
   & { product_tags: Array<(
     { __typename?: 'product_tags' }
@@ -2394,6 +2422,47 @@ export type GetProfilePictureQuery = (
 );
 
 
+export const UpsertProductTagDocument = gql`
+    mutation upsertProductTag($tagId: uuid!, $name: String!, $description: String!) {
+  insert_product_tags_one(
+    object: {id: $tagId, name: $name, description: $description}
+    on_conflict: {constraint: product_tags_name_key, update_columns: [name, description, updated_at]}
+  ) {
+    name
+    description
+    created_at
+    updated_at
+  }
+}
+    `;
+export type UpsertProductTagMutationFn = Apollo.MutationFunction<UpsertProductTagMutation, UpsertProductTagMutationVariables>;
+
+/**
+ * __useUpsertProductTagMutation__
+ *
+ * To run a mutation, you first call `useUpsertProductTagMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useUpsertProductTagMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [upsertProductTagMutation, { data, loading, error }] = useUpsertProductTagMutation({
+ *   variables: {
+ *      tagId: // value for 'tagId'
+ *      name: // value for 'name'
+ *      description: // value for 'description'
+ *   },
+ * });
+ */
+export function useUpsertProductTagMutation(baseOptions?: Apollo.MutationHookOptions<UpsertProductTagMutation, UpsertProductTagMutationVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useMutation<UpsertProductTagMutation, UpsertProductTagMutationVariables>(UpsertProductTagDocument, options);
+      }
+export type UpsertProductTagMutationHookResult = ReturnType<typeof useUpsertProductTagMutation>;
+export type UpsertProductTagMutationResult = Apollo.MutationResult<UpsertProductTagMutation>;
+export type UpsertProductTagMutationOptions = Apollo.BaseMutationOptions<UpsertProductTagMutation, UpsertProductTagMutationVariables>;
 export const UpsertProfileDocument = gql`
     mutation upsertProfile($accountId: uuid!, $name: String!) {
   insert_profiles_one(object: {account_id: $accountId, name: $name}) {
@@ -2467,6 +2536,45 @@ export function useListProductTagsLazyQuery(baseOptions?: Apollo.LazyQueryHookOp
 export type ListProductTagsQueryHookResult = ReturnType<typeof useListProductTagsQuery>;
 export type ListProductTagsLazyQueryHookResult = ReturnType<typeof useListProductTagsLazyQuery>;
 export type ListProductTagsQueryResult = Apollo.QueryResult<ListProductTagsQuery, ListProductTagsQueryVariables>;
+export const GetProductTagDocument = gql`
+    query getProductTag($tagId: uuid!) {
+  product_tags(where: {id: {_eq: $tagId}}) {
+    id
+    name
+    description
+    created_at
+    updated_at
+  }
+}
+    `;
+
+/**
+ * __useGetProductTagQuery__
+ *
+ * To run a query within a React component, call `useGetProductTagQuery` and pass it any options that fit your needs.
+ * When your component renders, `useGetProductTagQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useGetProductTagQuery({
+ *   variables: {
+ *      tagId: // value for 'tagId'
+ *   },
+ * });
+ */
+export function useGetProductTagQuery(baseOptions: Apollo.QueryHookOptions<GetProductTagQuery, GetProductTagQueryVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useQuery<GetProductTagQuery, GetProductTagQueryVariables>(GetProductTagDocument, options);
+      }
+export function useGetProductTagLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<GetProductTagQuery, GetProductTagQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useLazyQuery<GetProductTagQuery, GetProductTagQueryVariables>(GetProductTagDocument, options);
+        }
+export type GetProductTagQueryHookResult = ReturnType<typeof useGetProductTagQuery>;
+export type GetProductTagLazyQueryHookResult = ReturnType<typeof useGetProductTagLazyQuery>;
+export type GetProductTagQueryResult = Apollo.QueryResult<GetProductTagQuery, GetProductTagQueryVariables>;
 export const GetAccountDocument = gql`
     query getAccount($id: uuid!) {
   accounts(where: {user_id: {_eq: $id}}) {

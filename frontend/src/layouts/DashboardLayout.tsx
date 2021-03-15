@@ -81,7 +81,6 @@ export const useStyles = makeStyles((theme: Theme = useTheme()) =>
       }
     },
     content: {
-      // display: 'flex',
       paddingTop: '50px',
       height: '100vh',
       flexGrow: 1,
@@ -119,6 +118,16 @@ export const useStyles = makeStyles((theme: Theme = useTheme()) =>
       marginLeft: '0.2rem',
       padding: '8px 8px 8px 0',
       borderBottom: '1px solid #CCC'
+    },
+    masterLink: {
+      listStyleType: 'none'
+    },
+    masterNavLink: {
+      display: 'block'
+    },
+    activeMasterNavLink: {
+      backgroundColor: '#3f51b5',
+      color: 'white'
     }
   })
 )

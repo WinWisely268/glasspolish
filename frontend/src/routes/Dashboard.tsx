@@ -6,9 +6,10 @@ import UserProfile from '../pages/UserProfile'
 import SettingsPage from '../components/profile/Settings'
 import { ApolloProvider } from '@apollo/client'
 import { authGQLClient } from '../providers/ApolloClient'
-// import UsersPage from '../pages/UsersPage'
 import { AllRoutesStr } from './constants'
-import TagPage from '../pages/TagPage'
+import TagPage, { TagDetails } from '../pages/TagPage'
+import { MasterDetail } from '../components/MasterDetail'
+import DashboardLayout from '../layouts/DashboardLayout'
 
 export interface DashboardProps {
 }
@@ -21,8 +22,14 @@ const DashboardAll: React.FC<DashboardProps> = () => {
           <Route exact path={AllRoutesStr.Dashboard.root} component={Dashboard} />
           <Route exact path={AllRoutesStr.Dashboard.profile} component={UserProfile} />
           <Route exact path={AllRoutesStr.Dashboard.settings} component={SettingsPage} />
-          <Route exact path={AllRoutesStr.Dashboard.tags} component={TagPage} />
-          {/*<Route exact path={AllRoutesStr.Dashboard.users} component={UsersPage}/>*/}
+          <Route path={AllRoutesStr.Dashboard.tags}
+                 render={props => (
+                   <DashboardLayout>
+                     <MasterDetail MasterType={TagPage} masterProps={{}}
+                                   DetailType={TagDetails} detailProps={{}} />
+                   </DashboardLayout>
+                 )}
+          />
         </Switch>
       </ApolloProvider>
     </React.Fragment>
