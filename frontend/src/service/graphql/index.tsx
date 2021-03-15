@@ -2313,14 +2313,32 @@ export enum Warehouses_Update_Column {
   UpdatedAt = 'updated_at'
 }
 
-export type UpsertProductTagMutationVariables = Exact<{
+export type UpdateProductTagMutationVariables = Exact<{
+  tagId: Scalars['uuid'];
+  name?: Maybe<Scalars['String']>;
+  description?: Maybe<Scalars['String']>;
+}>;
+
+
+export type UpdateProductTagMutation = (
+  { __typename?: 'mutation_root' }
+  & { update_product_tags?: Maybe<(
+    { __typename?: 'product_tags_mutation_response' }
+    & { returning: Array<(
+      { __typename?: 'product_tags' }
+      & Pick<Product_Tags, 'id' | 'name' | 'description'>
+    )> }
+  )> }
+);
+
+export type InsertProductTagMutationVariables = Exact<{
   tagId: Scalars['uuid'];
   name: Scalars['String'];
   description: Scalars['String'];
 }>;
 
 
-export type UpsertProductTagMutation = (
+export type InsertProductTagMutation = (
   { __typename?: 'mutation_root' }
   & { insert_product_tags_one?: Maybe<(
     { __typename?: 'product_tags' }
@@ -2422,8 +2440,50 @@ export type GetProfilePictureQuery = (
 );
 
 
-export const UpsertProductTagDocument = gql`
-    mutation upsertProductTag($tagId: uuid!, $name: String!, $description: String!) {
+export const UpdateProductTagDocument = gql`
+    mutation updateProductTag($tagId: uuid!, $name: String, $description: String) {
+  update_product_tags(
+    where: {id: {_eq: $tagId}}
+    _set: {name: $name, description: $description}
+  ) {
+    returning {
+      id
+      name
+      description
+    }
+  }
+}
+    `;
+export type UpdateProductTagMutationFn = Apollo.MutationFunction<UpdateProductTagMutation, UpdateProductTagMutationVariables>;
+
+/**
+ * __useUpdateProductTagMutation__
+ *
+ * To run a mutation, you first call `useUpdateProductTagMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useUpdateProductTagMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [updateProductTagMutation, { data, loading, error }] = useUpdateProductTagMutation({
+ *   variables: {
+ *      tagId: // value for 'tagId'
+ *      name: // value for 'name'
+ *      description: // value for 'description'
+ *   },
+ * });
+ */
+export function useUpdateProductTagMutation(baseOptions?: Apollo.MutationHookOptions<UpdateProductTagMutation, UpdateProductTagMutationVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useMutation<UpdateProductTagMutation, UpdateProductTagMutationVariables>(UpdateProductTagDocument, options);
+      }
+export type UpdateProductTagMutationHookResult = ReturnType<typeof useUpdateProductTagMutation>;
+export type UpdateProductTagMutationResult = Apollo.MutationResult<UpdateProductTagMutation>;
+export type UpdateProductTagMutationOptions = Apollo.BaseMutationOptions<UpdateProductTagMutation, UpdateProductTagMutationVariables>;
+export const InsertProductTagDocument = gql`
+    mutation insertProductTag($tagId: uuid!, $name: String!, $description: String!) {
   insert_product_tags_one(
     object: {id: $tagId, name: $name, description: $description}
     on_conflict: {constraint: product_tags_name_key, update_columns: [name, description, updated_at]}
@@ -2435,20 +2495,20 @@ export const UpsertProductTagDocument = gql`
   }
 }
     `;
-export type UpsertProductTagMutationFn = Apollo.MutationFunction<UpsertProductTagMutation, UpsertProductTagMutationVariables>;
+export type InsertProductTagMutationFn = Apollo.MutationFunction<InsertProductTagMutation, InsertProductTagMutationVariables>;
 
 /**
- * __useUpsertProductTagMutation__
+ * __useInsertProductTagMutation__
  *
- * To run a mutation, you first call `useUpsertProductTagMutation` within a React component and pass it any options that fit your needs.
- * When your component renders, `useUpsertProductTagMutation` returns a tuple that includes:
+ * To run a mutation, you first call `useInsertProductTagMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useInsertProductTagMutation` returns a tuple that includes:
  * - A mutate function that you can call at any time to execute the mutation
  * - An object with fields that represent the current status of the mutation's execution
  *
  * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
  *
  * @example
- * const [upsertProductTagMutation, { data, loading, error }] = useUpsertProductTagMutation({
+ * const [insertProductTagMutation, { data, loading, error }] = useInsertProductTagMutation({
  *   variables: {
  *      tagId: // value for 'tagId'
  *      name: // value for 'name'
@@ -2456,13 +2516,13 @@ export type UpsertProductTagMutationFn = Apollo.MutationFunction<UpsertProductTa
  *   },
  * });
  */
-export function useUpsertProductTagMutation(baseOptions?: Apollo.MutationHookOptions<UpsertProductTagMutation, UpsertProductTagMutationVariables>) {
+export function useInsertProductTagMutation(baseOptions?: Apollo.MutationHookOptions<InsertProductTagMutation, InsertProductTagMutationVariables>) {
         const options = {...defaultOptions, ...baseOptions}
-        return Apollo.useMutation<UpsertProductTagMutation, UpsertProductTagMutationVariables>(UpsertProductTagDocument, options);
+        return Apollo.useMutation<InsertProductTagMutation, InsertProductTagMutationVariables>(InsertProductTagDocument, options);
       }
-export type UpsertProductTagMutationHookResult = ReturnType<typeof useUpsertProductTagMutation>;
-export type UpsertProductTagMutationResult = Apollo.MutationResult<UpsertProductTagMutation>;
-export type UpsertProductTagMutationOptions = Apollo.BaseMutationOptions<UpsertProductTagMutation, UpsertProductTagMutationVariables>;
+export type InsertProductTagMutationHookResult = ReturnType<typeof useInsertProductTagMutation>;
+export type InsertProductTagMutationResult = Apollo.MutationResult<InsertProductTagMutation>;
+export type InsertProductTagMutationOptions = Apollo.BaseMutationOptions<InsertProductTagMutation, InsertProductTagMutationVariables>;
 export const UpsertProfileDocument = gql`
     mutation upsertProfile($accountId: uuid!, $name: String!) {
   insert_profiles_one(object: {account_id: $accountId, name: $name}) {

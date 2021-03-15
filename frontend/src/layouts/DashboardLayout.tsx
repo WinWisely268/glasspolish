@@ -119,15 +119,22 @@ export const useStyles = makeStyles((theme: Theme = useTheme()) =>
       padding: '8px 8px 8px 0',
       borderBottom: '1px solid #CCC'
     },
-    masterLink: {
-      listStyleType: 'none'
+    masterUl: {
+      padding: '0px',
+      listStyleType: 'none',
     },
     masterNavLink: {
-      display: 'block'
+      display: 'block',
+      padding: '10px 1rem 0',
     },
     activeMasterNavLink: {
+      display: 'block',
       backgroundColor: '#3f51b5',
-      color: 'white'
+      color: 'white',
+      padding: '10px 1rem 0'
+    },
+    submitButton: {
+      marginRight: '1rem'
     }
   })
 )

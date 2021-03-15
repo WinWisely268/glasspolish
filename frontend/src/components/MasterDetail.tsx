@@ -39,7 +39,8 @@ const masterDetailStyles = makeStyles((theme: Theme = useTheme()) => createStyle
       overflowY: 'auto',
       webkitOverflowScrolling: 'touch',
       willChange: 'scroll-position',
-      overscrollBehavior: 'contain'
+      overscrollBehavior: 'contain',
+      padding: '0 3rem 0'
     }
   })
 )
