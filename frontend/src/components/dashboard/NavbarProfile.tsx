@@ -40,22 +40,10 @@ const NavbarProfile: React.FC<NavbarProfileProps> = ({ history }) => {
     'https://encrypted-tbn0.gstatic.com/images?q=tbn%3AANd9GcQm0wMf5sm27bsD0Z7DF9GsoRNjgLltS32iXQ&usqp=CAU'
 
 
-  const {
-    data: avatarData,
-    loading: avatarLoading,
-    error: avatarError,
-    refetch
-  } = useGetProfilePictureQuery({
-    variables: {
-      id: accountId
-    }
-  })
-
   useEffect(() => {
     if (authContext.user !== null) {
       setUserName(authContext.email.split('@')[0])
       setAccountId(authContext.user.getUsername())
-      refetch()
     }
   }, [authContext])
 
@@ -83,48 +71,6 @@ const NavbarProfile: React.FC<NavbarProfileProps> = ({ history }) => {
     setAnchorEl(null)
   }
 
-  const avatarComponent = () => {
-    if (avatarLoading) {
-      return (
-        <div style={{ display: 'flex', justifyContent: 'center' }}>
-          <CircularProgress className={classes.profileAvatar} />
-        </div>
-      )
-    } else if (avatarError) {
-      return (
-        <SnackBar
-          variant='error'
-          message={avatarError.message}
-          setMessage={(msg: React.SetStateAction<string>) => setAvatarErrMsg(msg)}
-        />
-      )
-    } else {
-      if (avatarData?.profile_pictures === undefined) {
-        return <Avatar className={classes.profileAvatar} src={defaultAvatarSrc} />
-      } else {
-        if (avatarData.profile_pictures.length > 0) {
-          let primary: Maybe<string>
-          avatarData.profile_pictures.forEach((p) =>
-            primary = p.primary ? p.picture_url! : avatarData.profile_pictures[0]!.picture_url!
-          )
-          let splitted = primary!.split('/')
-          let fileName = splitted?.pop()
-          let prefix = splitted?.join('/')
-
-          return (
-            <UserAvatar
-              avatarClass={classes.profileAvatar}
-              prefix={prefix as string}
-              fileName={fileName as string}
-            />
-          )
-        } else {
-          return <Avatar className={classes.profileAvatar} src={defaultAvatarSrc} />
-        }
-      }
-    }
-  }
-
   return (
     <div className={cx('headerProfile', classes.headerProfile)}>
       <IconButton
@@ -136,7 +82,6 @@ const NavbarProfile: React.FC<NavbarProfileProps> = ({ history }) => {
         aria-haspopup='true'
         onClick={handleClick}
       >
-        {avatarComponent()}
         <span className={classes.profileName}>{userName}</span>
         <IconArrowDropDown />
       </IconButton>

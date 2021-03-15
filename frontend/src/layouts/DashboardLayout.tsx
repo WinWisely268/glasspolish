@@ -81,7 +81,7 @@ export const useStyles = makeStyles((theme: Theme = useTheme()) =>
       }
     },
     content: {
-      paddingTop: '50px',
+      paddingTop: '3rem',
       height: '100vh',
       flexGrow: 1,
       overflow: 'auto'
@@ -121,11 +121,11 @@ export const useStyles = makeStyles((theme: Theme = useTheme()) =>
     },
     masterUl: {
       padding: '0px',
-      listStyleType: 'none',
+      listStyleType: 'none'
     },
     masterNavLink: {
       display: 'block',
-      padding: '10px 1rem 0',
+      padding: '10px 1rem 0'
     },
     activeMasterNavLink: {
       display: 'block',
@@ -135,6 +135,19 @@ export const useStyles = makeStyles((theme: Theme = useTheme()) =>
     },
     submitButton: {
       marginRight: '1rem'
+    },
+    center: {
+      width: '100%',
+      display: 'flex',
+      alignItems: 'center',
+      justifyContent: 'center'
+    },
+    notFound: {
+      width: '100%',
+      display: 'flex',
+      alignItems: 'center',
+      justifyContent: 'center',
+      height: '100vh',
     }
   })
 )

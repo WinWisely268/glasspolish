@@ -1,6 +1,5 @@
 import React from 'react'
 import Button, { ButtonTypeMap } from '@material-ui/core/Button'
-import TextField from '@material-ui/core/TextField'
 import Dialog from '@material-ui/core/Dialog'
 import DialogActions from '@material-ui/core/DialogActions'
 import DialogContent from '@material-ui/core/DialogContent'
@@ -29,8 +28,8 @@ const FormDialog: React.FC<FormDialogProps> = ({ title = 'New', content, actions
       <Button variant='outlined' color='primary' onClick={handleClickOpen}>
         {title}
       </Button>
-      <Dialog open={open} onClose={handleClose} aria-labelledby='form-dialog-title'>
-        <DialogTitle id='form-dialog-title'>{title}</DialogTitle>
+      <Dialog open={open} onClose={handleClose} aria-labelledby={title}>
+        <DialogTitle id={title}>{title}</DialogTitle>
         <DialogContent>
           {content}
         </DialogContent>

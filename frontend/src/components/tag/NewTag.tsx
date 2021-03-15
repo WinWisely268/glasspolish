@@ -30,6 +30,11 @@ export const TagNew: React.FC<TagNewProps> = ({
     { loading: insertTagLoading, error: insertTagErr }
   ] = useInsertProductTagMutation()
 
+  const [
+    updateTag,
+    { loading: updateTagLoading, error: updateTagError }
+  ] = useUpdateProductTagMutation()
+
   const [values, setValues] = useState<TagDetailsState>({
     id: detailValues.id || v4(),
     name: detailValues.name,
@@ -48,20 +53,34 @@ export const TagNew: React.FC<TagNewProps> = ({
 
   const submitHandler = (e: any) => {
     e.preventDefault()
-    insertTag({
-      variables: {
-        tagId: values.id,
-        name: values.name,
-        description: values.description
-      }
-    }).then((data) => {
-      setValues({
-        ...values
+    if (update) {
+      updateTag({
+        variables: {
+          tagId: values.id,
+          name: values.name,
+          description: values.description
+        }
       })
-      refetchAction()
-    }).catch((e) => {
-      setErrMsg(e.message)
-    })
+        .catch((e) => {
+          setErrMsg(e.message)
+        })
+    } else {
+      insertTag({
+        variables: {
+          tagId: values.id,
+          name: values.name,
+          description: values.description
+        }
+      }).then((data) => {
+        setValues({
+          ...values
+        })
+        refetchAction()
+      }).catch((e) => {
+        setErrMsg(e.message)
+      })
+    }
+
   }
 
   useEffect(() => {
@@ -80,6 +99,11 @@ export const TagNew: React.FC<TagNewProps> = ({
       variant='error'
       message={errMsg}
       setMessage={(message) => setErrMsg(insertTagErr != null ? insertTagErr.message : message)}
+    />
+    <SnackBar
+      variant='error'
+      message={errMsg}
+      setMessage={(message) => setErrMsg(updateTagError != null ? updateTagError.message : message)}
     />
     <form
       autoComplete='off'
@@ -118,7 +142,7 @@ export const TagNew: React.FC<TagNewProps> = ({
       </Grid>
 
       <Box display='flex' justifyContent='space-around' p={4}>
-        {insertTagLoading ? (
+        {insertTagLoading || updateTagLoading ? (
           <CircularProgress size={30} />
         ) : (
           <div>

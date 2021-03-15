@@ -1,12 +1,9 @@
-import React, { useContext, useEffect, useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import SnackBar from '../components/shared/Snackbar'
-import DashboardLayout, { useStyles } from '../layouts/DashboardLayout'
-import { useGetProductTagQuery, useListProductTagsQuery, useInsertProductTagMutation } from '../service/graphql'
+import { useStyles } from '../layouts/DashboardLayout'
+import { useGetProductTagQuery, useListProductTagsQuery } from '../service/graphql'
 import { NavLink, useRouteMatch, useParams, RouteProps } from 'react-router-dom'
-import { Box, Button, Card, CardContent, CardHeader, CircularProgress, Divider, Grid } from '@material-ui/core'
-import { v4 } from 'uuid'
-import { GenericField } from '../components/shared/GenericFormField'
-import { validateName } from '../utilities/validators'
+import { Box, Button, CircularProgress, Typography } from '@material-ui/core'
 import SearchBar from '../components/SearchBar'
 import DialogForm from '../components/shared/DialogForm'
 import { TagNew } from '../components/tag/NewTag'
@@ -52,35 +49,36 @@ const TagPage: React.FC<TagPageProps> = () => {
         message={errMsg}
         setMessage={(message) => setErrMsg(listTagsError != null ? listTagsError.message : message)}
       />
-      <DialogForm title={'Tambah Tag Baru'} content={<TagNew refetchAction={() => listTagsRefetch()} />} />
-      <SearchBar
-        onSubmit={handleSearch}
-        handleChangeQueryString={handleChangeSearchQuery}
-        queryString={queryString}
-      />
-      {listTagsLoading
-        ? <ul className={classes.masterUl}>
-          <CircularProgress className={classes.centerContainer} />
-        </ul>
-        : <ul className={classes.masterUl}>
-          {listTagsData?.product_tags.map((item, idx) => <li key={item.id}>
-            <NavLink exact to={`${path}/detail/${item.id}`} className={classes.masterNavLink}
-                     activeClassName={classes.activeMasterNavLink}>
-              <div>
-                <div className={classes.inner}>
-                  <h2 data-test='ListItemHeading'>
-                    {item.name}
-                  </h2>
-                  <p>
-                    {item.description}
-                  </p>
+      <div className={classes.content}>
+        <DialogForm title={'Tambah Tag Baru'} content={<TagNew refetchAction={() => listTagsRefetch()} />} />
+        <SearchBar
+          onSubmit={handleSearch}
+          handleChangeQueryString={handleChangeSearchQuery}
+          queryString={queryString}
+        />
+        {listTagsLoading
+          ? <ul className={classes.masterUl}>
+            <CircularProgress className={classes.centerContainer} />
+          </ul>
+          : <ul className={classes.masterUl}>
+            {listTagsData?.product_tags.map((item, idx) => <li key={item.id}>
+              <NavLink exact to={`${path}/detail/${item.id}`} className={classes.masterNavLink}
+                       activeClassName={classes.activeMasterNavLink}>
+                <div>
+                  <div className={classes.inner}>
+                    <h2 data-test='ListItemHeading'>
+                      {item.name}
+                    </h2>
+                    <p>
+                      {item.description}
+                    </p>
+                  </div>
                 </div>
-              </div>
-            </NavLink>
-          </li>)}
-        </ul>
-      }
-
+              </NavLink>
+            </li>)}
+          </ul>
+        }
+      </div>
     </React.Fragment>
   )
 }
@@ -96,17 +94,9 @@ interface TagDetailsState {
   updated_at: any,
 }
 
-interface TagNewProps {
-}
-
 export const TagDetails: React.FC<TagDetailsProps> = (props) => {
   const { id } = useParams<{ id: string }>()
   const classes = useStyles()
-  const [
-    upsertTag,
-    { loading: upsertTagLoading, error: upsertTagErr }
-  ] = useInsertProductTagMutation()
-
   const [values, setValues] = useState<TagDetailsState>({
     id: '',
     name: '',
@@ -150,98 +140,43 @@ export const TagDetails: React.FC<TagDetailsProps> = (props) => {
     )
   }, [values])
 
-  const handleChangeName = (val: string) => {
-    setValues({ ...values, name: val })
-  }
-
-  const handleChangeDesc = (val: string) => {
-    setValues({ ...values, description: val })
-  }
-
-  const submitHandler = (e: any) => {
-    e.preventDefault()
-    upsertTag({
-      variables: {
-        tagId: values.id || v4(),
-        name: values.name,
-        description: values.description
-      }
-    }).then((data) => {
-      setValues({
-        ...values
-      })
-    }).catch((e) => {
-      setErrMsg(e.message)
-    })
+  if (id === null || id === undefined) {
+    return <Typography variant={'h4'} className={classes.notFound}>
+      Tidak ada tag yang dipilih
+    </Typography>
   }
 
   return (
     <React.Fragment>
       <SnackBar variant='error' message={errMsg}
                 setMessage={(message) => setErrMsg(getTagError != null ? getTagError.message : message)} />
-      {getTagLoading ? <CircularProgress /> : <div className={classes.content}>
-        <form
-          autoComplete='off'
-          noValidate
-          onSubmit={(e) => submitHandler(e)}
-        >
-          <Grid container spacing={1}>
-            <GenericField
-              inputType='text'
-              placeholderValue={values.name}
-              isRequired={true}
-              setField={handleChangeName}
-              validationFunc={validateName}
-              messages={{
-                id: 'tagName',
-                label: 'Nama Tag',
-                autoComplete: 'false',
-                name: 'TagName',
-                invalidInput: 'Tag Invalid'
-              }}
-            />
-            <GenericField
-              inputType='text'
-              placeholderValue={values.description}
-              isRequired={true}
-              setField={handleChangeDesc}
-              validationFunc={() => true}
-              messages={{
-                id: 'tagDesc',
-                label: 'Deskripsi Tag',
-                autoComplete: 'false',
-                name: 'TagDesc',
-                invalidInput: 'Deskripsi Invalid'
-              }}
-            />
-          </Grid>
+      {getTagLoading ? <CircularProgress className={classes.notFound} /> : <div className={classes.content}>
+        <Box display='flex' justifyContent='flex-end' p={4}>
+          <Button
+            color='secondary'
+            className={classes.submitButton}
+            type='submit'
+            disabled={isButtonDisabled}
+            variant='contained'
+          >
+            Hapus
+          </Button>
+          <DialogForm title={'Edit'} content={<TagNew refetchAction={() => {
+            getTagRefetch()
+          }} update={true}
+                                                      detailValues={{
+                                                        id: values.id,
+                                                        name: values.name,
+                                                        description: values.description
+                                                      }} />} />
+        </Box>
+        <Typography variant={'h4'} className={classes.center}>
+          {values.name}
+        </Typography>
+        <Typography variant='subtitle1' className={classes.center} gutterBottom>
+          {values.description}
+        </Typography>
 
-          <Box display='flex' justifyContent='space-around' p={4}>
-            {upsertTagLoading ? (
-              <CircularProgress size={30} />
-            ) : (
-              <div>
-                <Button
-                  className={classes.submitButton}
-                  color='primary'
-                  type='submit'
-                  disabled={isButtonDisabled}
-                  variant='contained'
-                >
-                  Simpan
-                </Button>
-                <Button
-                  color='secondary'
-                  type='submit'
-                  disabled={isButtonDisabled}
-                  variant='contained'
-                >
-                  Hapus
-                </Button>
-              </div>
-            )}
-          </Box>
-        </form>
       </div>}
     </React.Fragment>
   )
