@@ -98,21 +98,26 @@ export const NewProduct: React.FC<NewProductProps> = ({
 
   const submitNewProduct = (e: any) => {
     e.preventDefault()
-    insertProduct({
-      variables: {
-        sku: values.sku,
-        name: values.name!,
-        sellable: values.sellable,
-        buyPrice: values.buy_price,
-        bestPrice: values.best_price,
-        downlinePrice: values.downline_price,
-        retailPrice: values.retail_price
-      }
-    }).then((data) => {
-      refetchAction()
-    }).catch((e) => {
-      setErrMsg(e.message)
-    })
+    if (!update) {
+      insertProduct({
+        variables: {
+          sku: values.sku,
+          name: values.name!,
+          sellable: values.sellable,
+          buyPrice: values.buy_price,
+          bestPrice: values.best_price,
+          downlinePrice: values.downline_price,
+          retailPrice: values.retail_price
+        }
+      }).then((data) => {
+        refetchAction()
+      }).catch((e) => {
+        setErrMsg(e.message)
+      })
+    } else {
+
+    }
+
   }
 
   return (
