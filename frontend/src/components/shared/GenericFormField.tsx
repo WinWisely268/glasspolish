@@ -1,6 +1,6 @@
 import React, { useState } from 'react'
 import TextField from '@material-ui/core/TextField'
-import { DEBOUNCE_TIME } from '../../utilities/validators'
+import { DEBOUNCE_TIME } from '../../utilities'
 
 export interface GenericFieldProps {
   isOutlined?: boolean

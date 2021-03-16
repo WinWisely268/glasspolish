@@ -38,8 +38,8 @@ const sidebarMenus = [
         hasIcon: false
       },
       {
-        name: 'menu.products.products',
-        link: '/dashboard/products/products',
+        name: 'produk',
+        link: AllRoutesStr.Dashboard.products,
         hasIcon: false
       },
       {

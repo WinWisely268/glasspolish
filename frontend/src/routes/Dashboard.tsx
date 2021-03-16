@@ -10,6 +10,8 @@ import { AllRoutesStr } from './constants'
 import TagPage, { TagDetails } from '../pages/TagPage'
 import { MasterDetail } from '../components/MasterDetail'
 import DashboardLayout from '../layouts/DashboardLayout'
+import UsersPage from '../pages/Users'
+import Products from '../pages/Products'
 
 export interface DashboardProps {
 }
@@ -30,6 +32,15 @@ const DashboardAll: React.FC<DashboardProps> = () => {
                    </DashboardLayout>
                  )}
           />
+          <Route path={AllRoutesStr.Dashboard.users}
+                 render={props => (
+                   <DashboardLayout>
+                     <MasterDetail MasterType={UsersPage} masterProps={{}}
+                                   DetailType={UsersPage} detailProps={{}} />
+                   </DashboardLayout>
+                 )}
+          />
+          <Route exact path={AllRoutesStr.Dashboard.products} component={Products} />
         </Switch>
       </ApolloProvider>
     </React.Fragment>

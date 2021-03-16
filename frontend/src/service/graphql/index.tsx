@@ -178,6 +178,13 @@ export type Accounts_Mutation_Response = {
   returning: Array<Accounts>;
 };
 
+/** input type for inserting object relation for remote table "accounts" */
+export type Accounts_Obj_Rel_Insert_Input = {
+  data: Accounts_Insert_Input;
+  /** on conflict condition */
+  on_conflict?: Maybe<Accounts_On_Conflict>;
+};
+
 /** on conflict condition type for table "accounts" */
 export type Accounts_On_Conflict = {
   constraint: Accounts_Constraint;
@@ -984,6 +991,7 @@ export type Products = {
   created_at: Scalars['timestamptz'];
   downline_price: Scalars['numeric'];
   id: Scalars['uuid'];
+  name?: Maybe<Scalars['String']>;
   /** fetch data from the table: "product_pictures" */
   product_pictures: Array<Product_Pictures>;
   /** fetch aggregated fields from the table: "product_pictures" */
@@ -1096,6 +1104,7 @@ export type Products_Bool_Exp = {
   created_at?: Maybe<Timestamptz_Comparison_Exp>;
   downline_price?: Maybe<Numeric_Comparison_Exp>;
   id?: Maybe<Uuid_Comparison_Exp>;
+  name?: Maybe<String_Comparison_Exp>;
   product_pictures?: Maybe<Product_Pictures_Bool_Exp>;
   product_tag?: Maybe<Product_Tags_Bool_Exp>;
   retail_price?: Maybe<Numeric_Comparison_Exp>;
@@ -1128,6 +1137,7 @@ export type Products_Insert_Input = {
   created_at?: Maybe<Scalars['timestamptz']>;
   downline_price?: Maybe<Scalars['numeric']>;
   id?: Maybe<Scalars['uuid']>;
+  name?: Maybe<Scalars['String']>;
   product_pictures?: Maybe<Product_Pictures_Arr_Rel_Insert_Input>;
   product_tag?: Maybe<Product_Tags_Obj_Rel_Insert_Input>;
   retail_price?: Maybe<Scalars['numeric']>;
@@ -1145,6 +1155,7 @@ export type Products_Max_Fields = {
   created_at?: Maybe<Scalars['timestamptz']>;
   downline_price?: Maybe<Scalars['numeric']>;
   id?: Maybe<Scalars['uuid']>;
+  name?: Maybe<Scalars['String']>;
   retail_price?: Maybe<Scalars['numeric']>;
   sku?: Maybe<Scalars['String']>;
   tag_id?: Maybe<Scalars['uuid']>;
@@ -1158,6 +1169,7 @@ export type Products_Max_Order_By = {
   created_at?: Maybe<Order_By>;
   downline_price?: Maybe<Order_By>;
   id?: Maybe<Order_By>;
+  name?: Maybe<Order_By>;
   retail_price?: Maybe<Order_By>;
   sku?: Maybe<Order_By>;
   tag_id?: Maybe<Order_By>;
@@ -1172,6 +1184,7 @@ export type Products_Min_Fields = {
   created_at?: Maybe<Scalars['timestamptz']>;
   downline_price?: Maybe<Scalars['numeric']>;
   id?: Maybe<Scalars['uuid']>;
+  name?: Maybe<Scalars['String']>;
   retail_price?: Maybe<Scalars['numeric']>;
   sku?: Maybe<Scalars['String']>;
   tag_id?: Maybe<Scalars['uuid']>;
@@ -1185,6 +1198,7 @@ export type Products_Min_Order_By = {
   created_at?: Maybe<Order_By>;
   downline_price?: Maybe<Order_By>;
   id?: Maybe<Order_By>;
+  name?: Maybe<Order_By>;
   retail_price?: Maybe<Order_By>;
   sku?: Maybe<Order_By>;
   tag_id?: Maybe<Order_By>;
@@ -1214,6 +1228,7 @@ export type Products_Order_By = {
   created_at?: Maybe<Order_By>;
   downline_price?: Maybe<Order_By>;
   id?: Maybe<Order_By>;
+  name?: Maybe<Order_By>;
   product_pictures_aggregate?: Maybe<Product_Pictures_Aggregate_Order_By>;
   product_tag?: Maybe<Product_Tags_Order_By>;
   retail_price?: Maybe<Order_By>;
@@ -1241,6 +1256,8 @@ export enum Products_Select_Column {
   /** column name */
   Id = 'id',
   /** column name */
+  Name = 'name',
+  /** column name */
   RetailPrice = 'retail_price',
   /** column name */
   Sellable = 'sellable',
@@ -1259,6 +1276,7 @@ export type Products_Set_Input = {
   created_at?: Maybe<Scalars['timestamptz']>;
   downline_price?: Maybe<Scalars['numeric']>;
   id?: Maybe<Scalars['uuid']>;
+  name?: Maybe<Scalars['String']>;
   retail_price?: Maybe<Scalars['numeric']>;
   sellable?: Maybe<Scalars['Boolean']>;
   sku?: Maybe<Scalars['String']>;
@@ -1346,6 +1364,8 @@ export enum Products_Update_Column {
   DownlinePrice = 'downline_price',
   /** column name */
   Id = 'id',
+  /** column name */
+  Name = 'name',
   /** column name */
   RetailPrice = 'retail_price',
   /** column name */
@@ -1573,6 +1593,8 @@ export enum Profile_Pictures_Update_Column {
 /** columns and relationships of "profiles" */
 export type Profiles = {
   __typename?: 'profiles';
+  /** An object relationship */
+  account: Accounts;
   account_id: Scalars['uuid'];
   created_at: Scalars['timestamptz'];
   locked: Scalars['Boolean'];
@@ -1607,6 +1629,7 @@ export type Profiles_Bool_Exp = {
   _and?: Maybe<Array<Profiles_Bool_Exp>>;
   _not?: Maybe<Profiles_Bool_Exp>;
   _or?: Maybe<Array<Profiles_Bool_Exp>>;
+  account?: Maybe<Accounts_Bool_Exp>;
   account_id?: Maybe<Uuid_Comparison_Exp>;
   created_at?: Maybe<Timestamptz_Comparison_Exp>;
   locked?: Maybe<Boolean_Comparison_Exp>;
@@ -1624,6 +1647,7 @@ export enum Profiles_Constraint {
 
 /** input type for inserting data into table "profiles" */
 export type Profiles_Insert_Input = {
+  account?: Maybe<Accounts_Obj_Rel_Insert_Input>;
   account_id?: Maybe<Scalars['uuid']>;
   created_at?: Maybe<Scalars['timestamptz']>;
   locked?: Maybe<Scalars['Boolean']>;
@@ -1674,6 +1698,7 @@ export type Profiles_On_Conflict = {
 
 /** Ordering options when selecting data from "profiles". */
 export type Profiles_Order_By = {
+  account?: Maybe<Accounts_Order_By>;
   account_id?: Maybe<Order_By>;
   created_at?: Maybe<Order_By>;
   locked?: Maybe<Order_By>;
@@ -2346,6 +2371,25 @@ export type InsertProductTagMutation = (
   )> }
 );
 
+export type InsertProductMutationVariables = Exact<{
+  name: Scalars['String'];
+  retailPrice?: Maybe<Scalars['numeric']>;
+  sellable: Scalars['Boolean'];
+  buyPrice: Scalars['numeric'];
+  bestPrice?: Maybe<Scalars['numeric']>;
+  downlinePrice?: Maybe<Scalars['numeric']>;
+  sku: Scalars['String'];
+}>;
+
+
+export type InsertProductMutation = (
+  { __typename?: 'mutation_root' }
+  & { insert_products_one?: Maybe<(
+    { __typename?: 'products' }
+    & Pick<Products, 'id' | 'name' | 'sku' | 'sellable' | 'buy_price' | 'best_price' | 'downline_price' | 'retail_price' | 'created_at' | 'updated_at'>
+  )> }
+);
+
 export type UpsertProfileMutationVariables = Exact<{
   accountId: Scalars['uuid'];
   name: Scalars['String'];
@@ -2386,6 +2430,28 @@ export type GetProductTagQuery = (
   )> }
 );
 
+export type ListProductsQueryVariables = Exact<{
+  name?: Maybe<Scalars['String']>;
+  createdAt?: Maybe<Scalars['timestamptz']>;
+  limit: Scalars['Int'];
+}>;
+
+
+export type ListProductsQuery = (
+  { __typename?: 'query_root' }
+  & { products: Array<(
+    { __typename?: 'products' }
+    & Pick<Products, 'id' | 'downline_price' | 'created_at' | 'buy_price' | 'best_price' | 'retail_price' | 'sellable' | 'sku' | 'name' | 'updated_at'>
+    & { product_tag?: Maybe<(
+      { __typename?: 'product_tags' }
+      & Pick<Product_Tags, 'id' | 'name'>
+    )>, product_pictures: Array<(
+      { __typename?: 'product_pictures' }
+      & Pick<Product_Pictures, 'id' | 'picture_url' | 'primary'>
+    )> }
+  )> }
+);
+
 export type GetAccountQueryVariables = Exact<{
   id: Scalars['uuid'];
 }>;
@@ -2406,19 +2472,20 @@ export type GetAccountQuery = (
   )> }
 );
 
-export type ListAccountQueryVariables = Exact<{
-  last_login: Scalars['timestamptz'];
+export type ListAccountsQueryVariables = Exact<{
+  name?: Maybe<Scalars['String']>;
+  lastLogin?: Maybe<Scalars['timestamptz']>;
 }>;
 
 
-export type ListAccountQuery = (
+export type ListAccountsQuery = (
   { __typename?: 'query_root' }
   & { accounts: Array<(
     { __typename?: 'accounts' }
     & Pick<Accounts, 'user_id' | 'email' | 'role' | 'last_login'>
     & { profile?: Maybe<(
       { __typename?: 'profiles' }
-      & Pick<Profiles, 'locked' | 'name' | 'created_at' | 'updated_at'>
+      & Pick<Profiles, 'name' | 'locked' | 'created_at' | 'updated_at'>
     )>, profile_pictures: Array<(
       { __typename?: 'profile_pictures' }
       & Pick<Profile_Pictures, 'picture_url' | 'primary'>
@@ -2523,6 +2590,56 @@ export function useInsertProductTagMutation(baseOptions?: Apollo.MutationHookOpt
 export type InsertProductTagMutationHookResult = ReturnType<typeof useInsertProductTagMutation>;
 export type InsertProductTagMutationResult = Apollo.MutationResult<InsertProductTagMutation>;
 export type InsertProductTagMutationOptions = Apollo.BaseMutationOptions<InsertProductTagMutation, InsertProductTagMutationVariables>;
+export const InsertProductDocument = gql`
+    mutation insertProduct($name: String!, $retailPrice: numeric, $sellable: Boolean!, $buyPrice: numeric!, $bestPrice: numeric, $downlinePrice: numeric, $sku: String!) {
+  insert_products_one(
+    object: {name: $name, retail_price: $retailPrice, sellable: $sellable, sku: $sku, best_price: $bestPrice, buy_price: $buyPrice, downline_price: $downlinePrice}
+  ) {
+    id
+    name
+    sku
+    sellable
+    buy_price
+    best_price
+    downline_price
+    retail_price
+    created_at
+    updated_at
+  }
+}
+    `;
+export type InsertProductMutationFn = Apollo.MutationFunction<InsertProductMutation, InsertProductMutationVariables>;
+
+/**
+ * __useInsertProductMutation__
+ *
+ * To run a mutation, you first call `useInsertProductMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useInsertProductMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [insertProductMutation, { data, loading, error }] = useInsertProductMutation({
+ *   variables: {
+ *      name: // value for 'name'
+ *      retailPrice: // value for 'retailPrice'
+ *      sellable: // value for 'sellable'
+ *      buyPrice: // value for 'buyPrice'
+ *      bestPrice: // value for 'bestPrice'
+ *      downlinePrice: // value for 'downlinePrice'
+ *      sku: // value for 'sku'
+ *   },
+ * });
+ */
+export function useInsertProductMutation(baseOptions?: Apollo.MutationHookOptions<InsertProductMutation, InsertProductMutationVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useMutation<InsertProductMutation, InsertProductMutationVariables>(InsertProductDocument, options);
+      }
+export type InsertProductMutationHookResult = ReturnType<typeof useInsertProductMutation>;
+export type InsertProductMutationResult = Apollo.MutationResult<InsertProductMutation>;
+export type InsertProductMutationOptions = Apollo.BaseMutationOptions<InsertProductMutation, InsertProductMutationVariables>;
 export const UpsertProfileDocument = gql`
     mutation upsertProfile($accountId: uuid!, $name: String!) {
   insert_profiles_one(object: {account_id: $accountId, name: $name}) {
@@ -2635,6 +2752,65 @@ export function useGetProductTagLazyQuery(baseOptions?: Apollo.LazyQueryHookOpti
 export type GetProductTagQueryHookResult = ReturnType<typeof useGetProductTagQuery>;
 export type GetProductTagLazyQueryHookResult = ReturnType<typeof useGetProductTagLazyQuery>;
 export type GetProductTagQueryResult = Apollo.QueryResult<GetProductTagQuery, GetProductTagQueryVariables>;
+export const ListProductsDocument = gql`
+    query listProducts($name: String, $createdAt: timestamptz, $limit: Int!) {
+  products(
+    where: {sku: {_ilike: $name}, _or: {created_at: {_gt: $createdAt}}}
+    order_by: {created_at: asc}
+    limit: $limit
+  ) {
+    id
+    downline_price
+    created_at
+    buy_price
+    best_price
+    retail_price
+    sellable
+    sku
+    name
+    updated_at
+    product_tag {
+      id
+      name
+    }
+    product_pictures {
+      id
+      picture_url
+      primary
+    }
+  }
+}
+    `;
+
+/**
+ * __useListProductsQuery__
+ *
+ * To run a query within a React component, call `useListProductsQuery` and pass it any options that fit your needs.
+ * When your component renders, `useListProductsQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useListProductsQuery({
+ *   variables: {
+ *      name: // value for 'name'
+ *      createdAt: // value for 'createdAt'
+ *      limit: // value for 'limit'
+ *   },
+ * });
+ */
+export function useListProductsQuery(baseOptions: Apollo.QueryHookOptions<ListProductsQuery, ListProductsQueryVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useQuery<ListProductsQuery, ListProductsQueryVariables>(ListProductsDocument, options);
+      }
+export function useListProductsLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<ListProductsQuery, ListProductsQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useLazyQuery<ListProductsQuery, ListProductsQueryVariables>(ListProductsDocument, options);
+        }
+export type ListProductsQueryHookResult = ReturnType<typeof useListProductsQuery>;
+export type ListProductsLazyQueryHookResult = ReturnType<typeof useListProductsLazyQuery>;
+export type ListProductsQueryResult = Apollo.QueryResult<ListProductsQuery, ListProductsQueryVariables>;
 export const GetAccountDocument = gql`
     query getAccount($id: uuid!) {
   accounts(where: {user_id: {_eq: $id}}) {
@@ -2682,19 +2858,22 @@ export function useGetAccountLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions
 export type GetAccountQueryHookResult = ReturnType<typeof useGetAccountQuery>;
 export type GetAccountLazyQueryHookResult = ReturnType<typeof useGetAccountLazyQuery>;
 export type GetAccountQueryResult = Apollo.QueryResult<GetAccountQuery, GetAccountQueryVariables>;
-export const ListAccountDocument = gql`
-    query listAccount($last_login: timestamptz!) {
-  accounts(where: {last_login: {_gt: $last_login}}, limit: 10) {
+export const ListAccountsDocument = gql`
+    query listAccounts($name: String, $lastLogin: timestamptz) {
+  accounts(
+    where: {profile: {name: {_ilike: $name}, _or: {account: {last_login: {_gt: $lastLogin}}}}}
+    limit: 10
+  ) {
     user_id
     email
     role
-    last_login
     profile {
-      locked
       name
+      locked
       created_at
       updated_at
     }
+    last_login
     profile_pictures {
       picture_url
       primary
@@ -2704,32 +2883,33 @@ export const ListAccountDocument = gql`
     `;
 
 /**
- * __useListAccountQuery__
+ * __useListAccountsQuery__
  *
- * To run a query within a React component, call `useListAccountQuery` and pass it any options that fit your needs.
- * When your component renders, `useListAccountQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * To run a query within a React component, call `useListAccountsQuery` and pass it any options that fit your needs.
+ * When your component renders, `useListAccountsQuery` returns an object from Apollo Client that contains loading, error, and data properties
  * you can use to render your UI.
  *
  * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
  *
  * @example
- * const { data, loading, error } = useListAccountQuery({
+ * const { data, loading, error } = useListAccountsQuery({
  *   variables: {
- *      last_login: // value for 'last_login'
+ *      name: // value for 'name'
+ *      lastLogin: // value for 'lastLogin'
  *   },
  * });
  */
-export function useListAccountQuery(baseOptions: Apollo.QueryHookOptions<ListAccountQuery, ListAccountQueryVariables>) {
+export function useListAccountsQuery(baseOptions?: Apollo.QueryHookOptions<ListAccountsQuery, ListAccountsQueryVariables>) {
         const options = {...defaultOptions, ...baseOptions}
-        return Apollo.useQuery<ListAccountQuery, ListAccountQueryVariables>(ListAccountDocument, options);
+        return Apollo.useQuery<ListAccountsQuery, ListAccountsQueryVariables>(ListAccountsDocument, options);
       }
-export function useListAccountLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<ListAccountQuery, ListAccountQueryVariables>) {
+export function useListAccountsLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<ListAccountsQuery, ListAccountsQueryVariables>) {
           const options = {...defaultOptions, ...baseOptions}
-          return Apollo.useLazyQuery<ListAccountQuery, ListAccountQueryVariables>(ListAccountDocument, options);
+          return Apollo.useLazyQuery<ListAccountsQuery, ListAccountsQueryVariables>(ListAccountsDocument, options);
         }
-export type ListAccountQueryHookResult = ReturnType<typeof useListAccountQuery>;
-export type ListAccountLazyQueryHookResult = ReturnType<typeof useListAccountLazyQuery>;
-export type ListAccountQueryResult = Apollo.QueryResult<ListAccountQuery, ListAccountQueryVariables>;
+export type ListAccountsQueryHookResult = ReturnType<typeof useListAccountsQuery>;
+export type ListAccountsLazyQueryHookResult = ReturnType<typeof useListAccountsLazyQuery>;
+export type ListAccountsQueryResult = Apollo.QueryResult<ListAccountsQuery, ListAccountsQueryVariables>;
 export const GetProfilePictureDocument = gql`
     query getProfilePicture($id: uuid!) {
   profile_pictures(where: {account_id: {_eq: $id}}) {

@@ -86,9 +86,9 @@ export const TagNew: React.FC<TagNewProps> = ({
   useEffect(() => {
     setButtonDisable(
       !(
-        values.id,
-          values.name,
-          values.description
+        values.id &&
+        values.name &&
+        values.description
       )
     )
   }, [values])

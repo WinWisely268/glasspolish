@@ -1250,6 +1250,45 @@
       },
       {
         "kind": "INPUT_OBJECT",
+        "name": "accounts_obj_rel_insert_input",
+        "description": "input type for inserting object relation for remote table \"accounts\"",
+        "fields": null,
+        "inputFields": [
+          {
+            "name": "data",
+            "description": null,
+            "type": {
+              "kind": "NON_NULL",
+              "name": null,
+              "ofType": {
+                "kind": "INPUT_OBJECT",
+                "name": "accounts_insert_input",
+                "ofType": null
+              }
+            },
+            "defaultValue": null,
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "on_conflict",
+            "description": "on conflict condition",
+            "type": {
+              "kind": "INPUT_OBJECT",
+              "name": "accounts_on_conflict",
+              "ofType": null
+            },
+            "defaultValue": null,
+            "isDeprecated": false,
+            "deprecationReason": null
+          }
+        ],
+        "interfaces": null,
+        "enumValues": null,
+        "possibleTypes": null
+      },
+      {
+        "kind": "INPUT_OBJECT",
         "name": "accounts_on_conflict",
         "description": "on conflict condition type for table \"accounts\"",
         "fields": null,
@@ -5684,6 +5723,18 @@
             "deprecationReason": null
           },
           {
+            "name": "name",
+            "description": null,
+            "args": [],
+            "type": {
+              "kind": "SCALAR",
+              "name": "String",
+              "ofType": null
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
             "name": "product_pictures",
             "description": "fetch data from the table: \"product_pictures\"",
             "args": [
@@ -6635,6 +6686,18 @@
             "deprecationReason": null
           },
           {
+            "name": "name",
+            "description": null,
+            "type": {
+              "kind": "INPUT_OBJECT",
+              "name": "String_comparison_exp",
+              "ofType": null
+            },
+            "defaultValue": null,
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
             "name": "product_pictures",
             "description": null,
             "type": {
@@ -6872,6 +6935,18 @@
             "deprecationReason": null
           },
           {
+            "name": "name",
+            "description": null,
+            "type": {
+              "kind": "SCALAR",
+              "name": "String",
+              "ofType": null
+            },
+            "defaultValue": null,
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
             "name": "product_pictures",
             "description": null,
             "type": {
@@ -7026,6 +7101,18 @@
             "deprecationReason": null
           },
           {
+            "name": "name",
+            "description": null,
+            "args": [],
+            "type": {
+              "kind": "SCALAR",
+              "name": "String",
+              "ofType": null
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
             "name": "retail_price",
             "description": null,
             "args": [],
@@ -7135,6 +7222,18 @@
           },
           {
             "name": "id",
+            "description": null,
+            "type": {
+              "kind": "ENUM",
+              "name": "order_by",
+              "ofType": null
+            },
+            "defaultValue": null,
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "name",
             "description": null,
             "type": {
               "kind": "ENUM",
@@ -7264,6 +7363,18 @@
             "deprecationReason": null
           },
           {
+            "name": "name",
+            "description": null,
+            "args": [],
+            "type": {
+              "kind": "SCALAR",
+              "name": "String",
+              "ofType": null
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
             "name": "retail_price",
             "description": null,
             "args": [],
@@ -7373,6 +7484,18 @@
           },
           {
             "name": "id",
+            "description": null,
+            "type": {
+              "kind": "ENUM",
+              "name": "order_by",
+              "ofType": null
+            },
+            "defaultValue": null,
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "name",
             "description": null,
             "type": {
               "kind": "ENUM",
@@ -7617,6 +7740,18 @@
             "deprecationReason": null
           },
           {
+            "name": "name",
+            "description": null,
+            "type": {
+              "kind": "ENUM",
+              "name": "order_by",
+              "ofType": null
+            },
+            "defaultValue": null,
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
             "name": "product_pictures_aggregate",
             "description": null,
             "type": {
@@ -7771,6 +7906,12 @@
             "deprecationReason": null
           },
           {
+            "name": "name",
+            "description": "column name",
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
             "name": "retail_price",
             "description": "column name",
             "isDeprecated": false,
@@ -7863,6 +8004,18 @@
             "type": {
               "kind": "SCALAR",
               "name": "uuid",
+              "ofType": null
+            },
+            "defaultValue": null,
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "name",
+            "description": null,
+            "type": {
+              "kind": "SCALAR",
+              "name": "String",
               "ofType": null
             },
             "defaultValue": null,
@@ -8440,6 +8593,12 @@
           },
           {
             "name": "id",
+            "description": "column name",
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "name",
             "description": "column name",
             "isDeprecated": false,
             "deprecationReason": null
@@ -9841,6 +10000,22 @@
         "description": "columns and relationships of \"profiles\"",
         "fields": [
           {
+            "name": "account",
+            "description": "An object relationship",
+            "args": [],
+            "type": {
+              "kind": "NON_NULL",
+              "name": null,
+              "ofType": {
+                "kind": "OBJECT",
+                "name": "accounts",
+                "ofType": null
+              }
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
             "name": "account_id",
             "description": null,
             "args": [],
@@ -10116,6 +10291,18 @@
             "deprecationReason": null
           },
           {
+            "name": "account",
+            "description": null,
+            "type": {
+              "kind": "INPUT_OBJECT",
+              "name": "accounts_bool_exp",
+              "ofType": null
+            },
+            "defaultValue": null,
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
             "name": "account_id",
             "description": null,
             "type": {
@@ -10209,6 +10396,18 @@
         "description": "input type for inserting data into table \"profiles\"",
         "fields": null,
         "inputFields": [
+          {
+            "name": "account",
+            "description": null,
+            "type": {
+              "kind": "INPUT_OBJECT",
+              "name": "accounts_obj_rel_insert_input",
+              "ofType": null
+            },
+            "defaultValue": null,
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
           {
             "name": "account_id",
             "description": null,
@@ -10551,6 +10750,18 @@
         "description": "Ordering options when selecting data from \"profiles\".",
         "fields": null,
         "inputFields": [
+          {
+            "name": "account",
+            "description": null,
+            "type": {
+              "kind": "INPUT_OBJECT",
+              "name": "accounts_order_by",
+              "ofType": null
+            },
+            "defaultValue": null,
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
           {
             "name": "account_id",
             "description": null,

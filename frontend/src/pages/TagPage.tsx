@@ -5,8 +5,10 @@ import { useGetProductTagQuery, useListProductTagsQuery } from '../service/graph
 import { NavLink, useRouteMatch, useParams, RouteProps } from 'react-router-dom'
 import { Box, Button, CircularProgress, Typography } from '@material-ui/core'
 import SearchBar from '../components/SearchBar'
-import DialogForm from '../components/shared/DialogForm'
+import { ActionButton } from '../components/shared/DialogForm'
 import { TagNew } from '../components/tag/NewTag'
+import AddIcon from '@material-ui/icons/Add'
+import EditIcon from '@material-ui/icons/Edit'
 
 export interface TagPageProps {
 }
@@ -50,7 +52,10 @@ const TagPage: React.FC<TagPageProps> = () => {
         setMessage={(message) => setErrMsg(listTagsError != null ? listTagsError.message : message)}
       />
       <div className={classes.content}>
-        <DialogForm title={'Tambah Tag Baru'} content={<TagNew refetchAction={() => listTagsRefetch()} />} />
+        <ActionButton
+          title={'Tambah Tag Baru'}
+          content={<TagNew refetchAction={() => listTagsRefetch()} />}
+          icon={<AddIcon />} />
         <SearchBar
           onSubmit={handleSearch}
           handleChangeQueryString={handleChangeSearchQuery}
@@ -161,14 +166,14 @@ export const TagDetails: React.FC<TagDetailsProps> = (props) => {
           >
             Hapus
           </Button>
-          <DialogForm title={'Edit'} content={<TagNew refetchAction={() => {
+          <ActionButton title={'Edit'} content={<TagNew refetchAction={() => {
             getTagRefetch()
           }} update={true}
-                                                      detailValues={{
-                                                        id: values.id,
-                                                        name: values.name,
-                                                        description: values.description
-                                                      }} />} />
+                                                        detailValues={{
+                                                          id: values.id,
+                                                          name: values.name,
+                                                          description: values.description
+                                                        }} />} icon={<EditIcon />} />
         </Box>
         <Typography variant={'h4'} className={classes.center}>
           {values.name}
