@@ -14,7 +14,7 @@ import { useUpsertProfileMutation, Profiles } from '../../service/graphql'
 import { GenericField } from '../shared/GenericFormField'
 import {
   validateName
-} from '../../utilities/validators'
+} from '../../utilities'
 import SnackBar from '../shared/Snackbar'
 
 const useStyles = makeStyles(() => ({

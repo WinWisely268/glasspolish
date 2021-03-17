@@ -5,7 +5,6 @@ import { Link } from 'react-router-dom'
 
 import { makeStyles } from '@material-ui/core/styles'
 import IconButton from '@material-ui/core/IconButton'
-import Avatar from '@material-ui/core/Avatar'
 import Menu from '@material-ui/core/Menu'
 import MenuItem from '@material-ui/core/MenuItem'
 import ListItemText from '@material-ui/core/ListItemText'
@@ -19,10 +18,6 @@ import IconLogout from '@material-ui/icons/ExitToApp'
 import { AuthContext } from '../../providers/AuthProvider'
 import * as H from 'history'
 import { AllRoutesStr } from '../../routes/constants'
-import UserAvatar from './UserAvatar'
-import { Maybe, useGetProfilePictureQuery } from '../../service/graphql'
-import { CircularProgress } from '@material-ui/core'
-import SnackBar from '../shared/Snackbar'
 
 interface NavbarProfileProps {
   history: H.History<H.LocationState>
@@ -34,11 +29,6 @@ const NavbarProfile: React.FC<NavbarProfileProps> = ({ history }) => {
   const [userName, setUserName] = useState<string>()
   const authContext = useContext(AuthContext)
   const [accountId, setAccountId] = useState<string>('')
-
-  const [avatarErrMsg, setAvatarErrMsg] = useState('')
-  const defaultAvatarSrc =
-    'https://encrypted-tbn0.gstatic.com/images?q=tbn%3AANd9GcQm0wMf5sm27bsD0Z7DF9GsoRNjgLltS32iXQ&usqp=CAU'
-
 
   useEffect(() => {
     if (authContext.user !== null) {

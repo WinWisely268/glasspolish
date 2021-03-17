@@ -1,38 +1,53 @@
-import React from 'react';
-import TextField from '@material-ui/core/TextField';
-import Autocomplete from '@material-ui/lab/Autocomplete';
+import React, { PropsWithChildren, ReactElement } from 'react'
+import TextField from '@material-ui/core/TextField'
+import Autocomplete from '@material-ui/lab/Autocomplete'
+import { CircularProgress } from '@material-ui/core'
 
-export interface AutoCompleteFieldProps {
-
+interface HasIdAndName {
+  id: string
+  name: string
 }
 
-export const AutoCompleteField : React.FC<AutoCompleteFieldProps> =  () => {
-  
+export interface AutoCompleteFieldProps<T extends HasIdAndName> {
+  values: T[] | undefined
+  setSelected: Function
+  label: string
+}
+
+export function AutoCompleteField<T extends HasIdAndName>(props: PropsWithChildren<AutoCompleteFieldProps<T>>): ReactElement {
+  const [open, setOpen] = React.useState(false)
+  const defaultValues: T[] = []
+  const loading = props.values === undefined || props.values.length === 0
+
   return (
-    <div style={{ width: 300 }}>
-      <Autocomplete
-        id="free-solo-demo"
-        freeSolo
-        options={top100Films.map((option) => option.title)}
-        renderInput={(params) => (
-          <TextField {...params} label="freeSolo" margin="normal" variant="outlined" />
-        )}
-      />
-      <Autocomplete
-        freeSolo
-        id="free-solo-2-demo"
-        disableClearable
-        options={top100Films.map((option) => option.title)}
-        renderInput={(params) => (
-          <TextField
-            {...params}
-            label="Search input"
-            margin="normal"
-            variant="outlined"
-            InputProps={{ ...params.InputProps, type: 'search' }}
-          />
-        )}
-      />
-    </div>
-  );
+    <Autocomplete
+      id={props.label}
+      open={open}
+      onOpen={() => setOpen(true)}
+      onClose={() => setOpen(false)}
+      getOptionSelected={(option, value) => {
+        return option.id === value.id
+      }}
+      onChange={((event, value) => value !== null ? props.setSelected(value.id) : '')}
+      getOptionLabel={(option) => option.name}
+      options={props.values !== undefined ? props.values : defaultValues}
+      loading={loading}
+      renderInput={(params) => (
+        <TextField
+          {...params}
+          label={props.label}
+          variant={'outlined'}
+          InputProps={{
+            ...params.InputProps,
+            endAdornment: (
+              <React.Fragment>
+                {loading ? <CircularProgress color='inherit' size={20} /> : null}
+                {params.InputProps.endAdornment}
+              </React.Fragment>
+            )
+          }}
+        />
+      )}
+    />
+  )
 }

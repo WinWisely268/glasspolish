@@ -3,19 +3,16 @@ import {
   CardContent,
   Typography,
   Box,
-  Avatar,
   CardActions,
-  Divider,
-  CircularProgress
+  Divider
 } from '@material-ui/core'
 import { makeStyles } from '@material-ui/styles'
 import cx from 'classnames'
 import React, { useState } from 'react'
-import { useGetProfilePictureQuery, Profiles, Maybe } from '../../service/graphql'
-import SnackBar from '../shared/Snackbar'
+import { useGetProfilePictureQuery, Profiles } from '../../service/graphql'
 import UploadButton from '../dashboard/UploadButton'
-import UserAvatar from '../dashboard/UserAvatar'
 import { v4, parse as uuidParse, stringify as uuidStrfy } from 'uuid'
+import AvatarComponent from '../Avatar'
 
 export interface UserProfileDisplayProps {
   profile: Pick<Profiles,
@@ -54,56 +51,13 @@ const UserProfileDisplay: React.FC<UserProfileDisplayProps> = ({
     }
   })
   const [avatarErrMsg, setAvatarErrMsg] = useState('')
-  const defaultAvatarSrc =
-    'https://encrypted-tbn0.gstatic.com/images?q=tbn%3AANd9GcQm0wMf5sm27bsD0Z7DF9GsoRNjgLltS32iXQ&usqp=CAU'
-
-  const avatarComponent = () => {
-    if (avatarLoading) {
-      return (
-        <div style={{ display: 'flex', justifyContent: 'center' }}>
-          <CircularProgress className={classes.avatar} />
-        </div>
-      )
-    } else if (avatarError) {
-      return (
-        <SnackBar
-          variant='error'
-          message={avatarErrMsg}
-          setMessage={(msg: React.SetStateAction<string>) => setAvatarErrMsg(msg)}
-        />
-      )
-    } else {
-      if (avatarData?.profile_pictures === undefined) {
-        return <Avatar className={classes.avatar} src={defaultAvatarSrc} />
-      } else {
-        if (avatarData.profile_pictures.length > 0) {
-          let primary: Maybe<string>
-          avatarData.profile_pictures.forEach((p) =>
-            primary = p.primary ? p.picture_url! : avatarData.profile_pictures[0]!.picture_url!
-          )
-          let splitted = primary!.split('/')
-          let fileName = splitted?.pop()
-          let prefix = splitted?.join('/')
-
-          return (
-            <UserAvatar
-              avatarClass={classes.avatar}
-              prefix={prefix as string}
-              fileName={fileName as string}
-            />
-          )
-        } else {
-          return <Avatar className={classes.avatar} src={defaultAvatarSrc} />
-        }
-      }
-    }
-  }
 
   return (
     <Card className={cx(classes.root)}>
       <CardContent>
         <Box alignItems='center' display='flex' flexDirection='column'>
-          {avatarComponent()}
+          <AvatarComponent loading={avatarLoading} error={avatarError} setError={setAvatarErrMsg}
+                           picture_urls={avatarData?.profile_pictures} avatarClass={classes.avatar} />
           <Typography color='textPrimary' gutterBottom variant='h6'>
             {profile.name}
           </Typography>
@@ -119,6 +73,7 @@ const UserProfileDisplay: React.FC<UserProfileDisplayProps> = ({
             onUploadDone={() => refetch()}
             accountId={accountUuidStrfied}
             tableName='profile_pictures'
+            tablePrimaryField='account_id'
             tableFieldName='picture_url'
             id={avatarData.profile_pictures[0].id}
             uploadMetadata={{ width: 300, height: 300 }}
@@ -130,6 +85,7 @@ const UserProfileDisplay: React.FC<UserProfileDisplayProps> = ({
             id={v4().toString()}
             tableName='profile_pictures'
             tableFieldName='picture_url'
+            tablePrimaryField='account_id'
             uploadMetadata={{ width: 300, height: 300 }}
           />
         )}

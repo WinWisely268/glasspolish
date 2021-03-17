@@ -19,11 +19,11 @@ const (
 	}
 `
 	QueryTemplate = `
-	mutation($id: uuid!, ${{ .TableFieldName | toCamelCase }}: String!, $accountId: uuid! ){
+	mutation($id: uuid!, ${{ .TableFieldName | toCamelCase }}: String!, $primaryId: uuid! ){
 		insert_{{.TableName}}_one(
 			object: { id: $id, 
 			  		{{.TableFieldName}}: ${{.TableFieldName | toCamelCase }}, 
-			  		account_id: $accountId,
+			  		{{ .TablePrimaryField }}: $primaryId,
 					primary: false,
 			},
 		) {

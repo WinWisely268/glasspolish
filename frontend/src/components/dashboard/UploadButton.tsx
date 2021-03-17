@@ -15,6 +15,7 @@ export interface UploadButtonProps {
   id: string
   tableName: string
   tableFieldName: string
+  tablePrimaryField: string
   uploadMetadata: UploadMetadata | null
   onUploadDone: Function
 }
@@ -38,6 +39,7 @@ const UploadButton: React.FC<UploadButtonProps> = ({
                                                      id,
                                                      tableName,
                                                      tableFieldName,
+                                                     tablePrimaryField,
                                                      uploadMetadata,
                                                      onUploadDone
                                                    }) => {
@@ -52,7 +54,8 @@ const UploadButton: React.FC<UploadButtonProps> = ({
     height: uploadMetadata?.height,
     tableData: {
       tableField: tableFieldName,
-      tableName: tableName
+      tableName: tableName,
+      tablePrimaryField: tablePrimaryField
     },
     onError: (e: any) => setErrMsg(e),
     onUploadReady: () => onUploadDone(),

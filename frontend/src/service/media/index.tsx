@@ -115,6 +115,7 @@ export interface s3UploadForm {
   setIsUploading: React.Dispatch<React.SetStateAction<boolean>>
   onError: Function
   tableData: prefixData
+  maxFiles?: number
 }
 
 export interface presignedForm {
@@ -129,6 +130,7 @@ export interface presignedForm {
 interface prefixData {
   tableName: string
   tableField: string
+  tablePrimaryField: string
 }
 
 export const useS3Upload = ({
@@ -141,6 +143,7 @@ export const useS3Upload = ({
                               isUploading,
                               setIsUploading,
                               tableData,
+                              maxFiles = 1,
                               onError
                             }: s3UploadForm) => {
   let presignedUrl: string | undefined
@@ -180,6 +183,7 @@ export const useS3Upload = ({
       tableData.tableName,
       tblRecordId as string,
       tableData.tableField,
+      tableData.tablePrimaryField,
       UTCseconds.toString()
     ]
     return prefixArr.join('/')
@@ -227,7 +231,7 @@ export const useS3Upload = ({
   return useDropzone({
     accept: 'image/*',
     disabled: isUploading,
-    maxFiles: 1,
+    maxFiles: maxFiles,
     onDrop: handleDrop
   })
 }

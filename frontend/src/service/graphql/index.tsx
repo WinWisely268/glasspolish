@@ -2379,6 +2379,7 @@ export type InsertProductMutationVariables = Exact<{
   bestPrice?: Maybe<Scalars['numeric']>;
   downlinePrice?: Maybe<Scalars['numeric']>;
   sku: Scalars['String'];
+  tagId?: Maybe<Scalars['uuid']>;
 }>;
 
 
@@ -2591,9 +2592,9 @@ export type InsertProductTagMutationHookResult = ReturnType<typeof useInsertProd
 export type InsertProductTagMutationResult = Apollo.MutationResult<InsertProductTagMutation>;
 export type InsertProductTagMutationOptions = Apollo.BaseMutationOptions<InsertProductTagMutation, InsertProductTagMutationVariables>;
 export const InsertProductDocument = gql`
-    mutation insertProduct($name: String!, $retailPrice: numeric, $sellable: Boolean!, $buyPrice: numeric!, $bestPrice: numeric, $downlinePrice: numeric, $sku: String!) {
+    mutation insertProduct($name: String!, $retailPrice: numeric, $sellable: Boolean!, $buyPrice: numeric!, $bestPrice: numeric, $downlinePrice: numeric, $sku: String!, $tagId: uuid) {
   insert_products_one(
-    object: {name: $name, retail_price: $retailPrice, sellable: $sellable, sku: $sku, best_price: $bestPrice, buy_price: $buyPrice, downline_price: $downlinePrice}
+    object: {name: $name, retail_price: $retailPrice, sellable: $sellable, sku: $sku, best_price: $bestPrice, buy_price: $buyPrice, downline_price: $downlinePrice, tag_id: $tagId}
   ) {
     id
     name
@@ -2630,6 +2631,7 @@ export type InsertProductMutationFn = Apollo.MutationFunction<InsertProductMutat
  *      bestPrice: // value for 'bestPrice'
  *      downlinePrice: // value for 'downlinePrice'
  *      sku: // value for 'sku'
+ *      tagId: // value for 'tagId'
  *   },
  * });
  */

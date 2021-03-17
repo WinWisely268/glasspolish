@@ -1,4 +1,4 @@
-import { CircularProgress, Typography } from '@material-ui/core'
+import { CircularProgress } from '@material-ui/core'
 import { CellProps, TableInstance } from 'react-table'
 import { Table } from '../components/table'
 import React, { useCallback, useState } from 'react'

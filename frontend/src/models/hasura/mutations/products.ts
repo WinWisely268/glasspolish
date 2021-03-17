@@ -8,7 +8,8 @@ export const INSERT_PRODUCT = gql`
         $buyPrice: numeric!,
         $bestPrice: numeric,
         $downlinePrice: numeric,
-        $sku: String!
+        $sku: String!,
+        $tagId: uuid
     ) {
         insert_products_one(
             object:
@@ -19,7 +20,8 @@ export const INSERT_PRODUCT = gql`
                 sku: $sku,
                 best_price: $bestPrice,
                 buy_price: $buyPrice,
-                downline_price: $downlinePrice
+                downline_price: $downlinePrice,
+                tag_id: $tagId
             }
         )
         {

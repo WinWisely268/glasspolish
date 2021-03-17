@@ -6,6 +6,7 @@ import { useInsertProductMutation, useListProductTagsQuery } from '../../service
 import SnackBar from '../shared/Snackbar'
 import { GenericField } from '../shared/GenericFormField'
 import { Box, Button, Checkbox, CircularProgress, FormControlLabel, Grid } from '@material-ui/core'
+import { AutoCompleteField } from '../shared/AutoCompleteField'
 
 interface NewProductProps {
   existing?: ProductQueryResult
@@ -50,7 +51,7 @@ export const NewProduct: React.FC<NewProductProps> = ({
       }
     ],
     product_tag: {
-      id: v4(),
+      id: '',
       name: ''
     }
   })
@@ -84,6 +85,11 @@ export const NewProduct: React.FC<NewProductProps> = ({
     setValues({ ...values, sellable: checked })
   }
 
+  const handleChangeTagId = (val: string) => {
+    console.log(`TagID: ${val}`)
+    setValues({ ...values, product_tag: { id: val, name: '' } })
+  }
+
   useEffect(() => {
     setButtonDisable(
       !(
@@ -91,7 +97,7 @@ export const NewProduct: React.FC<NewProductProps> = ({
         values.name &&
         values.sku &&
         values.buy_price &&
-        values.sellable
+        values.product_tag!.id
       )
     )
   }, [values])
@@ -107,7 +113,8 @@ export const NewProduct: React.FC<NewProductProps> = ({
           buyPrice: values.buy_price,
           bestPrice: values.best_price,
           downlinePrice: values.downline_price,
-          retailPrice: values.retail_price
+          retailPrice: values.retail_price,
+          tagId: values.product_tag!.id
         }
       }).then((data) => {
         refetchAction()
@@ -173,7 +180,7 @@ export const NewProduct: React.FC<NewProductProps> = ({
         />
         <GenericField
           inputType='number'
-          placeholderValue={values.buy_price}
+          placeholderValue={values.buy_price.toString()}
           isRequired={true}
           setField={handleChangeBuyPrice}
           validationFunc={(s) => Number(s) > 0}
@@ -187,7 +194,7 @@ export const NewProduct: React.FC<NewProductProps> = ({
         />
         <GenericField
           inputType='number'
-          placeholderValue={values.best_price}
+          placeholderValue={values.best_price.toString()}
           isRequired={false}
           setField={handleChangeBestPrice}
           validationFunc={(s) => Number(s) > 0}
@@ -201,7 +208,7 @@ export const NewProduct: React.FC<NewProductProps> = ({
         />
         <GenericField
           inputType='number'
-          placeholderValue={values.downline_price}
+          placeholderValue={values.downline_price.toString()}
           isRequired={false}
           setField={handleChangeDownlinePrice}
           validationFunc={(s) => Number(s) > 0}
@@ -215,7 +222,7 @@ export const NewProduct: React.FC<NewProductProps> = ({
         />
         <GenericField
           inputType='number'
-          placeholderValue={values.retail_price}
+          placeholderValue={values.retail_price.toString()}
           isRequired={false}
           setField={handleChangeRetailPrice}
           validationFunc={(s) => Number(s) > 0}
@@ -227,6 +234,8 @@ export const NewProduct: React.FC<NewProductProps> = ({
             invalidInput: 'Harga Invalid'
           }}
         />
+        <AutoCompleteField values={listTagsData?.product_tags} setSelected={handleChangeTagId}
+                           label={'Pilih Tag'} />
         <Box display='flex' justifyContent='space-around' p={4}>
           {insertProductLoading ? (
             <CircularProgress size={30} />
