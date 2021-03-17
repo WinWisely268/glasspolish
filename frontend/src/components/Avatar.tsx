@@ -1,11 +1,12 @@
 import React, { PropsWithChildren, ReactElement } from 'react'
 import { ApolloError } from '@apollo/client'
-import { Avatar, CircularProgress } from '@material-ui/core'
+import { Avatar, CircularProgress, Grid } from '@material-ui/core'
 import SnackBar from './shared/Snackbar'
 import UserAvatar from './dashboard/UserAvatar'
+import { Maybe } from '../service/graphql'
 
 interface HasPictureUrl {
-  picture_url: string
+  picture_url?: Maybe<String> | undefined
 }
 
 export interface AvatarComponentProps<T extends HasPictureUrl> {
@@ -38,18 +39,20 @@ export default function AvatarComponent<T extends HasPictureUrl>(props: PropsWit
         return <Avatar className={props.avatarClass} src={defaultAvatarSrc} />
       } else {
         if (props.picture_urls.length > 0) {
-          return (<div>
+          const ln = props.picture_urls.length == 1 ? 12 : 6
+          return (<div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center'}}>
             {props.picture_urls.map((p) => {
-              let splitted = p.picture_url.split('/')
+              let splitted = p.picture_url?.split('/')
               let fileName = splitted?.pop()
               let prefix = splitted?.join('/')
               return (
-                <UserAvatar key={prefix} prefix={prefix as string} fileName={fileName as string}
-                            avatarClass={props.avatarClass} />
+                // <Grid item md={ln} xs={12}>
+                  <UserAvatar key={prefix} prefix={prefix as string} fileName={fileName as string}
+                              avatarClass={props.avatarClass} />
+                // </Grid>
               )
             })}
           </div>)
-
         } else {
           return <Avatar className={props.avatarClass} src={defaultAvatarSrc} />
         }

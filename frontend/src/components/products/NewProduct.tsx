@@ -7,6 +7,8 @@ import SnackBar from '../shared/Snackbar'
 import { GenericField } from '../shared/GenericFormField'
 import { Box, Button, Checkbox, CircularProgress, FormControlLabel, Grid } from '@material-ui/core'
 import { AutoCompleteField } from '../shared/AutoCompleteField'
+import AvatarComponent from '../Avatar'
+import UploadButton from '../dashboard/UploadButton'
 
 interface NewProductProps {
   existing?: ProductQueryResult
@@ -90,6 +92,8 @@ export const NewProduct: React.FC<NewProductProps> = ({
     setValues({ ...values, product_tag: { id: val, name: '' } })
   }
 
+  const [avatarErr, setAvatarErr] = useState<string>('')
+
   useEffect(() => {
     setButtonDisable(
       !(
@@ -134,6 +138,12 @@ export const NewProduct: React.FC<NewProductProps> = ({
         message={errMsg}
         setMessage={(message) => setErrMsg(insertProductErr != null ? insertProductErr.message : message)}
       />
+      <AvatarComponent loading={false} error={undefined} setError={setAvatarErr} picture_urls={values.product_pictures}
+                       avatarClass={classes.avatar} />
+      <UploadButton accountId={values.id} id={v4().toString()} tableName={'product_pictures'}
+                    tableFieldName={'picture_url'} tablePrimaryField={'product_id'}
+                    uploadMetadata={{ width: 300, height: 300 }}
+                    onUploadDone={refetchAction} />
       <form
         autoComplete={'off'}
         noValidate
@@ -254,6 +264,7 @@ export const NewProduct: React.FC<NewProductProps> = ({
           )}
         </Box>
       </form>
+
     </React.Fragment>
   )
 

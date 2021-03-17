@@ -148,6 +148,10 @@ export const useStyles = makeStyles((theme: Theme = useTheme()) =>
       alignItems: 'center',
       justifyContent: 'center',
       height: '100vh',
+    },
+    avatar: {
+      height: 80,
+      width: 80,
     }
   })
 )
