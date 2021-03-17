@@ -2,7 +2,7 @@ import React, { ChangeEvent, useEffect, useState } from 'react'
 import { ProductQueryResult } from '../../types/products'
 import { v4 } from 'uuid'
 import { useStyles } from '../../layouts/DashboardLayout'
-import { useInsertProductMutation, useListProductTagsQuery } from '../../service/graphql'
+import { useInsertProductMutation, useListProductTagsQuery, useUpdateProductMutation } from '../../service/graphql'
 import SnackBar from '../shared/Snackbar'
 import { GenericField } from '../shared/GenericFormField'
 import { Box, Button, Checkbox, CircularProgress, FormControlLabel, Grid } from '@material-ui/core'
@@ -23,6 +23,7 @@ export const NewProduct: React.FC<NewProductProps> = ({
                                                       }) => {
   const classes = useStyles()
   const [insertProduct, { loading: insertProductLoading, error: insertProductErr }] = useInsertProductMutation()
+  const [updateProduct, { loading: updateProductLoading, error: updateProductErr }] = useUpdateProductMutation()
   const [queryString, setQueryString] = useState<string>('%')
   const {
     data: listTagsData,
@@ -95,6 +96,7 @@ export const NewProduct: React.FC<NewProductProps> = ({
   const [avatarErr, setAvatarErr] = useState<string>('')
 
   useEffect(() => {
+    console.log(`tag id: ${values.product_tag?.id} tag name: ${values.product_tag?.name}`)
     setButtonDisable(
       !(
         values.id &&
@@ -126,7 +128,23 @@ export const NewProduct: React.FC<NewProductProps> = ({
         setErrMsg(e.message)
       })
     } else {
-
+      updateProduct({
+        variables: {
+          id: values.id,
+          sku: values.sku,
+          name: values.name!,
+          sellable: values.sellable,
+          buyPrice: values.buy_price,
+          bestPrice: values.best_price,
+          downlinePrice: values.downline_price,
+          retailPrice: values.retail_price,
+          tagId: values.product_tag!.id
+        }
+      }).then((data) => {
+        refetchAction()
+      }).catch((e) => {
+        setErrMsg(e.message)
+      })
     }
 
   }
@@ -137,6 +155,11 @@ export const NewProduct: React.FC<NewProductProps> = ({
         variant='error'
         message={errMsg}
         setMessage={(message) => setErrMsg(insertProductErr != null ? insertProductErr.message : message)}
+      />
+      <SnackBar
+        variant='error'
+        message={errMsg}
+        setMessage={(message) => setErrMsg(updateProductErr != null ? updateProductErr.message : message)}
       />
       <AvatarComponent loading={false} error={undefined} setError={setAvatarErr} picture_urls={values.product_pictures}
                        avatarClass={classes.avatar} />
@@ -245,7 +268,7 @@ export const NewProduct: React.FC<NewProductProps> = ({
           }}
         />
         <AutoCompleteField values={listTagsData?.product_tags} setSelected={handleChangeTagId}
-                           label={'Pilih Tag'} />
+                           label={'Pilih Tag'} defaultValue={values.product_tag?.id} />
         <Box display='flex' justifyContent='space-around' p={4}>
           {insertProductLoading ? (
             <CircularProgress size={30} />

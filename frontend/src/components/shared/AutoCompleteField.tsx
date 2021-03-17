@@ -9,6 +9,7 @@ interface HasIdAndName {
 }
 
 export interface AutoCompleteFieldProps<T extends HasIdAndName> {
+  defaultValue?: T
   values: T[] | undefined
   setSelected: Function
   label: string
@@ -28,6 +29,7 @@ export function AutoCompleteField<T extends HasIdAndName>(props: PropsWithChildr
       getOptionSelected={(option, value) => {
         return option.id === value.id
       }}
+      defaultValue={props.defaultValue !== undefined ? props.defaultValue : { id: '', name: '' }}
       onChange={((event, value) => value !== null ? props.setSelected(value.id) : '')}
       getOptionLabel={(option) => option.name}
       options={props.values !== undefined ? props.values : defaultValues}

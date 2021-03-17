@@ -9,6 +9,7 @@ import { NumberRangeColumnFilter } from '../utilities'
 import SnackBar from '../components/shared/Snackbar'
 import DialogForm from '../components/shared/DialogForm'
 import { NewProduct } from '../components/products/NewProduct'
+import DeleteProduct, { DeleteProductActions } from '../components/products/DeleteProduct'
 
 const columns = [
   {
@@ -79,6 +80,7 @@ const ProductsPage: React.FC = () => {
   const [limit, setLimit] = useState<number>(10)
   const [errMsg, setErrMsg] = useState('')
   const [selected, setSelected] = useState<ProductQueryResult | undefined>(undefined)
+  const [toBeDeleted, setDeleted] = useState<string[] | undefined>([])
   const {
     data: listProductsData,
     loading,
@@ -91,8 +93,11 @@ const ProductsPage: React.FC = () => {
       limit: limit
     }
   })
+
+
   const [isEditDialogOpen, setEditDialogOpen] = useState(false)
   const [isAddDialogOpen, setAddDialogOpen] = useState(false)
+  const [isDeleteDialogOpen, setDeleteDialogOpen] = useState(false)
 
   const handleEditClick = useCallback((i: TableInstance<ProductQueryResult>) => () => {
     if (i !== undefined) {
@@ -105,31 +110,16 @@ const ProductsPage: React.FC = () => {
     setAddDialogOpen(!isAddDialogOpen)
   }, [isAddDialogOpen])
 
-  const handleSearch = () => {
-    if (queryString !== '' && queryString.length > 2) {
-      setTimeout(() => {
-        refetch().catch((e) => {
-          setErrMsg(e.message)
-        })
-      }, 300)
+  const handleDeleteClick = useCallback((i: TableInstance<ProductQueryResult>) => () => {
+    if (i !== undefined) {
+      let rows: string[] = []
+      i.selectedFlatRows.forEach((p) => {
+        rows.push(p.original.id)
+      })
+      setDeleted(rows)
     }
-  }
-
-  const handleChangeSearchQuery = (s: string) => {
-    if (s.length > 2) {
-      setQueryString('%' + s + '%')
-    }
-  }
-
-  const dummy = useCallback(
-    (instance: TableInstance<ProductQueryResult>) => () => {
-      console.log(
-        'Selected',
-        instance.selectedFlatRows.map((v) => `'${v}'`)
-      )
-    },
-    []
-  )
+    setDeleteDialogOpen(!isDeleteDialogOpen)
+  }, [isDeleteDialogOpen])
 
   return (
     <DashboardLayout>
@@ -145,7 +135,7 @@ const ProductsPage: React.FC = () => {
           data={listProductsData!.products}
           onAdd={handleAddClick}
           onEdit={handleEditClick}
-          onDelete={dummy}
+          onDelete={handleDeleteClick}
         />
       }
       <DialogForm title={'Edit'} content={<NewProduct existing={selected!} update={true} refetchAction={refetch} />}
@@ -153,6 +143,9 @@ const ProductsPage: React.FC = () => {
                   onClose={handleEditClick} />
       <DialogForm title={'Produk Baru'} content={<NewProduct refetchAction={refetch} />} open={isAddDialogOpen}
                   onClose={handleAddClick} />
+      <DialogForm title={'Hapus'} content={<DeleteProduct ids={toBeDeleted} refetchAction={refetch} />}
+                  open={isDeleteDialogOpen} onClose={handleDeleteClick}
+                  actions={<DeleteProductActions ids={toBeDeleted} refetchAction={refetch} />} />
     </DashboardLayout>
   )
 }

@@ -1,4 +1,4 @@
-import gql from 'graphql-tag'
+import {gql } from '@apollo/client'
 
 export const LIST_PRODUCTS = gql`
     query listProducts($name: String, $createdAt: timestamptz, $limit: Int!) {

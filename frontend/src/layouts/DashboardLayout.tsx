@@ -147,11 +147,11 @@ export const useStyles = makeStyles((theme: Theme = useTheme()) =>
       display: 'flex',
       alignItems: 'center',
       justifyContent: 'center',
-      height: '100vh',
+      height: '100vh'
     },
     avatar: {
-      height: 80,
-      width: 80,
+      height: 100,
+      width: 100
     }
   })
 )

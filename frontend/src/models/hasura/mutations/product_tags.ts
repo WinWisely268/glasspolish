@@ -1,4 +1,4 @@
-import gql from 'graphql-tag'
+import {gql} from '@apollo/client'
 
 export const UPDATE_PRODUCT_TAG = gql`
     mutation updateProductTag($tagId: uuid!, $name: String, $description: String) {

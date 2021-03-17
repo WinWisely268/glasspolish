@@ -1,4 +1,4 @@
-import gql from 'graphql-tag'
+import { gql } from '@apollo/client'
 
 export const LIST_PRODUCT_TAGS = gql`
     query listProductTags($query: String!) {

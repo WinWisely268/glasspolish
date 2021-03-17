@@ -2391,6 +2391,43 @@ export type InsertProductMutation = (
   )> }
 );
 
+export type UpdateProductMutationVariables = Exact<{
+  id: Scalars['uuid'];
+  name?: Maybe<Scalars['String']>;
+  sku?: Maybe<Scalars['String']>;
+  buyPrice?: Maybe<Scalars['numeric']>;
+  bestPrice?: Maybe<Scalars['numeric']>;
+  downlinePrice?: Maybe<Scalars['numeric']>;
+  retailPrice?: Maybe<Scalars['numeric']>;
+  tagId?: Maybe<Scalars['uuid']>;
+  sellable?: Maybe<Scalars['Boolean']>;
+}>;
+
+
+export type UpdateProductMutation = (
+  { __typename?: 'mutation_root' }
+  & { update_products?: Maybe<(
+    { __typename?: 'products_mutation_response' }
+    & { returning: Array<(
+      { __typename?: 'products' }
+      & Pick<Products, 'id' | 'name' | 'sku' | 'sellable' | 'buy_price' | 'best_price' | 'downline_price' | 'retail_price' | 'created_at' | 'updated_at'>
+    )> }
+  )> }
+);
+
+export type DeleteProductMutationVariables = Exact<{
+  id: Scalars['uuid'];
+}>;
+
+
+export type DeleteProductMutation = (
+  { __typename?: 'mutation_root' }
+  & { delete_products?: Maybe<(
+    { __typename?: 'products_mutation_response' }
+    & Pick<Products_Mutation_Response, 'affected_rows'>
+  )> }
+);
+
 export type UpsertProfileMutationVariables = Exact<{
   accountId: Scalars['uuid'];
   name: Scalars['String'];
@@ -2642,6 +2679,94 @@ export function useInsertProductMutation(baseOptions?: Apollo.MutationHookOption
 export type InsertProductMutationHookResult = ReturnType<typeof useInsertProductMutation>;
 export type InsertProductMutationResult = Apollo.MutationResult<InsertProductMutation>;
 export type InsertProductMutationOptions = Apollo.BaseMutationOptions<InsertProductMutation, InsertProductMutationVariables>;
+export const UpdateProductDocument = gql`
+    mutation updateProduct($id: uuid!, $name: String, $sku: String, $buyPrice: numeric, $bestPrice: numeric, $downlinePrice: numeric, $retailPrice: numeric, $tagId: uuid, $sellable: Boolean) {
+  update_products(
+    where: {id: {_eq: $id}}
+    _set: {name: $name, sku: $sku, buy_price: $buyPrice, best_price: $bestPrice, downline_price: $downlinePrice, retail_price: $retailPrice, tag_id: $tagId, sellable: $sellable}
+  ) {
+    returning {
+      id
+      name
+      sku
+      sellable
+      buy_price
+      best_price
+      downline_price
+      retail_price
+      created_at
+      updated_at
+    }
+  }
+}
+    `;
+export type UpdateProductMutationFn = Apollo.MutationFunction<UpdateProductMutation, UpdateProductMutationVariables>;
+
+/**
+ * __useUpdateProductMutation__
+ *
+ * To run a mutation, you first call `useUpdateProductMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useUpdateProductMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [updateProductMutation, { data, loading, error }] = useUpdateProductMutation({
+ *   variables: {
+ *      id: // value for 'id'
+ *      name: // value for 'name'
+ *      sku: // value for 'sku'
+ *      buyPrice: // value for 'buyPrice'
+ *      bestPrice: // value for 'bestPrice'
+ *      downlinePrice: // value for 'downlinePrice'
+ *      retailPrice: // value for 'retailPrice'
+ *      tagId: // value for 'tagId'
+ *      sellable: // value for 'sellable'
+ *   },
+ * });
+ */
+export function useUpdateProductMutation(baseOptions?: Apollo.MutationHookOptions<UpdateProductMutation, UpdateProductMutationVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useMutation<UpdateProductMutation, UpdateProductMutationVariables>(UpdateProductDocument, options);
+      }
+export type UpdateProductMutationHookResult = ReturnType<typeof useUpdateProductMutation>;
+export type UpdateProductMutationResult = Apollo.MutationResult<UpdateProductMutation>;
+export type UpdateProductMutationOptions = Apollo.BaseMutationOptions<UpdateProductMutation, UpdateProductMutationVariables>;
+export const DeleteProductDocument = gql`
+    mutation deleteProduct($id: uuid!) {
+  delete_products(where: {id: {_eq: $id}}) {
+    affected_rows
+  }
+}
+    `;
+export type DeleteProductMutationFn = Apollo.MutationFunction<DeleteProductMutation, DeleteProductMutationVariables>;
+
+/**
+ * __useDeleteProductMutation__
+ *
+ * To run a mutation, you first call `useDeleteProductMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useDeleteProductMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [deleteProductMutation, { data, loading, error }] = useDeleteProductMutation({
+ *   variables: {
+ *      id: // value for 'id'
+ *   },
+ * });
+ */
+export function useDeleteProductMutation(baseOptions?: Apollo.MutationHookOptions<DeleteProductMutation, DeleteProductMutationVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useMutation<DeleteProductMutation, DeleteProductMutationVariables>(DeleteProductDocument, options);
+      }
+export type DeleteProductMutationHookResult = ReturnType<typeof useDeleteProductMutation>;
+export type DeleteProductMutationResult = Apollo.MutationResult<DeleteProductMutation>;
+export type DeleteProductMutationOptions = Apollo.BaseMutationOptions<DeleteProductMutation, DeleteProductMutationVariables>;
 export const UpsertProfileDocument = gql`
     mutation upsertProfile($accountId: uuid!, $name: String!) {
   insert_profiles_one(object: {account_id: $accountId, name: $name}) {

@@ -40,18 +40,18 @@ export default function AvatarComponent<T extends HasPictureUrl>(props: PropsWit
       } else {
         if (props.picture_urls.length > 0) {
           const ln = props.picture_urls.length == 1 ? 12 : 6
-          return (<div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center'}}>
-            {props.picture_urls.map((p) => {
-              let splitted = p.picture_url?.split('/')
-              let fileName = splitted?.pop()
-              let prefix = splitted?.join('/')
-              return (
-                // <Grid item md={ln} xs={12}>
-                  <UserAvatar key={prefix} prefix={prefix as string} fileName={fileName as string}
-                              avatarClass={props.avatarClass} />
-                // </Grid>
-              )
-            })}
+          let items: React.ReactElement[] = []
+          props.picture_urls.forEach((p) => {
+            let splitted = p.picture_url?.split('/')
+            let fileName = splitted?.pop()
+            let prefix = splitted?.join('/')
+            items.push(
+              <UserAvatar key={prefix} prefix={prefix as string} fileName={fileName as string}
+                          avatarClass={props.avatarClass} />
+            )
+          })
+          return (<div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+            {items}
           </div>)
         } else {
           return <Avatar className={props.avatarClass} src={defaultAvatarSrc} />
