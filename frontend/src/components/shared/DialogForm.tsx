@@ -57,8 +57,12 @@ export const ActionButton: React.FC<ActionButtonProps> = ({ ...props }) => {
       >
         {props.icon}
       </IconButton>
-      <FormDialog title={props.title} content={props.content} open={open}
-                  onClose={handleClose} />
+      <Dialog maxWidth={'xl'} open={open} onClose={handleClose} aria-labelledby={props.title}>
+        <DialogTitle id={props.title}>{props.title}</DialogTitle>
+        <DialogContent>
+          {props.content}
+        </DialogContent>
+      </Dialog>
     </div>
   )
 

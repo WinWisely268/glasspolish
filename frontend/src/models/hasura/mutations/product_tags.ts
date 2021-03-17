@@ -39,3 +39,11 @@ export const INSERT_PRODUCT_TAG = gql`
         }
     }
 `
+
+export const DELETE_PRODUCT_TAG = gql`
+  mutation deleteProductTag($tagId: uuid!) {
+      delete_product_tags(where: {id: {_eq: $tagId}}) {
+          affected_rows
+      }
+  }
+`

@@ -2,13 +2,16 @@ import React, { useEffect, useState } from 'react'
 import SnackBar from '../components/shared/Snackbar'
 import { useStyles } from '../layouts/DashboardLayout'
 import { useGetProductTagQuery, useListProductTagsQuery } from '../service/graphql'
-import { NavLink, useRouteMatch, useParams, RouteProps } from 'react-router-dom'
-import { Box, Button, CircularProgress, Typography } from '@material-ui/core'
+import { NavLink, useRouteMatch, useParams, RouteProps, useHistory } from 'react-router-dom'
+import { Box, CircularProgress, Typography } from '@material-ui/core'
 import SearchBar from '../components/SearchBar'
 import { ActionButton } from '../components/shared/DialogForm'
 import { TagNew } from '../components/tag/NewTag'
 import AddIcon from '@material-ui/icons/Add'
 import EditIcon from '@material-ui/icons/Edit'
+import DeleteTagAction from '../components/tag/DeleteTag'
+import DeleteIcon from '@material-ui/icons/DeleteOutline'
+import { AllRoutesStr } from '../routes/constants'
 
 export interface TagPageProps {
 }
@@ -16,6 +19,7 @@ export interface TagPageProps {
 const TagPage: React.FC<TagPageProps> = () => {
   let { path } = useRouteMatch() as RouteProps
   const classes = useStyles()
+  const history = useHistory()
   const [queryString, setQueryString] = useState<string>('%')
   const [errMsg, setErrMsg] = useState('')
   const {
@@ -77,6 +81,14 @@ const TagPage: React.FC<TagPageProps> = () => {
                     <p>
                       {item.description}
                     </p>
+                    <ActionButton title={'Hapus'} content={
+                      <DeleteTagAction id={item.id}
+                                       refetch={() => {
+                                         listTagsRefetch().then((r) => history.push(AllRoutesStr.Dashboard.tags))
+                                       }} />}
+                                  icon={<DeleteIcon />}
+
+                    />
                   </div>
                 </div>
               </NavLink>
@@ -123,10 +135,17 @@ export const TagDetails: React.FC<TagDetailsProps> = (props) => {
     }
   })
 
+  const {
+    refetch: refetchAll
+  } = useListProductTagsQuery({
+    variables: {
+      query: '%'
+    }
+  })
   useEffect(() => {
     if (data !== null) {
       setValues({
-        id: data?.product_tags[0].id,
+        id: data?.product_tags[0].id || '',
         name: data?.product_tags[0].name || '',
         description: data?.product_tags[0].description || '',
         created_at: data?.product_tags[0].created_at,
@@ -138,9 +157,9 @@ export const TagDetails: React.FC<TagDetailsProps> = (props) => {
   useEffect(() => {
     setButtonDisable(
       !(
-        values.id,
-          values.name,
-          values.description
+        values.id &&
+        values.name &&
+        values.description
       )
     )
   }, [values])
@@ -157,15 +176,6 @@ export const TagDetails: React.FC<TagDetailsProps> = (props) => {
                 setMessage={(message) => setErrMsg(getTagError != null ? getTagError.message : message)} />
       {getTagLoading ? <CircularProgress className={classes.notFound} /> : <div className={classes.content}>
         <Box display='flex' justifyContent='flex-end' p={4}>
-          <Button
-            color='secondary'
-            className={classes.submitButton}
-            type='submit'
-            disabled={isButtonDisabled}
-            variant='contained'
-          >
-            Hapus
-          </Button>
           <ActionButton title={'Edit'} content={<TagNew refetchAction={() => {
             getTagRefetch()
           }} update={true}

@@ -2371,6 +2371,19 @@ export type InsertProductTagMutation = (
   )> }
 );
 
+export type DeleteProductTagMutationVariables = Exact<{
+  tagId: Scalars['uuid'];
+}>;
+
+
+export type DeleteProductTagMutation = (
+  { __typename?: 'mutation_root' }
+  & { delete_product_tags?: Maybe<(
+    { __typename?: 'product_tags_mutation_response' }
+    & Pick<Product_Tags_Mutation_Response, 'affected_rows'>
+  )> }
+);
+
 export type InsertProductMutationVariables = Exact<{
   name: Scalars['String'];
   retailPrice?: Maybe<Scalars['numeric']>;
@@ -2628,6 +2641,39 @@ export function useInsertProductTagMutation(baseOptions?: Apollo.MutationHookOpt
 export type InsertProductTagMutationHookResult = ReturnType<typeof useInsertProductTagMutation>;
 export type InsertProductTagMutationResult = Apollo.MutationResult<InsertProductTagMutation>;
 export type InsertProductTagMutationOptions = Apollo.BaseMutationOptions<InsertProductTagMutation, InsertProductTagMutationVariables>;
+export const DeleteProductTagDocument = gql`
+    mutation deleteProductTag($tagId: uuid!) {
+  delete_product_tags(where: {id: {_eq: $tagId}}) {
+    affected_rows
+  }
+}
+    `;
+export type DeleteProductTagMutationFn = Apollo.MutationFunction<DeleteProductTagMutation, DeleteProductTagMutationVariables>;
+
+/**
+ * __useDeleteProductTagMutation__
+ *
+ * To run a mutation, you first call `useDeleteProductTagMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useDeleteProductTagMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [deleteProductTagMutation, { data, loading, error }] = useDeleteProductTagMutation({
+ *   variables: {
+ *      tagId: // value for 'tagId'
+ *   },
+ * });
+ */
+export function useDeleteProductTagMutation(baseOptions?: Apollo.MutationHookOptions<DeleteProductTagMutation, DeleteProductTagMutationVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useMutation<DeleteProductTagMutation, DeleteProductTagMutationVariables>(DeleteProductTagDocument, options);
+      }
+export type DeleteProductTagMutationHookResult = ReturnType<typeof useDeleteProductTagMutation>;
+export type DeleteProductTagMutationResult = Apollo.MutationResult<DeleteProductTagMutation>;
+export type DeleteProductTagMutationOptions = Apollo.BaseMutationOptions<DeleteProductTagMutation, DeleteProductTagMutationVariables>;
 export const InsertProductDocument = gql`
     mutation insertProduct($name: String!, $retailPrice: numeric, $sellable: Boolean!, $buyPrice: numeric!, $bestPrice: numeric, $downlinePrice: numeric, $sku: String!, $tagId: uuid) {
   insert_products_one(
