@@ -24,6 +24,8 @@ interface AllRoutes {
         profile: string,
         settings: string,
         users: string,
+        tags: string,
+        products: string,
     }
 }
 
@@ -47,5 +49,7 @@ export const AllRoutesStr: AllRoutes = {
         profile: ROUTE_DASHBOARD_ROOT + '/profile',
         settings: ROUTE_DASHBOARD_ROOT + '/settings',
         users: ROUTE_DASHBOARD_ROOT + '/users',
+        tags: ROUTE_DASHBOARD_ROOT + '/product/tags',
+        products: ROUTE_DASHBOARD_ROOT + '/products/all'
     }
 }

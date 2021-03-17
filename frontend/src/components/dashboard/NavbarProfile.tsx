@@ -5,7 +5,6 @@ import { Link } from 'react-router-dom'
 
 import { makeStyles } from '@material-ui/core/styles'
 import IconButton from '@material-ui/core/IconButton'
-import Avatar from '@material-ui/core/Avatar'
 import Menu from '@material-ui/core/Menu'
 import MenuItem from '@material-ui/core/MenuItem'
 import ListItemText from '@material-ui/core/ListItemText'
@@ -28,18 +27,20 @@ const NavbarProfile: React.FC<NavbarProfileProps> = ({ history }) => {
   const classes = useStyles()
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null)
   const [userName, setUserName] = useState<string>()
-  const [userPicture, setUserPicture] = useState<string>()
   const authContext = useContext(AuthContext)
+  const [accountId, setAccountId] = useState<string>('')
 
   useEffect(() => {
     if (authContext.user !== null) {
       setUserName(authContext.email.split('@')[0])
+      setAccountId(authContext.user.getUsername())
     }
   }, [authContext])
 
   if (authContext.user === null) {
     return <div className={cx('headerProfile', classes.headerProfile)} />
   }
+
 
   const signOutHandler = () => {
     authContext
@@ -71,11 +72,6 @@ const NavbarProfile: React.FC<NavbarProfileProps> = ({ history }) => {
         aria-haspopup='true'
         onClick={handleClick}
       >
-        <Avatar
-          className={classes.profileAvatar}
-          alt={userName}
-          src={userPicture}
-        />
         <span className={classes.profileName}>{userName}</span>
         <IconArrowDropDown />
       </IconButton>

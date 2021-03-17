@@ -23,27 +23,28 @@ type UploadURLRequest struct {
 }
 
 type Prefix struct {
-	AccountID      uuid.UUID
-	TableName      string
-	TableRecordID  uuid.UUID
-	TableFieldName string
-	Timestamp      int64
-	Filename       string
+	ID                uuid.UUID
+	TableName         string
+	TableRecordID     uuid.UUID
+	TableFieldName    string
+	TablePrimaryField string
+	Timestamp         int64
+	Filename          string
 }
 
 func ToPrefix(key string) (*Prefix, error) {
 	var p Prefix
 	splitted := strings.Split(key, "/")
-	if len(splitted) < 7 {
+	if len(splitted) < 8 {
 		return nil, errors.New(
-			fmt.Sprintf("object has invalid key length, expected 7, got: %d", len(splitted)),
+			fmt.Sprintf("object has invalid key length, expected 8, got: %d", len(splitted)),
 		)
 	}
 	accId, err := uuid.Parse(splitted[1])
 	if err != nil {
 		return nil, errors.New("invalid account id")
 	}
-	p.AccountID = accId
+	p.ID = accId
 	p.TableName = splitted[2]
 	tableRecordID, err := uuid.Parse(splitted[3])
 	if err != nil {
@@ -54,21 +55,26 @@ func ToPrefix(key string) (*Prefix, error) {
 		return nil, errors.New("invalid table field name")
 	}
 	p.TableFieldName = splitted[4]
-	tstamp, err := strconv.ParseInt(splitted[5], 10, 64)
+	if splitted[5] == "" {
+		return nil, errors.New("invalid primary field name")
+	}
+	p.TablePrimaryField = splitted[5]
+	tstamp, err := strconv.ParseInt(splitted[6], 10, 64)
 	if err != nil {
 		return nil, err
 	}
 	p.Timestamp = tstamp
-	p.Filename = splitted[6]
+	p.Filename = splitted[7]
 	return &p, nil
 }
 
 func (p *Prefix) ToString() string {
 	return strings.Join([]string{
-		p.AccountID.String(),
+		p.ID.String(),
 		p.TableName,
 		p.TableRecordID.String(),
 		p.TableFieldName,
+		p.TablePrimaryField,
 		strconv.FormatInt(p.Timestamp, 10),
 		p.Filename}, "/",
 	)
@@ -88,7 +94,7 @@ func (p *Prefix) GenerateMutationQuery() (*graphql.Request, error) {
 		"query": bf.String(),
 	}).Info("Mutation query")
 	req := graphql.NewRequest(bf.String())
-	req.Var("accountId", p.AccountID)
+	req.Var("primaryId", p.ID)
 	req.Var("id", p.TableRecordID)
 	req.Var(mutation.ToCamelCase(p.TableFieldName), p.ToString())
 	return req, nil

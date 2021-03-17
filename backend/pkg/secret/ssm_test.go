@@ -1,6 +1,7 @@
 package secret_test
 
 import (
+	"github.com/stretchr/testify/require"
 	"github.com/winwisely268/glasspolish-triggers/pkg/config"
 	"github.com/winwisely268/glasspolish-triggers/pkg/secret"
 	"testing"
@@ -9,21 +10,14 @@ import (
 func TestGetDecryptedParameter(t *testing.T) {
 
 	ssmApi := secret.NewSsmAPI(config.InitConfig())
-
-	val, err := ssmApi.GetDecryptedParameter("/applications/GlassPolish/CloudFront/PrivateKey")
-	if err != nil {
-		t.Fatalf("GetDecryptedParameter failed: %v", err)
-	}
-	t.Logf("GetDecryptedParameter: %v", val)
+	_, err := ssmApi.GetDecryptedParameter("/applications/GlassPolish/CloudFront/PrivateKey")
+	require.NoError(t, err)
 
 }
 
 func TestGetParameters(t *testing.T) {
 	ssmApi := secret.NewSsmAPI(config.InitConfig())
 
-	vals, err := ssmApi.GetParameters("/applications/GlassPolish/CloudFront/KeyId", "/applications/SFDashbboard/CloudFront/PrivateKey")
-	if err != nil {
-		t.Fatalf("GetParameters failed: %v", err)
-	}
-	t.Logf("GetParameters: %v", vals)
+	_, err := ssmApi.GetParameters("/applications/GlassPolish/CloudFront/KeyId", "/applications/SFDashbboard/CloudFront/PrivateKey")
+	require.NoError(t, err)
 }

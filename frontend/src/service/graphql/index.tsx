@@ -12,6 +12,7 @@ export type Scalars = {
   Boolean: boolean;
   Int: number;
   Float: number;
+  numeric: any;
   timestamptz: any;
   uuid: any;
 };
@@ -177,6 +178,13 @@ export type Accounts_Mutation_Response = {
   returning: Array<Accounts>;
 };
 
+/** input type for inserting object relation for remote table "accounts" */
+export type Accounts_Obj_Rel_Insert_Input = {
+  data: Accounts_Insert_Input;
+  /** on conflict condition */
+  on_conflict?: Maybe<Accounts_On_Conflict>;
+};
+
 /** on conflict condition type for table "accounts" */
 export type Accounts_On_Conflict = {
   constraint: Accounts_Constraint;
@@ -238,6 +246,18 @@ export type Mutation_Root = {
   delete_accounts?: Maybe<Accounts_Mutation_Response>;
   /** delete single row from the table: "accounts" */
   delete_accounts_by_pk?: Maybe<Accounts>;
+  /** delete data from the table: "product_pictures" */
+  delete_product_pictures?: Maybe<Product_Pictures_Mutation_Response>;
+  /** delete single row from the table: "product_pictures" */
+  delete_product_pictures_by_pk?: Maybe<Product_Pictures>;
+  /** delete data from the table: "product_tags" */
+  delete_product_tags?: Maybe<Product_Tags_Mutation_Response>;
+  /** delete single row from the table: "product_tags" */
+  delete_product_tags_by_pk?: Maybe<Product_Tags>;
+  /** delete data from the table: "products" */
+  delete_products?: Maybe<Products_Mutation_Response>;
+  /** delete single row from the table: "products" */
+  delete_products_by_pk?: Maybe<Products>;
   /** delete data from the table: "profile_pictures" */
   delete_profile_pictures?: Maybe<Profile_Pictures_Mutation_Response>;
   /** delete single row from the table: "profile_pictures" */
@@ -246,10 +266,26 @@ export type Mutation_Root = {
   delete_profiles?: Maybe<Profiles_Mutation_Response>;
   /** delete single row from the table: "profiles" */
   delete_profiles_by_pk?: Maybe<Profiles>;
+  /** delete data from the table: "warehouses" */
+  delete_warehouses?: Maybe<Warehouses_Mutation_Response>;
+  /** delete single row from the table: "warehouses" */
+  delete_warehouses_by_pk?: Maybe<Warehouses>;
   /** insert data into the table: "accounts" */
   insert_accounts?: Maybe<Accounts_Mutation_Response>;
   /** insert a single row into the table: "accounts" */
   insert_accounts_one?: Maybe<Accounts>;
+  /** insert data into the table: "product_pictures" */
+  insert_product_pictures?: Maybe<Product_Pictures_Mutation_Response>;
+  /** insert a single row into the table: "product_pictures" */
+  insert_product_pictures_one?: Maybe<Product_Pictures>;
+  /** insert data into the table: "product_tags" */
+  insert_product_tags?: Maybe<Product_Tags_Mutation_Response>;
+  /** insert a single row into the table: "product_tags" */
+  insert_product_tags_one?: Maybe<Product_Tags>;
+  /** insert data into the table: "products" */
+  insert_products?: Maybe<Products_Mutation_Response>;
+  /** insert a single row into the table: "products" */
+  insert_products_one?: Maybe<Products>;
   /** insert data into the table: "profile_pictures" */
   insert_profile_pictures?: Maybe<Profile_Pictures_Mutation_Response>;
   /** insert a single row into the table: "profile_pictures" */
@@ -258,10 +294,26 @@ export type Mutation_Root = {
   insert_profiles?: Maybe<Profiles_Mutation_Response>;
   /** insert a single row into the table: "profiles" */
   insert_profiles_one?: Maybe<Profiles>;
+  /** insert data into the table: "warehouses" */
+  insert_warehouses?: Maybe<Warehouses_Mutation_Response>;
+  /** insert a single row into the table: "warehouses" */
+  insert_warehouses_one?: Maybe<Warehouses>;
   /** update data of the table: "accounts" */
   update_accounts?: Maybe<Accounts_Mutation_Response>;
   /** update single row of the table: "accounts" */
   update_accounts_by_pk?: Maybe<Accounts>;
+  /** update data of the table: "product_pictures" */
+  update_product_pictures?: Maybe<Product_Pictures_Mutation_Response>;
+  /** update single row of the table: "product_pictures" */
+  update_product_pictures_by_pk?: Maybe<Product_Pictures>;
+  /** update data of the table: "product_tags" */
+  update_product_tags?: Maybe<Product_Tags_Mutation_Response>;
+  /** update single row of the table: "product_tags" */
+  update_product_tags_by_pk?: Maybe<Product_Tags>;
+  /** update data of the table: "products" */
+  update_products?: Maybe<Products_Mutation_Response>;
+  /** update single row of the table: "products" */
+  update_products_by_pk?: Maybe<Products>;
   /** update data of the table: "profile_pictures" */
   update_profile_pictures?: Maybe<Profile_Pictures_Mutation_Response>;
   /** update single row of the table: "profile_pictures" */
@@ -270,6 +322,10 @@ export type Mutation_Root = {
   update_profiles?: Maybe<Profiles_Mutation_Response>;
   /** update single row of the table: "profiles" */
   update_profiles_by_pk?: Maybe<Profiles>;
+  /** update data of the table: "warehouses" */
+  update_warehouses?: Maybe<Warehouses_Mutation_Response>;
+  /** update single row of the table: "warehouses" */
+  update_warehouses_by_pk?: Maybe<Warehouses>;
 };
 
 
@@ -282,6 +338,42 @@ export type Mutation_RootDelete_AccountsArgs = {
 /** mutation root */
 export type Mutation_RootDelete_Accounts_By_PkArgs = {
   user_id: Scalars['uuid'];
+};
+
+
+/** mutation root */
+export type Mutation_RootDelete_Product_PicturesArgs = {
+  where: Product_Pictures_Bool_Exp;
+};
+
+
+/** mutation root */
+export type Mutation_RootDelete_Product_Pictures_By_PkArgs = {
+  id: Scalars['uuid'];
+};
+
+
+/** mutation root */
+export type Mutation_RootDelete_Product_TagsArgs = {
+  where: Product_Tags_Bool_Exp;
+};
+
+
+/** mutation root */
+export type Mutation_RootDelete_Product_Tags_By_PkArgs = {
+  id: Scalars['uuid'];
+};
+
+
+/** mutation root */
+export type Mutation_RootDelete_ProductsArgs = {
+  where: Products_Bool_Exp;
+};
+
+
+/** mutation root */
+export type Mutation_RootDelete_Products_By_PkArgs = {
+  id: Scalars['uuid'];
 };
 
 
@@ -310,6 +402,18 @@ export type Mutation_RootDelete_Profiles_By_PkArgs = {
 
 
 /** mutation root */
+export type Mutation_RootDelete_WarehousesArgs = {
+  where: Warehouses_Bool_Exp;
+};
+
+
+/** mutation root */
+export type Mutation_RootDelete_Warehouses_By_PkArgs = {
+  id: Scalars['uuid'];
+};
+
+
+/** mutation root */
 export type Mutation_RootInsert_AccountsArgs = {
   objects: Array<Accounts_Insert_Input>;
   on_conflict?: Maybe<Accounts_On_Conflict>;
@@ -320,6 +424,48 @@ export type Mutation_RootInsert_AccountsArgs = {
 export type Mutation_RootInsert_Accounts_OneArgs = {
   object: Accounts_Insert_Input;
   on_conflict?: Maybe<Accounts_On_Conflict>;
+};
+
+
+/** mutation root */
+export type Mutation_RootInsert_Product_PicturesArgs = {
+  objects: Array<Product_Pictures_Insert_Input>;
+  on_conflict?: Maybe<Product_Pictures_On_Conflict>;
+};
+
+
+/** mutation root */
+export type Mutation_RootInsert_Product_Pictures_OneArgs = {
+  object: Product_Pictures_Insert_Input;
+  on_conflict?: Maybe<Product_Pictures_On_Conflict>;
+};
+
+
+/** mutation root */
+export type Mutation_RootInsert_Product_TagsArgs = {
+  objects: Array<Product_Tags_Insert_Input>;
+  on_conflict?: Maybe<Product_Tags_On_Conflict>;
+};
+
+
+/** mutation root */
+export type Mutation_RootInsert_Product_Tags_OneArgs = {
+  object: Product_Tags_Insert_Input;
+  on_conflict?: Maybe<Product_Tags_On_Conflict>;
+};
+
+
+/** mutation root */
+export type Mutation_RootInsert_ProductsArgs = {
+  objects: Array<Products_Insert_Input>;
+  on_conflict?: Maybe<Products_On_Conflict>;
+};
+
+
+/** mutation root */
+export type Mutation_RootInsert_Products_OneArgs = {
+  object: Products_Insert_Input;
+  on_conflict?: Maybe<Products_On_Conflict>;
 };
 
 
@@ -352,6 +498,20 @@ export type Mutation_RootInsert_Profiles_OneArgs = {
 
 
 /** mutation root */
+export type Mutation_RootInsert_WarehousesArgs = {
+  objects: Array<Warehouses_Insert_Input>;
+  on_conflict?: Maybe<Warehouses_On_Conflict>;
+};
+
+
+/** mutation root */
+export type Mutation_RootInsert_Warehouses_OneArgs = {
+  object: Warehouses_Insert_Input;
+  on_conflict?: Maybe<Warehouses_On_Conflict>;
+};
+
+
+/** mutation root */
 export type Mutation_RootUpdate_AccountsArgs = {
   _set?: Maybe<Accounts_Set_Input>;
   where: Accounts_Bool_Exp;
@@ -362,6 +522,50 @@ export type Mutation_RootUpdate_AccountsArgs = {
 export type Mutation_RootUpdate_Accounts_By_PkArgs = {
   _set?: Maybe<Accounts_Set_Input>;
   pk_columns: Accounts_Pk_Columns_Input;
+};
+
+
+/** mutation root */
+export type Mutation_RootUpdate_Product_PicturesArgs = {
+  _set?: Maybe<Product_Pictures_Set_Input>;
+  where: Product_Pictures_Bool_Exp;
+};
+
+
+/** mutation root */
+export type Mutation_RootUpdate_Product_Pictures_By_PkArgs = {
+  _set?: Maybe<Product_Pictures_Set_Input>;
+  pk_columns: Product_Pictures_Pk_Columns_Input;
+};
+
+
+/** mutation root */
+export type Mutation_RootUpdate_Product_TagsArgs = {
+  _set?: Maybe<Product_Tags_Set_Input>;
+  where: Product_Tags_Bool_Exp;
+};
+
+
+/** mutation root */
+export type Mutation_RootUpdate_Product_Tags_By_PkArgs = {
+  _set?: Maybe<Product_Tags_Set_Input>;
+  pk_columns: Product_Tags_Pk_Columns_Input;
+};
+
+
+/** mutation root */
+export type Mutation_RootUpdate_ProductsArgs = {
+  _inc?: Maybe<Products_Inc_Input>;
+  _set?: Maybe<Products_Set_Input>;
+  where: Products_Bool_Exp;
+};
+
+
+/** mutation root */
+export type Mutation_RootUpdate_Products_By_PkArgs = {
+  _inc?: Maybe<Products_Inc_Input>;
+  _set?: Maybe<Products_Set_Input>;
+  pk_columns: Products_Pk_Columns_Input;
 };
 
 
@@ -392,6 +596,34 @@ export type Mutation_RootUpdate_Profiles_By_PkArgs = {
   pk_columns: Profiles_Pk_Columns_Input;
 };
 
+
+/** mutation root */
+export type Mutation_RootUpdate_WarehousesArgs = {
+  _set?: Maybe<Warehouses_Set_Input>;
+  where: Warehouses_Bool_Exp;
+};
+
+
+/** mutation root */
+export type Mutation_RootUpdate_Warehouses_By_PkArgs = {
+  _set?: Maybe<Warehouses_Set_Input>;
+  pk_columns: Warehouses_Pk_Columns_Input;
+};
+
+
+/** Boolean expression to compare columns of type "numeric". All fields are combined with logical 'AND'. */
+export type Numeric_Comparison_Exp = {
+  _eq?: Maybe<Scalars['numeric']>;
+  _gt?: Maybe<Scalars['numeric']>;
+  _gte?: Maybe<Scalars['numeric']>;
+  _in?: Maybe<Array<Scalars['numeric']>>;
+  _is_null?: Maybe<Scalars['Boolean']>;
+  _lt?: Maybe<Scalars['numeric']>;
+  _lte?: Maybe<Scalars['numeric']>;
+  _neq?: Maybe<Scalars['numeric']>;
+  _nin?: Maybe<Array<Scalars['numeric']>>;
+};
+
 /** column ordering options */
 export enum Order_By {
   /** in ascending order, nulls last */
@@ -407,6 +639,795 @@ export enum Order_By {
   /** in descending order, nulls last */
   DescNullsLast = 'desc_nulls_last'
 }
+
+/** columns and relationships of "product_pictures" */
+export type Product_Pictures = {
+  __typename?: 'product_pictures';
+  id: Scalars['uuid'];
+  picture_url?: Maybe<Scalars['String']>;
+  primary: Scalars['Boolean'];
+  product_id: Scalars['uuid'];
+};
+
+/** aggregated selection of "product_pictures" */
+export type Product_Pictures_Aggregate = {
+  __typename?: 'product_pictures_aggregate';
+  aggregate?: Maybe<Product_Pictures_Aggregate_Fields>;
+  nodes: Array<Product_Pictures>;
+};
+
+/** aggregate fields of "product_pictures" */
+export type Product_Pictures_Aggregate_Fields = {
+  __typename?: 'product_pictures_aggregate_fields';
+  count: Scalars['Int'];
+  max?: Maybe<Product_Pictures_Max_Fields>;
+  min?: Maybe<Product_Pictures_Min_Fields>;
+};
+
+
+/** aggregate fields of "product_pictures" */
+export type Product_Pictures_Aggregate_FieldsCountArgs = {
+  columns?: Maybe<Array<Product_Pictures_Select_Column>>;
+  distinct?: Maybe<Scalars['Boolean']>;
+};
+
+/** order by aggregate values of table "product_pictures" */
+export type Product_Pictures_Aggregate_Order_By = {
+  count?: Maybe<Order_By>;
+  max?: Maybe<Product_Pictures_Max_Order_By>;
+  min?: Maybe<Product_Pictures_Min_Order_By>;
+};
+
+/** input type for inserting array relation for remote table "product_pictures" */
+export type Product_Pictures_Arr_Rel_Insert_Input = {
+  data: Array<Product_Pictures_Insert_Input>;
+  /** on conflict condition */
+  on_conflict?: Maybe<Product_Pictures_On_Conflict>;
+};
+
+/** Boolean expression to filter rows from the table "product_pictures". All fields are combined with a logical 'AND'. */
+export type Product_Pictures_Bool_Exp = {
+  _and?: Maybe<Array<Product_Pictures_Bool_Exp>>;
+  _not?: Maybe<Product_Pictures_Bool_Exp>;
+  _or?: Maybe<Array<Product_Pictures_Bool_Exp>>;
+  id?: Maybe<Uuid_Comparison_Exp>;
+  picture_url?: Maybe<String_Comparison_Exp>;
+  primary?: Maybe<Boolean_Comparison_Exp>;
+  product_id?: Maybe<Uuid_Comparison_Exp>;
+};
+
+/** unique or primary key constraints on table "product_pictures" */
+export enum Product_Pictures_Constraint {
+  /** unique or primary key constraint */
+  ProductPicturesPkey = 'product_pictures_pkey'
+}
+
+/** input type for inserting data into table "product_pictures" */
+export type Product_Pictures_Insert_Input = {
+  id?: Maybe<Scalars['uuid']>;
+  picture_url?: Maybe<Scalars['String']>;
+  primary?: Maybe<Scalars['Boolean']>;
+  product_id?: Maybe<Scalars['uuid']>;
+};
+
+/** aggregate max on columns */
+export type Product_Pictures_Max_Fields = {
+  __typename?: 'product_pictures_max_fields';
+  id?: Maybe<Scalars['uuid']>;
+  picture_url?: Maybe<Scalars['String']>;
+  product_id?: Maybe<Scalars['uuid']>;
+};
+
+/** order by max() on columns of table "product_pictures" */
+export type Product_Pictures_Max_Order_By = {
+  id?: Maybe<Order_By>;
+  picture_url?: Maybe<Order_By>;
+  product_id?: Maybe<Order_By>;
+};
+
+/** aggregate min on columns */
+export type Product_Pictures_Min_Fields = {
+  __typename?: 'product_pictures_min_fields';
+  id?: Maybe<Scalars['uuid']>;
+  picture_url?: Maybe<Scalars['String']>;
+  product_id?: Maybe<Scalars['uuid']>;
+};
+
+/** order by min() on columns of table "product_pictures" */
+export type Product_Pictures_Min_Order_By = {
+  id?: Maybe<Order_By>;
+  picture_url?: Maybe<Order_By>;
+  product_id?: Maybe<Order_By>;
+};
+
+/** response of any mutation on the table "product_pictures" */
+export type Product_Pictures_Mutation_Response = {
+  __typename?: 'product_pictures_mutation_response';
+  /** number of rows affected by the mutation */
+  affected_rows: Scalars['Int'];
+  /** data from the rows affected by the mutation */
+  returning: Array<Product_Pictures>;
+};
+
+/** on conflict condition type for table "product_pictures" */
+export type Product_Pictures_On_Conflict = {
+  constraint: Product_Pictures_Constraint;
+  update_columns: Array<Product_Pictures_Update_Column>;
+  where?: Maybe<Product_Pictures_Bool_Exp>;
+};
+
+/** Ordering options when selecting data from "product_pictures". */
+export type Product_Pictures_Order_By = {
+  id?: Maybe<Order_By>;
+  picture_url?: Maybe<Order_By>;
+  primary?: Maybe<Order_By>;
+  product_id?: Maybe<Order_By>;
+};
+
+/** primary key columns input for table: product_pictures */
+export type Product_Pictures_Pk_Columns_Input = {
+  id: Scalars['uuid'];
+};
+
+/** select columns of table "product_pictures" */
+export enum Product_Pictures_Select_Column {
+  /** column name */
+  Id = 'id',
+  /** column name */
+  PictureUrl = 'picture_url',
+  /** column name */
+  Primary = 'primary',
+  /** column name */
+  ProductId = 'product_id'
+}
+
+/** input type for updating data in table "product_pictures" */
+export type Product_Pictures_Set_Input = {
+  id?: Maybe<Scalars['uuid']>;
+  picture_url?: Maybe<Scalars['String']>;
+  primary?: Maybe<Scalars['Boolean']>;
+  product_id?: Maybe<Scalars['uuid']>;
+};
+
+/** update columns of table "product_pictures" */
+export enum Product_Pictures_Update_Column {
+  /** column name */
+  Id = 'id',
+  /** column name */
+  PictureUrl = 'picture_url',
+  /** column name */
+  Primary = 'primary',
+  /** column name */
+  ProductId = 'product_id'
+}
+
+/** columns and relationships of "product_tags" */
+export type Product_Tags = {
+  __typename?: 'product_tags';
+  created_at: Scalars['timestamptz'];
+  description?: Maybe<Scalars['String']>;
+  id: Scalars['uuid'];
+  name: Scalars['String'];
+  /** fetch data from the table: "products" */
+  products: Array<Products>;
+  /** An aggregate relationship */
+  products_aggregate: Products_Aggregate;
+  updated_at: Scalars['timestamptz'];
+};
+
+
+/** columns and relationships of "product_tags" */
+export type Product_TagsProductsArgs = {
+  distinct_on?: Maybe<Array<Products_Select_Column>>;
+  limit?: Maybe<Scalars['Int']>;
+  offset?: Maybe<Scalars['Int']>;
+  order_by?: Maybe<Array<Products_Order_By>>;
+  where?: Maybe<Products_Bool_Exp>;
+};
+
+
+/** columns and relationships of "product_tags" */
+export type Product_TagsProducts_AggregateArgs = {
+  distinct_on?: Maybe<Array<Products_Select_Column>>;
+  limit?: Maybe<Scalars['Int']>;
+  offset?: Maybe<Scalars['Int']>;
+  order_by?: Maybe<Array<Products_Order_By>>;
+  where?: Maybe<Products_Bool_Exp>;
+};
+
+/** aggregated selection of "product_tags" */
+export type Product_Tags_Aggregate = {
+  __typename?: 'product_tags_aggregate';
+  aggregate?: Maybe<Product_Tags_Aggregate_Fields>;
+  nodes: Array<Product_Tags>;
+};
+
+/** aggregate fields of "product_tags" */
+export type Product_Tags_Aggregate_Fields = {
+  __typename?: 'product_tags_aggregate_fields';
+  count: Scalars['Int'];
+  max?: Maybe<Product_Tags_Max_Fields>;
+  min?: Maybe<Product_Tags_Min_Fields>;
+};
+
+
+/** aggregate fields of "product_tags" */
+export type Product_Tags_Aggregate_FieldsCountArgs = {
+  columns?: Maybe<Array<Product_Tags_Select_Column>>;
+  distinct?: Maybe<Scalars['Boolean']>;
+};
+
+/** Boolean expression to filter rows from the table "product_tags". All fields are combined with a logical 'AND'. */
+export type Product_Tags_Bool_Exp = {
+  _and?: Maybe<Array<Product_Tags_Bool_Exp>>;
+  _not?: Maybe<Product_Tags_Bool_Exp>;
+  _or?: Maybe<Array<Product_Tags_Bool_Exp>>;
+  created_at?: Maybe<Timestamptz_Comparison_Exp>;
+  description?: Maybe<String_Comparison_Exp>;
+  id?: Maybe<Uuid_Comparison_Exp>;
+  name?: Maybe<String_Comparison_Exp>;
+  products?: Maybe<Products_Bool_Exp>;
+  updated_at?: Maybe<Timestamptz_Comparison_Exp>;
+};
+
+/** unique or primary key constraints on table "product_tags" */
+export enum Product_Tags_Constraint {
+  /** unique or primary key constraint */
+  ProductTagsNameKey = 'product_tags_name_key',
+  /** unique or primary key constraint */
+  ProductTagsPkey = 'product_tags_pkey'
+}
+
+/** input type for inserting data into table "product_tags" */
+export type Product_Tags_Insert_Input = {
+  created_at?: Maybe<Scalars['timestamptz']>;
+  description?: Maybe<Scalars['String']>;
+  id?: Maybe<Scalars['uuid']>;
+  name?: Maybe<Scalars['String']>;
+  products?: Maybe<Products_Arr_Rel_Insert_Input>;
+  updated_at?: Maybe<Scalars['timestamptz']>;
+};
+
+/** aggregate max on columns */
+export type Product_Tags_Max_Fields = {
+  __typename?: 'product_tags_max_fields';
+  created_at?: Maybe<Scalars['timestamptz']>;
+  description?: Maybe<Scalars['String']>;
+  id?: Maybe<Scalars['uuid']>;
+  name?: Maybe<Scalars['String']>;
+  updated_at?: Maybe<Scalars['timestamptz']>;
+};
+
+/** aggregate min on columns */
+export type Product_Tags_Min_Fields = {
+  __typename?: 'product_tags_min_fields';
+  created_at?: Maybe<Scalars['timestamptz']>;
+  description?: Maybe<Scalars['String']>;
+  id?: Maybe<Scalars['uuid']>;
+  name?: Maybe<Scalars['String']>;
+  updated_at?: Maybe<Scalars['timestamptz']>;
+};
+
+/** response of any mutation on the table "product_tags" */
+export type Product_Tags_Mutation_Response = {
+  __typename?: 'product_tags_mutation_response';
+  /** number of rows affected by the mutation */
+  affected_rows: Scalars['Int'];
+  /** data from the rows affected by the mutation */
+  returning: Array<Product_Tags>;
+};
+
+/** input type for inserting object relation for remote table "product_tags" */
+export type Product_Tags_Obj_Rel_Insert_Input = {
+  data: Product_Tags_Insert_Input;
+  /** on conflict condition */
+  on_conflict?: Maybe<Product_Tags_On_Conflict>;
+};
+
+/** on conflict condition type for table "product_tags" */
+export type Product_Tags_On_Conflict = {
+  constraint: Product_Tags_Constraint;
+  update_columns: Array<Product_Tags_Update_Column>;
+  where?: Maybe<Product_Tags_Bool_Exp>;
+};
+
+/** Ordering options when selecting data from "product_tags". */
+export type Product_Tags_Order_By = {
+  created_at?: Maybe<Order_By>;
+  description?: Maybe<Order_By>;
+  id?: Maybe<Order_By>;
+  name?: Maybe<Order_By>;
+  products_aggregate?: Maybe<Products_Aggregate_Order_By>;
+  updated_at?: Maybe<Order_By>;
+};
+
+/** primary key columns input for table: product_tags */
+export type Product_Tags_Pk_Columns_Input = {
+  id: Scalars['uuid'];
+};
+
+/** select columns of table "product_tags" */
+export enum Product_Tags_Select_Column {
+  /** column name */
+  CreatedAt = 'created_at',
+  /** column name */
+  Description = 'description',
+  /** column name */
+  Id = 'id',
+  /** column name */
+  Name = 'name',
+  /** column name */
+  UpdatedAt = 'updated_at'
+}
+
+/** input type for updating data in table "product_tags" */
+export type Product_Tags_Set_Input = {
+  created_at?: Maybe<Scalars['timestamptz']>;
+  description?: Maybe<Scalars['String']>;
+  id?: Maybe<Scalars['uuid']>;
+  name?: Maybe<Scalars['String']>;
+  updated_at?: Maybe<Scalars['timestamptz']>;
+};
+
+/** update columns of table "product_tags" */
+export enum Product_Tags_Update_Column {
+  /** column name */
+  CreatedAt = 'created_at',
+  /** column name */
+  Description = 'description',
+  /** column name */
+  Id = 'id',
+  /** column name */
+  Name = 'name',
+  /** column name */
+  UpdatedAt = 'updated_at'
+}
+
+/** columns and relationships of "products" */
+export type Products = {
+  __typename?: 'products';
+  best_price: Scalars['numeric'];
+  buy_price: Scalars['numeric'];
+  created_at: Scalars['timestamptz'];
+  downline_price: Scalars['numeric'];
+  id: Scalars['uuid'];
+  name?: Maybe<Scalars['String']>;
+  /** fetch data from the table: "product_pictures" */
+  product_pictures: Array<Product_Pictures>;
+  /** fetch aggregated fields from the table: "product_pictures" */
+  product_pictures_aggregate: Product_Pictures_Aggregate;
+  /** An object relationship */
+  product_tag?: Maybe<Product_Tags>;
+  retail_price: Scalars['numeric'];
+  sellable: Scalars['Boolean'];
+  sku: Scalars['String'];
+  tag_id?: Maybe<Scalars['uuid']>;
+  updated_at: Scalars['timestamptz'];
+};
+
+
+/** columns and relationships of "products" */
+export type ProductsProduct_PicturesArgs = {
+  distinct_on?: Maybe<Array<Product_Pictures_Select_Column>>;
+  limit?: Maybe<Scalars['Int']>;
+  offset?: Maybe<Scalars['Int']>;
+  order_by?: Maybe<Array<Product_Pictures_Order_By>>;
+  where?: Maybe<Product_Pictures_Bool_Exp>;
+};
+
+
+/** columns and relationships of "products" */
+export type ProductsProduct_Pictures_AggregateArgs = {
+  distinct_on?: Maybe<Array<Product_Pictures_Select_Column>>;
+  limit?: Maybe<Scalars['Int']>;
+  offset?: Maybe<Scalars['Int']>;
+  order_by?: Maybe<Array<Product_Pictures_Order_By>>;
+  where?: Maybe<Product_Pictures_Bool_Exp>;
+};
+
+/** aggregated selection of "products" */
+export type Products_Aggregate = {
+  __typename?: 'products_aggregate';
+  aggregate?: Maybe<Products_Aggregate_Fields>;
+  nodes: Array<Products>;
+};
+
+/** aggregate fields of "products" */
+export type Products_Aggregate_Fields = {
+  __typename?: 'products_aggregate_fields';
+  avg?: Maybe<Products_Avg_Fields>;
+  count: Scalars['Int'];
+  max?: Maybe<Products_Max_Fields>;
+  min?: Maybe<Products_Min_Fields>;
+  stddev?: Maybe<Products_Stddev_Fields>;
+  stddev_pop?: Maybe<Products_Stddev_Pop_Fields>;
+  stddev_samp?: Maybe<Products_Stddev_Samp_Fields>;
+  sum?: Maybe<Products_Sum_Fields>;
+  var_pop?: Maybe<Products_Var_Pop_Fields>;
+  var_samp?: Maybe<Products_Var_Samp_Fields>;
+  variance?: Maybe<Products_Variance_Fields>;
+};
+
+
+/** aggregate fields of "products" */
+export type Products_Aggregate_FieldsCountArgs = {
+  columns?: Maybe<Array<Products_Select_Column>>;
+  distinct?: Maybe<Scalars['Boolean']>;
+};
+
+/** order by aggregate values of table "products" */
+export type Products_Aggregate_Order_By = {
+  avg?: Maybe<Products_Avg_Order_By>;
+  count?: Maybe<Order_By>;
+  max?: Maybe<Products_Max_Order_By>;
+  min?: Maybe<Products_Min_Order_By>;
+  stddev?: Maybe<Products_Stddev_Order_By>;
+  stddev_pop?: Maybe<Products_Stddev_Pop_Order_By>;
+  stddev_samp?: Maybe<Products_Stddev_Samp_Order_By>;
+  sum?: Maybe<Products_Sum_Order_By>;
+  var_pop?: Maybe<Products_Var_Pop_Order_By>;
+  var_samp?: Maybe<Products_Var_Samp_Order_By>;
+  variance?: Maybe<Products_Variance_Order_By>;
+};
+
+/** input type for inserting array relation for remote table "products" */
+export type Products_Arr_Rel_Insert_Input = {
+  data: Array<Products_Insert_Input>;
+  /** on conflict condition */
+  on_conflict?: Maybe<Products_On_Conflict>;
+};
+
+/** aggregate avg on columns */
+export type Products_Avg_Fields = {
+  __typename?: 'products_avg_fields';
+  best_price?: Maybe<Scalars['Float']>;
+  buy_price?: Maybe<Scalars['Float']>;
+  downline_price?: Maybe<Scalars['Float']>;
+  retail_price?: Maybe<Scalars['Float']>;
+};
+
+/** order by avg() on columns of table "products" */
+export type Products_Avg_Order_By = {
+  best_price?: Maybe<Order_By>;
+  buy_price?: Maybe<Order_By>;
+  downline_price?: Maybe<Order_By>;
+  retail_price?: Maybe<Order_By>;
+};
+
+/** Boolean expression to filter rows from the table "products". All fields are combined with a logical 'AND'. */
+export type Products_Bool_Exp = {
+  _and?: Maybe<Array<Products_Bool_Exp>>;
+  _not?: Maybe<Products_Bool_Exp>;
+  _or?: Maybe<Array<Products_Bool_Exp>>;
+  best_price?: Maybe<Numeric_Comparison_Exp>;
+  buy_price?: Maybe<Numeric_Comparison_Exp>;
+  created_at?: Maybe<Timestamptz_Comparison_Exp>;
+  downline_price?: Maybe<Numeric_Comparison_Exp>;
+  id?: Maybe<Uuid_Comparison_Exp>;
+  name?: Maybe<String_Comparison_Exp>;
+  product_pictures?: Maybe<Product_Pictures_Bool_Exp>;
+  product_tag?: Maybe<Product_Tags_Bool_Exp>;
+  retail_price?: Maybe<Numeric_Comparison_Exp>;
+  sellable?: Maybe<Boolean_Comparison_Exp>;
+  sku?: Maybe<String_Comparison_Exp>;
+  tag_id?: Maybe<Uuid_Comparison_Exp>;
+  updated_at?: Maybe<Timestamptz_Comparison_Exp>;
+};
+
+/** unique or primary key constraints on table "products" */
+export enum Products_Constraint {
+  /** unique or primary key constraint */
+  ProductsPkey = 'products_pkey',
+  /** unique or primary key constraint */
+  ProductsSkuKey = 'products_sku_key'
+}
+
+/** input type for incrementing numeric columns in table "products" */
+export type Products_Inc_Input = {
+  best_price?: Maybe<Scalars['numeric']>;
+  buy_price?: Maybe<Scalars['numeric']>;
+  downline_price?: Maybe<Scalars['numeric']>;
+  retail_price?: Maybe<Scalars['numeric']>;
+};
+
+/** input type for inserting data into table "products" */
+export type Products_Insert_Input = {
+  best_price?: Maybe<Scalars['numeric']>;
+  buy_price?: Maybe<Scalars['numeric']>;
+  created_at?: Maybe<Scalars['timestamptz']>;
+  downline_price?: Maybe<Scalars['numeric']>;
+  id?: Maybe<Scalars['uuid']>;
+  name?: Maybe<Scalars['String']>;
+  product_pictures?: Maybe<Product_Pictures_Arr_Rel_Insert_Input>;
+  product_tag?: Maybe<Product_Tags_Obj_Rel_Insert_Input>;
+  retail_price?: Maybe<Scalars['numeric']>;
+  sellable?: Maybe<Scalars['Boolean']>;
+  sku?: Maybe<Scalars['String']>;
+  tag_id?: Maybe<Scalars['uuid']>;
+  updated_at?: Maybe<Scalars['timestamptz']>;
+};
+
+/** aggregate max on columns */
+export type Products_Max_Fields = {
+  __typename?: 'products_max_fields';
+  best_price?: Maybe<Scalars['numeric']>;
+  buy_price?: Maybe<Scalars['numeric']>;
+  created_at?: Maybe<Scalars['timestamptz']>;
+  downline_price?: Maybe<Scalars['numeric']>;
+  id?: Maybe<Scalars['uuid']>;
+  name?: Maybe<Scalars['String']>;
+  retail_price?: Maybe<Scalars['numeric']>;
+  sku?: Maybe<Scalars['String']>;
+  tag_id?: Maybe<Scalars['uuid']>;
+  updated_at?: Maybe<Scalars['timestamptz']>;
+};
+
+/** order by max() on columns of table "products" */
+export type Products_Max_Order_By = {
+  best_price?: Maybe<Order_By>;
+  buy_price?: Maybe<Order_By>;
+  created_at?: Maybe<Order_By>;
+  downline_price?: Maybe<Order_By>;
+  id?: Maybe<Order_By>;
+  name?: Maybe<Order_By>;
+  retail_price?: Maybe<Order_By>;
+  sku?: Maybe<Order_By>;
+  tag_id?: Maybe<Order_By>;
+  updated_at?: Maybe<Order_By>;
+};
+
+/** aggregate min on columns */
+export type Products_Min_Fields = {
+  __typename?: 'products_min_fields';
+  best_price?: Maybe<Scalars['numeric']>;
+  buy_price?: Maybe<Scalars['numeric']>;
+  created_at?: Maybe<Scalars['timestamptz']>;
+  downline_price?: Maybe<Scalars['numeric']>;
+  id?: Maybe<Scalars['uuid']>;
+  name?: Maybe<Scalars['String']>;
+  retail_price?: Maybe<Scalars['numeric']>;
+  sku?: Maybe<Scalars['String']>;
+  tag_id?: Maybe<Scalars['uuid']>;
+  updated_at?: Maybe<Scalars['timestamptz']>;
+};
+
+/** order by min() on columns of table "products" */
+export type Products_Min_Order_By = {
+  best_price?: Maybe<Order_By>;
+  buy_price?: Maybe<Order_By>;
+  created_at?: Maybe<Order_By>;
+  downline_price?: Maybe<Order_By>;
+  id?: Maybe<Order_By>;
+  name?: Maybe<Order_By>;
+  retail_price?: Maybe<Order_By>;
+  sku?: Maybe<Order_By>;
+  tag_id?: Maybe<Order_By>;
+  updated_at?: Maybe<Order_By>;
+};
+
+/** response of any mutation on the table "products" */
+export type Products_Mutation_Response = {
+  __typename?: 'products_mutation_response';
+  /** number of rows affected by the mutation */
+  affected_rows: Scalars['Int'];
+  /** data from the rows affected by the mutation */
+  returning: Array<Products>;
+};
+
+/** on conflict condition type for table "products" */
+export type Products_On_Conflict = {
+  constraint: Products_Constraint;
+  update_columns: Array<Products_Update_Column>;
+  where?: Maybe<Products_Bool_Exp>;
+};
+
+/** Ordering options when selecting data from "products". */
+export type Products_Order_By = {
+  best_price?: Maybe<Order_By>;
+  buy_price?: Maybe<Order_By>;
+  created_at?: Maybe<Order_By>;
+  downline_price?: Maybe<Order_By>;
+  id?: Maybe<Order_By>;
+  name?: Maybe<Order_By>;
+  product_pictures_aggregate?: Maybe<Product_Pictures_Aggregate_Order_By>;
+  product_tag?: Maybe<Product_Tags_Order_By>;
+  retail_price?: Maybe<Order_By>;
+  sellable?: Maybe<Order_By>;
+  sku?: Maybe<Order_By>;
+  tag_id?: Maybe<Order_By>;
+  updated_at?: Maybe<Order_By>;
+};
+
+/** primary key columns input for table: products */
+export type Products_Pk_Columns_Input = {
+  id: Scalars['uuid'];
+};
+
+/** select columns of table "products" */
+export enum Products_Select_Column {
+  /** column name */
+  BestPrice = 'best_price',
+  /** column name */
+  BuyPrice = 'buy_price',
+  /** column name */
+  CreatedAt = 'created_at',
+  /** column name */
+  DownlinePrice = 'downline_price',
+  /** column name */
+  Id = 'id',
+  /** column name */
+  Name = 'name',
+  /** column name */
+  RetailPrice = 'retail_price',
+  /** column name */
+  Sellable = 'sellable',
+  /** column name */
+  Sku = 'sku',
+  /** column name */
+  TagId = 'tag_id',
+  /** column name */
+  UpdatedAt = 'updated_at'
+}
+
+/** input type for updating data in table "products" */
+export type Products_Set_Input = {
+  best_price?: Maybe<Scalars['numeric']>;
+  buy_price?: Maybe<Scalars['numeric']>;
+  created_at?: Maybe<Scalars['timestamptz']>;
+  downline_price?: Maybe<Scalars['numeric']>;
+  id?: Maybe<Scalars['uuid']>;
+  name?: Maybe<Scalars['String']>;
+  retail_price?: Maybe<Scalars['numeric']>;
+  sellable?: Maybe<Scalars['Boolean']>;
+  sku?: Maybe<Scalars['String']>;
+  tag_id?: Maybe<Scalars['uuid']>;
+  updated_at?: Maybe<Scalars['timestamptz']>;
+};
+
+/** aggregate stddev on columns */
+export type Products_Stddev_Fields = {
+  __typename?: 'products_stddev_fields';
+  best_price?: Maybe<Scalars['Float']>;
+  buy_price?: Maybe<Scalars['Float']>;
+  downline_price?: Maybe<Scalars['Float']>;
+  retail_price?: Maybe<Scalars['Float']>;
+};
+
+/** order by stddev() on columns of table "products" */
+export type Products_Stddev_Order_By = {
+  best_price?: Maybe<Order_By>;
+  buy_price?: Maybe<Order_By>;
+  downline_price?: Maybe<Order_By>;
+  retail_price?: Maybe<Order_By>;
+};
+
+/** aggregate stddev_pop on columns */
+export type Products_Stddev_Pop_Fields = {
+  __typename?: 'products_stddev_pop_fields';
+  best_price?: Maybe<Scalars['Float']>;
+  buy_price?: Maybe<Scalars['Float']>;
+  downline_price?: Maybe<Scalars['Float']>;
+  retail_price?: Maybe<Scalars['Float']>;
+};
+
+/** order by stddev_pop() on columns of table "products" */
+export type Products_Stddev_Pop_Order_By = {
+  best_price?: Maybe<Order_By>;
+  buy_price?: Maybe<Order_By>;
+  downline_price?: Maybe<Order_By>;
+  retail_price?: Maybe<Order_By>;
+};
+
+/** aggregate stddev_samp on columns */
+export type Products_Stddev_Samp_Fields = {
+  __typename?: 'products_stddev_samp_fields';
+  best_price?: Maybe<Scalars['Float']>;
+  buy_price?: Maybe<Scalars['Float']>;
+  downline_price?: Maybe<Scalars['Float']>;
+  retail_price?: Maybe<Scalars['Float']>;
+};
+
+/** order by stddev_samp() on columns of table "products" */
+export type Products_Stddev_Samp_Order_By = {
+  best_price?: Maybe<Order_By>;
+  buy_price?: Maybe<Order_By>;
+  downline_price?: Maybe<Order_By>;
+  retail_price?: Maybe<Order_By>;
+};
+
+/** aggregate sum on columns */
+export type Products_Sum_Fields = {
+  __typename?: 'products_sum_fields';
+  best_price?: Maybe<Scalars['numeric']>;
+  buy_price?: Maybe<Scalars['numeric']>;
+  downline_price?: Maybe<Scalars['numeric']>;
+  retail_price?: Maybe<Scalars['numeric']>;
+};
+
+/** order by sum() on columns of table "products" */
+export type Products_Sum_Order_By = {
+  best_price?: Maybe<Order_By>;
+  buy_price?: Maybe<Order_By>;
+  downline_price?: Maybe<Order_By>;
+  retail_price?: Maybe<Order_By>;
+};
+
+/** update columns of table "products" */
+export enum Products_Update_Column {
+  /** column name */
+  BestPrice = 'best_price',
+  /** column name */
+  BuyPrice = 'buy_price',
+  /** column name */
+  CreatedAt = 'created_at',
+  /** column name */
+  DownlinePrice = 'downline_price',
+  /** column name */
+  Id = 'id',
+  /** column name */
+  Name = 'name',
+  /** column name */
+  RetailPrice = 'retail_price',
+  /** column name */
+  Sellable = 'sellable',
+  /** column name */
+  Sku = 'sku',
+  /** column name */
+  TagId = 'tag_id',
+  /** column name */
+  UpdatedAt = 'updated_at'
+}
+
+/** aggregate var_pop on columns */
+export type Products_Var_Pop_Fields = {
+  __typename?: 'products_var_pop_fields';
+  best_price?: Maybe<Scalars['Float']>;
+  buy_price?: Maybe<Scalars['Float']>;
+  downline_price?: Maybe<Scalars['Float']>;
+  retail_price?: Maybe<Scalars['Float']>;
+};
+
+/** order by var_pop() on columns of table "products" */
+export type Products_Var_Pop_Order_By = {
+  best_price?: Maybe<Order_By>;
+  buy_price?: Maybe<Order_By>;
+  downline_price?: Maybe<Order_By>;
+  retail_price?: Maybe<Order_By>;
+};
+
+/** aggregate var_samp on columns */
+export type Products_Var_Samp_Fields = {
+  __typename?: 'products_var_samp_fields';
+  best_price?: Maybe<Scalars['Float']>;
+  buy_price?: Maybe<Scalars['Float']>;
+  downline_price?: Maybe<Scalars['Float']>;
+  retail_price?: Maybe<Scalars['Float']>;
+};
+
+/** order by var_samp() on columns of table "products" */
+export type Products_Var_Samp_Order_By = {
+  best_price?: Maybe<Order_By>;
+  buy_price?: Maybe<Order_By>;
+  downline_price?: Maybe<Order_By>;
+  retail_price?: Maybe<Order_By>;
+};
+
+/** aggregate variance on columns */
+export type Products_Variance_Fields = {
+  __typename?: 'products_variance_fields';
+  best_price?: Maybe<Scalars['Float']>;
+  buy_price?: Maybe<Scalars['Float']>;
+  downline_price?: Maybe<Scalars['Float']>;
+  retail_price?: Maybe<Scalars['Float']>;
+};
+
+/** order by variance() on columns of table "products" */
+export type Products_Variance_Order_By = {
+  best_price?: Maybe<Order_By>;
+  buy_price?: Maybe<Order_By>;
+  downline_price?: Maybe<Order_By>;
+  retail_price?: Maybe<Order_By>;
+};
 
 /** columns and relationships of "profile_pictures" */
 export type Profile_Pictures = {
@@ -572,6 +1593,8 @@ export enum Profile_Pictures_Update_Column {
 /** columns and relationships of "profiles" */
 export type Profiles = {
   __typename?: 'profiles';
+  /** An object relationship */
+  account: Accounts;
   account_id: Scalars['uuid'];
   created_at: Scalars['timestamptz'];
   locked: Scalars['Boolean'];
@@ -606,6 +1629,7 @@ export type Profiles_Bool_Exp = {
   _and?: Maybe<Array<Profiles_Bool_Exp>>;
   _not?: Maybe<Profiles_Bool_Exp>;
   _or?: Maybe<Array<Profiles_Bool_Exp>>;
+  account?: Maybe<Accounts_Bool_Exp>;
   account_id?: Maybe<Uuid_Comparison_Exp>;
   created_at?: Maybe<Timestamptz_Comparison_Exp>;
   locked?: Maybe<Boolean_Comparison_Exp>;
@@ -623,6 +1647,7 @@ export enum Profiles_Constraint {
 
 /** input type for inserting data into table "profiles" */
 export type Profiles_Insert_Input = {
+  account?: Maybe<Accounts_Obj_Rel_Insert_Input>;
   account_id?: Maybe<Scalars['uuid']>;
   created_at?: Maybe<Scalars['timestamptz']>;
   locked?: Maybe<Scalars['Boolean']>;
@@ -673,6 +1698,7 @@ export type Profiles_On_Conflict = {
 
 /** Ordering options when selecting data from "profiles". */
 export type Profiles_Order_By = {
+  account?: Maybe<Accounts_Order_By>;
   account_id?: Maybe<Order_By>;
   created_at?: Maybe<Order_By>;
   locked?: Maybe<Order_By>;
@@ -730,6 +1756,24 @@ export type Query_Root = {
   accounts_aggregate: Accounts_Aggregate;
   /** fetch data from the table: "accounts" using primary key columns */
   accounts_by_pk?: Maybe<Accounts>;
+  /** fetch data from the table: "product_pictures" */
+  product_pictures: Array<Product_Pictures>;
+  /** fetch aggregated fields from the table: "product_pictures" */
+  product_pictures_aggregate: Product_Pictures_Aggregate;
+  /** fetch data from the table: "product_pictures" using primary key columns */
+  product_pictures_by_pk?: Maybe<Product_Pictures>;
+  /** fetch data from the table: "product_tags" */
+  product_tags: Array<Product_Tags>;
+  /** fetch aggregated fields from the table: "product_tags" */
+  product_tags_aggregate: Product_Tags_Aggregate;
+  /** fetch data from the table: "product_tags" using primary key columns */
+  product_tags_by_pk?: Maybe<Product_Tags>;
+  /** fetch data from the table: "products" */
+  products: Array<Products>;
+  /** An aggregate relationship */
+  products_aggregate: Products_Aggregate;
+  /** fetch data from the table: "products" using primary key columns */
+  products_by_pk?: Maybe<Products>;
   /** fetch data from the table: "profile_pictures" */
   profile_pictures: Array<Profile_Pictures>;
   /** fetch aggregated fields from the table: "profile_pictures" */
@@ -742,6 +1786,12 @@ export type Query_Root = {
   profiles_aggregate: Profiles_Aggregate;
   /** fetch data from the table: "profiles" using primary key columns */
   profiles_by_pk?: Maybe<Profiles>;
+  /** fetch data from the table: "warehouses" */
+  warehouses: Array<Warehouses>;
+  /** fetch aggregated fields from the table: "warehouses" */
+  warehouses_aggregate: Warehouses_Aggregate;
+  /** fetch data from the table: "warehouses" using primary key columns */
+  warehouses_by_pk?: Maybe<Warehouses>;
 };
 
 
@@ -765,6 +1815,75 @@ export type Query_RootAccounts_AggregateArgs = {
 
 export type Query_RootAccounts_By_PkArgs = {
   user_id: Scalars['uuid'];
+};
+
+
+export type Query_RootProduct_PicturesArgs = {
+  distinct_on?: Maybe<Array<Product_Pictures_Select_Column>>;
+  limit?: Maybe<Scalars['Int']>;
+  offset?: Maybe<Scalars['Int']>;
+  order_by?: Maybe<Array<Product_Pictures_Order_By>>;
+  where?: Maybe<Product_Pictures_Bool_Exp>;
+};
+
+
+export type Query_RootProduct_Pictures_AggregateArgs = {
+  distinct_on?: Maybe<Array<Product_Pictures_Select_Column>>;
+  limit?: Maybe<Scalars['Int']>;
+  offset?: Maybe<Scalars['Int']>;
+  order_by?: Maybe<Array<Product_Pictures_Order_By>>;
+  where?: Maybe<Product_Pictures_Bool_Exp>;
+};
+
+
+export type Query_RootProduct_Pictures_By_PkArgs = {
+  id: Scalars['uuid'];
+};
+
+
+export type Query_RootProduct_TagsArgs = {
+  distinct_on?: Maybe<Array<Product_Tags_Select_Column>>;
+  limit?: Maybe<Scalars['Int']>;
+  offset?: Maybe<Scalars['Int']>;
+  order_by?: Maybe<Array<Product_Tags_Order_By>>;
+  where?: Maybe<Product_Tags_Bool_Exp>;
+};
+
+
+export type Query_RootProduct_Tags_AggregateArgs = {
+  distinct_on?: Maybe<Array<Product_Tags_Select_Column>>;
+  limit?: Maybe<Scalars['Int']>;
+  offset?: Maybe<Scalars['Int']>;
+  order_by?: Maybe<Array<Product_Tags_Order_By>>;
+  where?: Maybe<Product_Tags_Bool_Exp>;
+};
+
+
+export type Query_RootProduct_Tags_By_PkArgs = {
+  id: Scalars['uuid'];
+};
+
+
+export type Query_RootProductsArgs = {
+  distinct_on?: Maybe<Array<Products_Select_Column>>;
+  limit?: Maybe<Scalars['Int']>;
+  offset?: Maybe<Scalars['Int']>;
+  order_by?: Maybe<Array<Products_Order_By>>;
+  where?: Maybe<Products_Bool_Exp>;
+};
+
+
+export type Query_RootProducts_AggregateArgs = {
+  distinct_on?: Maybe<Array<Products_Select_Column>>;
+  limit?: Maybe<Scalars['Int']>;
+  offset?: Maybe<Scalars['Int']>;
+  order_by?: Maybe<Array<Products_Order_By>>;
+  where?: Maybe<Products_Bool_Exp>;
+};
+
+
+export type Query_RootProducts_By_PkArgs = {
+  id: Scalars['uuid'];
 };
 
 
@@ -813,6 +1932,29 @@ export type Query_RootProfiles_By_PkArgs = {
   name: Scalars['String'];
 };
 
+
+export type Query_RootWarehousesArgs = {
+  distinct_on?: Maybe<Array<Warehouses_Select_Column>>;
+  limit?: Maybe<Scalars['Int']>;
+  offset?: Maybe<Scalars['Int']>;
+  order_by?: Maybe<Array<Warehouses_Order_By>>;
+  where?: Maybe<Warehouses_Bool_Exp>;
+};
+
+
+export type Query_RootWarehouses_AggregateArgs = {
+  distinct_on?: Maybe<Array<Warehouses_Select_Column>>;
+  limit?: Maybe<Scalars['Int']>;
+  offset?: Maybe<Scalars['Int']>;
+  order_by?: Maybe<Array<Warehouses_Order_By>>;
+  where?: Maybe<Warehouses_Bool_Exp>;
+};
+
+
+export type Query_RootWarehouses_By_PkArgs = {
+  id: Scalars['uuid'];
+};
+
 export type Subscription_Root = {
   __typename?: 'subscription_root';
   /** fetch data from the table: "accounts" */
@@ -821,6 +1963,24 @@ export type Subscription_Root = {
   accounts_aggregate: Accounts_Aggregate;
   /** fetch data from the table: "accounts" using primary key columns */
   accounts_by_pk?: Maybe<Accounts>;
+  /** fetch data from the table: "product_pictures" */
+  product_pictures: Array<Product_Pictures>;
+  /** fetch aggregated fields from the table: "product_pictures" */
+  product_pictures_aggregate: Product_Pictures_Aggregate;
+  /** fetch data from the table: "product_pictures" using primary key columns */
+  product_pictures_by_pk?: Maybe<Product_Pictures>;
+  /** fetch data from the table: "product_tags" */
+  product_tags: Array<Product_Tags>;
+  /** fetch aggregated fields from the table: "product_tags" */
+  product_tags_aggregate: Product_Tags_Aggregate;
+  /** fetch data from the table: "product_tags" using primary key columns */
+  product_tags_by_pk?: Maybe<Product_Tags>;
+  /** fetch data from the table: "products" */
+  products: Array<Products>;
+  /** An aggregate relationship */
+  products_aggregate: Products_Aggregate;
+  /** fetch data from the table: "products" using primary key columns */
+  products_by_pk?: Maybe<Products>;
   /** fetch data from the table: "profile_pictures" */
   profile_pictures: Array<Profile_Pictures>;
   /** fetch aggregated fields from the table: "profile_pictures" */
@@ -833,6 +1993,12 @@ export type Subscription_Root = {
   profiles_aggregate: Profiles_Aggregate;
   /** fetch data from the table: "profiles" using primary key columns */
   profiles_by_pk?: Maybe<Profiles>;
+  /** fetch data from the table: "warehouses" */
+  warehouses: Array<Warehouses>;
+  /** fetch aggregated fields from the table: "warehouses" */
+  warehouses_aggregate: Warehouses_Aggregate;
+  /** fetch data from the table: "warehouses" using primary key columns */
+  warehouses_by_pk?: Maybe<Warehouses>;
 };
 
 
@@ -856,6 +2022,75 @@ export type Subscription_RootAccounts_AggregateArgs = {
 
 export type Subscription_RootAccounts_By_PkArgs = {
   user_id: Scalars['uuid'];
+};
+
+
+export type Subscription_RootProduct_PicturesArgs = {
+  distinct_on?: Maybe<Array<Product_Pictures_Select_Column>>;
+  limit?: Maybe<Scalars['Int']>;
+  offset?: Maybe<Scalars['Int']>;
+  order_by?: Maybe<Array<Product_Pictures_Order_By>>;
+  where?: Maybe<Product_Pictures_Bool_Exp>;
+};
+
+
+export type Subscription_RootProduct_Pictures_AggregateArgs = {
+  distinct_on?: Maybe<Array<Product_Pictures_Select_Column>>;
+  limit?: Maybe<Scalars['Int']>;
+  offset?: Maybe<Scalars['Int']>;
+  order_by?: Maybe<Array<Product_Pictures_Order_By>>;
+  where?: Maybe<Product_Pictures_Bool_Exp>;
+};
+
+
+export type Subscription_RootProduct_Pictures_By_PkArgs = {
+  id: Scalars['uuid'];
+};
+
+
+export type Subscription_RootProduct_TagsArgs = {
+  distinct_on?: Maybe<Array<Product_Tags_Select_Column>>;
+  limit?: Maybe<Scalars['Int']>;
+  offset?: Maybe<Scalars['Int']>;
+  order_by?: Maybe<Array<Product_Tags_Order_By>>;
+  where?: Maybe<Product_Tags_Bool_Exp>;
+};
+
+
+export type Subscription_RootProduct_Tags_AggregateArgs = {
+  distinct_on?: Maybe<Array<Product_Tags_Select_Column>>;
+  limit?: Maybe<Scalars['Int']>;
+  offset?: Maybe<Scalars['Int']>;
+  order_by?: Maybe<Array<Product_Tags_Order_By>>;
+  where?: Maybe<Product_Tags_Bool_Exp>;
+};
+
+
+export type Subscription_RootProduct_Tags_By_PkArgs = {
+  id: Scalars['uuid'];
+};
+
+
+export type Subscription_RootProductsArgs = {
+  distinct_on?: Maybe<Array<Products_Select_Column>>;
+  limit?: Maybe<Scalars['Int']>;
+  offset?: Maybe<Scalars['Int']>;
+  order_by?: Maybe<Array<Products_Order_By>>;
+  where?: Maybe<Products_Bool_Exp>;
+};
+
+
+export type Subscription_RootProducts_AggregateArgs = {
+  distinct_on?: Maybe<Array<Products_Select_Column>>;
+  limit?: Maybe<Scalars['Int']>;
+  offset?: Maybe<Scalars['Int']>;
+  order_by?: Maybe<Array<Products_Order_By>>;
+  where?: Maybe<Products_Bool_Exp>;
+};
+
+
+export type Subscription_RootProducts_By_PkArgs = {
+  id: Scalars['uuid'];
 };
 
 
@@ -905,6 +2140,29 @@ export type Subscription_RootProfiles_By_PkArgs = {
 };
 
 
+export type Subscription_RootWarehousesArgs = {
+  distinct_on?: Maybe<Array<Warehouses_Select_Column>>;
+  limit?: Maybe<Scalars['Int']>;
+  offset?: Maybe<Scalars['Int']>;
+  order_by?: Maybe<Array<Warehouses_Order_By>>;
+  where?: Maybe<Warehouses_Bool_Exp>;
+};
+
+
+export type Subscription_RootWarehouses_AggregateArgs = {
+  distinct_on?: Maybe<Array<Warehouses_Select_Column>>;
+  limit?: Maybe<Scalars['Int']>;
+  offset?: Maybe<Scalars['Int']>;
+  order_by?: Maybe<Array<Warehouses_Order_By>>;
+  where?: Maybe<Warehouses_Bool_Exp>;
+};
+
+
+export type Subscription_RootWarehouses_By_PkArgs = {
+  id: Scalars['uuid'];
+};
+
+
 /** Boolean expression to compare columns of type "timestamptz". All fields are combined with logical 'AND'. */
 export type Timestamptz_Comparison_Exp = {
   _eq?: Maybe<Scalars['timestamptz']>;
@@ -932,6 +2190,257 @@ export type Uuid_Comparison_Exp = {
   _nin?: Maybe<Array<Scalars['uuid']>>;
 };
 
+/** columns and relationships of "warehouses" */
+export type Warehouses = {
+  __typename?: 'warehouses';
+  address: Scalars['String'];
+  created_at: Scalars['timestamptz'];
+  id: Scalars['uuid'];
+  name: Scalars['String'];
+  updated_at: Scalars['timestamptz'];
+};
+
+/** aggregated selection of "warehouses" */
+export type Warehouses_Aggregate = {
+  __typename?: 'warehouses_aggregate';
+  aggregate?: Maybe<Warehouses_Aggregate_Fields>;
+  nodes: Array<Warehouses>;
+};
+
+/** aggregate fields of "warehouses" */
+export type Warehouses_Aggregate_Fields = {
+  __typename?: 'warehouses_aggregate_fields';
+  count: Scalars['Int'];
+  max?: Maybe<Warehouses_Max_Fields>;
+  min?: Maybe<Warehouses_Min_Fields>;
+};
+
+
+/** aggregate fields of "warehouses" */
+export type Warehouses_Aggregate_FieldsCountArgs = {
+  columns?: Maybe<Array<Warehouses_Select_Column>>;
+  distinct?: Maybe<Scalars['Boolean']>;
+};
+
+/** Boolean expression to filter rows from the table "warehouses". All fields are combined with a logical 'AND'. */
+export type Warehouses_Bool_Exp = {
+  _and?: Maybe<Array<Warehouses_Bool_Exp>>;
+  _not?: Maybe<Warehouses_Bool_Exp>;
+  _or?: Maybe<Array<Warehouses_Bool_Exp>>;
+  address?: Maybe<String_Comparison_Exp>;
+  created_at?: Maybe<Timestamptz_Comparison_Exp>;
+  id?: Maybe<Uuid_Comparison_Exp>;
+  name?: Maybe<String_Comparison_Exp>;
+  updated_at?: Maybe<Timestamptz_Comparison_Exp>;
+};
+
+/** unique or primary key constraints on table "warehouses" */
+export enum Warehouses_Constraint {
+  /** unique or primary key constraint */
+  WarehousesNameKey = 'warehouses_name_key',
+  /** unique or primary key constraint */
+  WarehousesPkey = 'warehouses_pkey'
+}
+
+/** input type for inserting data into table "warehouses" */
+export type Warehouses_Insert_Input = {
+  address?: Maybe<Scalars['String']>;
+  created_at?: Maybe<Scalars['timestamptz']>;
+  id?: Maybe<Scalars['uuid']>;
+  name?: Maybe<Scalars['String']>;
+  updated_at?: Maybe<Scalars['timestamptz']>;
+};
+
+/** aggregate max on columns */
+export type Warehouses_Max_Fields = {
+  __typename?: 'warehouses_max_fields';
+  address?: Maybe<Scalars['String']>;
+  created_at?: Maybe<Scalars['timestamptz']>;
+  id?: Maybe<Scalars['uuid']>;
+  name?: Maybe<Scalars['String']>;
+  updated_at?: Maybe<Scalars['timestamptz']>;
+};
+
+/** aggregate min on columns */
+export type Warehouses_Min_Fields = {
+  __typename?: 'warehouses_min_fields';
+  address?: Maybe<Scalars['String']>;
+  created_at?: Maybe<Scalars['timestamptz']>;
+  id?: Maybe<Scalars['uuid']>;
+  name?: Maybe<Scalars['String']>;
+  updated_at?: Maybe<Scalars['timestamptz']>;
+};
+
+/** response of any mutation on the table "warehouses" */
+export type Warehouses_Mutation_Response = {
+  __typename?: 'warehouses_mutation_response';
+  /** number of rows affected by the mutation */
+  affected_rows: Scalars['Int'];
+  /** data from the rows affected by the mutation */
+  returning: Array<Warehouses>;
+};
+
+/** on conflict condition type for table "warehouses" */
+export type Warehouses_On_Conflict = {
+  constraint: Warehouses_Constraint;
+  update_columns: Array<Warehouses_Update_Column>;
+  where?: Maybe<Warehouses_Bool_Exp>;
+};
+
+/** Ordering options when selecting data from "warehouses". */
+export type Warehouses_Order_By = {
+  address?: Maybe<Order_By>;
+  created_at?: Maybe<Order_By>;
+  id?: Maybe<Order_By>;
+  name?: Maybe<Order_By>;
+  updated_at?: Maybe<Order_By>;
+};
+
+/** primary key columns input for table: warehouses */
+export type Warehouses_Pk_Columns_Input = {
+  id: Scalars['uuid'];
+};
+
+/** select columns of table "warehouses" */
+export enum Warehouses_Select_Column {
+  /** column name */
+  Address = 'address',
+  /** column name */
+  CreatedAt = 'created_at',
+  /** column name */
+  Id = 'id',
+  /** column name */
+  Name = 'name',
+  /** column name */
+  UpdatedAt = 'updated_at'
+}
+
+/** input type for updating data in table "warehouses" */
+export type Warehouses_Set_Input = {
+  address?: Maybe<Scalars['String']>;
+  created_at?: Maybe<Scalars['timestamptz']>;
+  id?: Maybe<Scalars['uuid']>;
+  name?: Maybe<Scalars['String']>;
+  updated_at?: Maybe<Scalars['timestamptz']>;
+};
+
+/** update columns of table "warehouses" */
+export enum Warehouses_Update_Column {
+  /** column name */
+  Address = 'address',
+  /** column name */
+  CreatedAt = 'created_at',
+  /** column name */
+  Id = 'id',
+  /** column name */
+  Name = 'name',
+  /** column name */
+  UpdatedAt = 'updated_at'
+}
+
+export type UpdateProductTagMutationVariables = Exact<{
+  tagId: Scalars['uuid'];
+  name?: Maybe<Scalars['String']>;
+  description?: Maybe<Scalars['String']>;
+}>;
+
+
+export type UpdateProductTagMutation = (
+  { __typename?: 'mutation_root' }
+  & { update_product_tags?: Maybe<(
+    { __typename?: 'product_tags_mutation_response' }
+    & { returning: Array<(
+      { __typename?: 'product_tags' }
+      & Pick<Product_Tags, 'id' | 'name' | 'description'>
+    )> }
+  )> }
+);
+
+export type InsertProductTagMutationVariables = Exact<{
+  tagId: Scalars['uuid'];
+  name: Scalars['String'];
+  description: Scalars['String'];
+}>;
+
+
+export type InsertProductTagMutation = (
+  { __typename?: 'mutation_root' }
+  & { insert_product_tags_one?: Maybe<(
+    { __typename?: 'product_tags' }
+    & Pick<Product_Tags, 'name' | 'description' | 'created_at' | 'updated_at'>
+  )> }
+);
+
+export type DeleteProductTagMutationVariables = Exact<{
+  tagId: Scalars['uuid'];
+}>;
+
+
+export type DeleteProductTagMutation = (
+  { __typename?: 'mutation_root' }
+  & { delete_product_tags?: Maybe<(
+    { __typename?: 'product_tags_mutation_response' }
+    & Pick<Product_Tags_Mutation_Response, 'affected_rows'>
+  )> }
+);
+
+export type InsertProductMutationVariables = Exact<{
+  name: Scalars['String'];
+  retailPrice?: Maybe<Scalars['numeric']>;
+  sellable: Scalars['Boolean'];
+  buyPrice: Scalars['numeric'];
+  bestPrice?: Maybe<Scalars['numeric']>;
+  downlinePrice?: Maybe<Scalars['numeric']>;
+  sku: Scalars['String'];
+  tagId?: Maybe<Scalars['uuid']>;
+}>;
+
+
+export type InsertProductMutation = (
+  { __typename?: 'mutation_root' }
+  & { insert_products_one?: Maybe<(
+    { __typename?: 'products' }
+    & Pick<Products, 'id' | 'name' | 'sku' | 'sellable' | 'buy_price' | 'best_price' | 'downline_price' | 'retail_price' | 'created_at' | 'updated_at'>
+  )> }
+);
+
+export type UpdateProductMutationVariables = Exact<{
+  id: Scalars['uuid'];
+  name?: Maybe<Scalars['String']>;
+  sku?: Maybe<Scalars['String']>;
+  buyPrice?: Maybe<Scalars['numeric']>;
+  bestPrice?: Maybe<Scalars['numeric']>;
+  downlinePrice?: Maybe<Scalars['numeric']>;
+  retailPrice?: Maybe<Scalars['numeric']>;
+  tagId?: Maybe<Scalars['uuid']>;
+  sellable?: Maybe<Scalars['Boolean']>;
+}>;
+
+
+export type UpdateProductMutation = (
+  { __typename?: 'mutation_root' }
+  & { update_products?: Maybe<(
+    { __typename?: 'products_mutation_response' }
+    & { returning: Array<(
+      { __typename?: 'products' }
+      & Pick<Products, 'id' | 'name' | 'sku' | 'sellable' | 'buy_price' | 'best_price' | 'downline_price' | 'retail_price' | 'created_at' | 'updated_at'>
+    )> }
+  )> }
+);
+
+export type DeleteProductMutationVariables = Exact<{
+  id: Scalars['uuid'];
+}>;
+
+
+export type DeleteProductMutation = (
+  { __typename?: 'mutation_root' }
+  & { delete_products?: Maybe<(
+    { __typename?: 'products_mutation_response' }
+    & Pick<Products_Mutation_Response, 'affected_rows'>
+  )> }
+);
+
 export type UpsertProfileMutationVariables = Exact<{
   accountId: Scalars['uuid'];
   name: Scalars['String'];
@@ -943,6 +2452,54 @@ export type UpsertProfileMutation = (
   & { insert_profiles_one?: Maybe<(
     { __typename?: 'profiles' }
     & Pick<Profiles, 'name'>
+  )> }
+);
+
+export type ListProductTagsQueryVariables = Exact<{
+  query: Scalars['String'];
+}>;
+
+
+export type ListProductTagsQuery = (
+  { __typename?: 'query_root' }
+  & { product_tags: Array<(
+    { __typename?: 'product_tags' }
+    & Pick<Product_Tags, 'id' | 'name' | 'description' | 'created_at' | 'updated_at'>
+  )> }
+);
+
+export type GetProductTagQueryVariables = Exact<{
+  tagId: Scalars['uuid'];
+}>;
+
+
+export type GetProductTagQuery = (
+  { __typename?: 'query_root' }
+  & { product_tags: Array<(
+    { __typename?: 'product_tags' }
+    & Pick<Product_Tags, 'id' | 'name' | 'description' | 'created_at' | 'updated_at'>
+  )> }
+);
+
+export type ListProductsQueryVariables = Exact<{
+  name?: Maybe<Scalars['String']>;
+  createdAt?: Maybe<Scalars['timestamptz']>;
+  limit: Scalars['Int'];
+}>;
+
+
+export type ListProductsQuery = (
+  { __typename?: 'query_root' }
+  & { products: Array<(
+    { __typename?: 'products' }
+    & Pick<Products, 'id' | 'downline_price' | 'created_at' | 'buy_price' | 'best_price' | 'retail_price' | 'sellable' | 'sku' | 'name' | 'updated_at'>
+    & { product_tag?: Maybe<(
+      { __typename?: 'product_tags' }
+      & Pick<Product_Tags, 'id' | 'name'>
+    )>, product_pictures: Array<(
+      { __typename?: 'product_pictures' }
+      & Pick<Product_Pictures, 'id' | 'picture_url' | 'primary'>
+    )> }
   )> }
 );
 
@@ -966,19 +2523,20 @@ export type GetAccountQuery = (
   )> }
 );
 
-export type ListAccountQueryVariables = Exact<{
-  last_login: Scalars['timestamptz'];
+export type ListAccountsQueryVariables = Exact<{
+  name?: Maybe<Scalars['String']>;
+  lastLogin?: Maybe<Scalars['timestamptz']>;
 }>;
 
 
-export type ListAccountQuery = (
+export type ListAccountsQuery = (
   { __typename?: 'query_root' }
   & { accounts: Array<(
     { __typename?: 'accounts' }
     & Pick<Accounts, 'user_id' | 'email' | 'role' | 'last_login'>
     & { profile?: Maybe<(
       { __typename?: 'profiles' }
-      & Pick<Profiles, 'locked' | 'name' | 'created_at' | 'updated_at'>
+      & Pick<Profiles, 'name' | 'locked' | 'created_at' | 'updated_at'>
     )>, profile_pictures: Array<(
       { __typename?: 'profile_pictures' }
       & Pick<Profile_Pictures, 'picture_url' | 'primary'>
@@ -1000,6 +2558,261 @@ export type GetProfilePictureQuery = (
 );
 
 
+export const UpdateProductTagDocument = gql`
+    mutation updateProductTag($tagId: uuid!, $name: String, $description: String) {
+  update_product_tags(
+    where: {id: {_eq: $tagId}}
+    _set: {name: $name, description: $description}
+  ) {
+    returning {
+      id
+      name
+      description
+    }
+  }
+}
+    `;
+export type UpdateProductTagMutationFn = Apollo.MutationFunction<UpdateProductTagMutation, UpdateProductTagMutationVariables>;
+
+/**
+ * __useUpdateProductTagMutation__
+ *
+ * To run a mutation, you first call `useUpdateProductTagMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useUpdateProductTagMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [updateProductTagMutation, { data, loading, error }] = useUpdateProductTagMutation({
+ *   variables: {
+ *      tagId: // value for 'tagId'
+ *      name: // value for 'name'
+ *      description: // value for 'description'
+ *   },
+ * });
+ */
+export function useUpdateProductTagMutation(baseOptions?: Apollo.MutationHookOptions<UpdateProductTagMutation, UpdateProductTagMutationVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useMutation<UpdateProductTagMutation, UpdateProductTagMutationVariables>(UpdateProductTagDocument, options);
+      }
+export type UpdateProductTagMutationHookResult = ReturnType<typeof useUpdateProductTagMutation>;
+export type UpdateProductTagMutationResult = Apollo.MutationResult<UpdateProductTagMutation>;
+export type UpdateProductTagMutationOptions = Apollo.BaseMutationOptions<UpdateProductTagMutation, UpdateProductTagMutationVariables>;
+export const InsertProductTagDocument = gql`
+    mutation insertProductTag($tagId: uuid!, $name: String!, $description: String!) {
+  insert_product_tags_one(
+    object: {id: $tagId, name: $name, description: $description}
+    on_conflict: {constraint: product_tags_name_key, update_columns: [name, description, updated_at]}
+  ) {
+    name
+    description
+    created_at
+    updated_at
+  }
+}
+    `;
+export type InsertProductTagMutationFn = Apollo.MutationFunction<InsertProductTagMutation, InsertProductTagMutationVariables>;
+
+/**
+ * __useInsertProductTagMutation__
+ *
+ * To run a mutation, you first call `useInsertProductTagMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useInsertProductTagMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [insertProductTagMutation, { data, loading, error }] = useInsertProductTagMutation({
+ *   variables: {
+ *      tagId: // value for 'tagId'
+ *      name: // value for 'name'
+ *      description: // value for 'description'
+ *   },
+ * });
+ */
+export function useInsertProductTagMutation(baseOptions?: Apollo.MutationHookOptions<InsertProductTagMutation, InsertProductTagMutationVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useMutation<InsertProductTagMutation, InsertProductTagMutationVariables>(InsertProductTagDocument, options);
+      }
+export type InsertProductTagMutationHookResult = ReturnType<typeof useInsertProductTagMutation>;
+export type InsertProductTagMutationResult = Apollo.MutationResult<InsertProductTagMutation>;
+export type InsertProductTagMutationOptions = Apollo.BaseMutationOptions<InsertProductTagMutation, InsertProductTagMutationVariables>;
+export const DeleteProductTagDocument = gql`
+    mutation deleteProductTag($tagId: uuid!) {
+  delete_product_tags(where: {id: {_eq: $tagId}}) {
+    affected_rows
+  }
+}
+    `;
+export type DeleteProductTagMutationFn = Apollo.MutationFunction<DeleteProductTagMutation, DeleteProductTagMutationVariables>;
+
+/**
+ * __useDeleteProductTagMutation__
+ *
+ * To run a mutation, you first call `useDeleteProductTagMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useDeleteProductTagMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [deleteProductTagMutation, { data, loading, error }] = useDeleteProductTagMutation({
+ *   variables: {
+ *      tagId: // value for 'tagId'
+ *   },
+ * });
+ */
+export function useDeleteProductTagMutation(baseOptions?: Apollo.MutationHookOptions<DeleteProductTagMutation, DeleteProductTagMutationVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useMutation<DeleteProductTagMutation, DeleteProductTagMutationVariables>(DeleteProductTagDocument, options);
+      }
+export type DeleteProductTagMutationHookResult = ReturnType<typeof useDeleteProductTagMutation>;
+export type DeleteProductTagMutationResult = Apollo.MutationResult<DeleteProductTagMutation>;
+export type DeleteProductTagMutationOptions = Apollo.BaseMutationOptions<DeleteProductTagMutation, DeleteProductTagMutationVariables>;
+export const InsertProductDocument = gql`
+    mutation insertProduct($name: String!, $retailPrice: numeric, $sellable: Boolean!, $buyPrice: numeric!, $bestPrice: numeric, $downlinePrice: numeric, $sku: String!, $tagId: uuid) {
+  insert_products_one(
+    object: {name: $name, retail_price: $retailPrice, sellable: $sellable, sku: $sku, best_price: $bestPrice, buy_price: $buyPrice, downline_price: $downlinePrice, tag_id: $tagId}
+  ) {
+    id
+    name
+    sku
+    sellable
+    buy_price
+    best_price
+    downline_price
+    retail_price
+    created_at
+    updated_at
+  }
+}
+    `;
+export type InsertProductMutationFn = Apollo.MutationFunction<InsertProductMutation, InsertProductMutationVariables>;
+
+/**
+ * __useInsertProductMutation__
+ *
+ * To run a mutation, you first call `useInsertProductMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useInsertProductMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [insertProductMutation, { data, loading, error }] = useInsertProductMutation({
+ *   variables: {
+ *      name: // value for 'name'
+ *      retailPrice: // value for 'retailPrice'
+ *      sellable: // value for 'sellable'
+ *      buyPrice: // value for 'buyPrice'
+ *      bestPrice: // value for 'bestPrice'
+ *      downlinePrice: // value for 'downlinePrice'
+ *      sku: // value for 'sku'
+ *      tagId: // value for 'tagId'
+ *   },
+ * });
+ */
+export function useInsertProductMutation(baseOptions?: Apollo.MutationHookOptions<InsertProductMutation, InsertProductMutationVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useMutation<InsertProductMutation, InsertProductMutationVariables>(InsertProductDocument, options);
+      }
+export type InsertProductMutationHookResult = ReturnType<typeof useInsertProductMutation>;
+export type InsertProductMutationResult = Apollo.MutationResult<InsertProductMutation>;
+export type InsertProductMutationOptions = Apollo.BaseMutationOptions<InsertProductMutation, InsertProductMutationVariables>;
+export const UpdateProductDocument = gql`
+    mutation updateProduct($id: uuid!, $name: String, $sku: String, $buyPrice: numeric, $bestPrice: numeric, $downlinePrice: numeric, $retailPrice: numeric, $tagId: uuid, $sellable: Boolean) {
+  update_products(
+    where: {id: {_eq: $id}}
+    _set: {name: $name, sku: $sku, buy_price: $buyPrice, best_price: $bestPrice, downline_price: $downlinePrice, retail_price: $retailPrice, tag_id: $tagId, sellable: $sellable}
+  ) {
+    returning {
+      id
+      name
+      sku
+      sellable
+      buy_price
+      best_price
+      downline_price
+      retail_price
+      created_at
+      updated_at
+    }
+  }
+}
+    `;
+export type UpdateProductMutationFn = Apollo.MutationFunction<UpdateProductMutation, UpdateProductMutationVariables>;
+
+/**
+ * __useUpdateProductMutation__
+ *
+ * To run a mutation, you first call `useUpdateProductMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useUpdateProductMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [updateProductMutation, { data, loading, error }] = useUpdateProductMutation({
+ *   variables: {
+ *      id: // value for 'id'
+ *      name: // value for 'name'
+ *      sku: // value for 'sku'
+ *      buyPrice: // value for 'buyPrice'
+ *      bestPrice: // value for 'bestPrice'
+ *      downlinePrice: // value for 'downlinePrice'
+ *      retailPrice: // value for 'retailPrice'
+ *      tagId: // value for 'tagId'
+ *      sellable: // value for 'sellable'
+ *   },
+ * });
+ */
+export function useUpdateProductMutation(baseOptions?: Apollo.MutationHookOptions<UpdateProductMutation, UpdateProductMutationVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useMutation<UpdateProductMutation, UpdateProductMutationVariables>(UpdateProductDocument, options);
+      }
+export type UpdateProductMutationHookResult = ReturnType<typeof useUpdateProductMutation>;
+export type UpdateProductMutationResult = Apollo.MutationResult<UpdateProductMutation>;
+export type UpdateProductMutationOptions = Apollo.BaseMutationOptions<UpdateProductMutation, UpdateProductMutationVariables>;
+export const DeleteProductDocument = gql`
+    mutation deleteProduct($id: uuid!) {
+  delete_products(where: {id: {_eq: $id}}) {
+    affected_rows
+  }
+}
+    `;
+export type DeleteProductMutationFn = Apollo.MutationFunction<DeleteProductMutation, DeleteProductMutationVariables>;
+
+/**
+ * __useDeleteProductMutation__
+ *
+ * To run a mutation, you first call `useDeleteProductMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useDeleteProductMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [deleteProductMutation, { data, loading, error }] = useDeleteProductMutation({
+ *   variables: {
+ *      id: // value for 'id'
+ *   },
+ * });
+ */
+export function useDeleteProductMutation(baseOptions?: Apollo.MutationHookOptions<DeleteProductMutation, DeleteProductMutationVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useMutation<DeleteProductMutation, DeleteProductMutationVariables>(DeleteProductDocument, options);
+      }
+export type DeleteProductMutationHookResult = ReturnType<typeof useDeleteProductMutation>;
+export type DeleteProductMutationResult = Apollo.MutationResult<DeleteProductMutation>;
+export type DeleteProductMutationOptions = Apollo.BaseMutationOptions<DeleteProductMutation, DeleteProductMutationVariables>;
 export const UpsertProfileDocument = gql`
     mutation upsertProfile($accountId: uuid!, $name: String!) {
   insert_profiles_one(object: {account_id: $accountId, name: $name}) {
@@ -1034,6 +2847,143 @@ export function useUpsertProfileMutation(baseOptions?: Apollo.MutationHookOption
 export type UpsertProfileMutationHookResult = ReturnType<typeof useUpsertProfileMutation>;
 export type UpsertProfileMutationResult = Apollo.MutationResult<UpsertProfileMutation>;
 export type UpsertProfileMutationOptions = Apollo.BaseMutationOptions<UpsertProfileMutation, UpsertProfileMutationVariables>;
+export const ListProductTagsDocument = gql`
+    query listProductTags($query: String!) {
+  product_tags(where: {name: {_ilike: $query}}) {
+    id
+    name
+    description
+    created_at
+    updated_at
+  }
+}
+    `;
+
+/**
+ * __useListProductTagsQuery__
+ *
+ * To run a query within a React component, call `useListProductTagsQuery` and pass it any options that fit your needs.
+ * When your component renders, `useListProductTagsQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useListProductTagsQuery({
+ *   variables: {
+ *      query: // value for 'query'
+ *   },
+ * });
+ */
+export function useListProductTagsQuery(baseOptions: Apollo.QueryHookOptions<ListProductTagsQuery, ListProductTagsQueryVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useQuery<ListProductTagsQuery, ListProductTagsQueryVariables>(ListProductTagsDocument, options);
+      }
+export function useListProductTagsLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<ListProductTagsQuery, ListProductTagsQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useLazyQuery<ListProductTagsQuery, ListProductTagsQueryVariables>(ListProductTagsDocument, options);
+        }
+export type ListProductTagsQueryHookResult = ReturnType<typeof useListProductTagsQuery>;
+export type ListProductTagsLazyQueryHookResult = ReturnType<typeof useListProductTagsLazyQuery>;
+export type ListProductTagsQueryResult = Apollo.QueryResult<ListProductTagsQuery, ListProductTagsQueryVariables>;
+export const GetProductTagDocument = gql`
+    query getProductTag($tagId: uuid!) {
+  product_tags(where: {id: {_eq: $tagId}}) {
+    id
+    name
+    description
+    created_at
+    updated_at
+  }
+}
+    `;
+
+/**
+ * __useGetProductTagQuery__
+ *
+ * To run a query within a React component, call `useGetProductTagQuery` and pass it any options that fit your needs.
+ * When your component renders, `useGetProductTagQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useGetProductTagQuery({
+ *   variables: {
+ *      tagId: // value for 'tagId'
+ *   },
+ * });
+ */
+export function useGetProductTagQuery(baseOptions: Apollo.QueryHookOptions<GetProductTagQuery, GetProductTagQueryVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useQuery<GetProductTagQuery, GetProductTagQueryVariables>(GetProductTagDocument, options);
+      }
+export function useGetProductTagLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<GetProductTagQuery, GetProductTagQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useLazyQuery<GetProductTagQuery, GetProductTagQueryVariables>(GetProductTagDocument, options);
+        }
+export type GetProductTagQueryHookResult = ReturnType<typeof useGetProductTagQuery>;
+export type GetProductTagLazyQueryHookResult = ReturnType<typeof useGetProductTagLazyQuery>;
+export type GetProductTagQueryResult = Apollo.QueryResult<GetProductTagQuery, GetProductTagQueryVariables>;
+export const ListProductsDocument = gql`
+    query listProducts($name: String, $createdAt: timestamptz, $limit: Int!) {
+  products(
+    where: {sku: {_ilike: $name}, _or: {created_at: {_gt: $createdAt}}}
+    order_by: {created_at: asc}
+    limit: $limit
+  ) {
+    id
+    downline_price
+    created_at
+    buy_price
+    best_price
+    retail_price
+    sellable
+    sku
+    name
+    updated_at
+    product_tag {
+      id
+      name
+    }
+    product_pictures {
+      id
+      picture_url
+      primary
+    }
+  }
+}
+    `;
+
+/**
+ * __useListProductsQuery__
+ *
+ * To run a query within a React component, call `useListProductsQuery` and pass it any options that fit your needs.
+ * When your component renders, `useListProductsQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useListProductsQuery({
+ *   variables: {
+ *      name: // value for 'name'
+ *      createdAt: // value for 'createdAt'
+ *      limit: // value for 'limit'
+ *   },
+ * });
+ */
+export function useListProductsQuery(baseOptions: Apollo.QueryHookOptions<ListProductsQuery, ListProductsQueryVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useQuery<ListProductsQuery, ListProductsQueryVariables>(ListProductsDocument, options);
+      }
+export function useListProductsLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<ListProductsQuery, ListProductsQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useLazyQuery<ListProductsQuery, ListProductsQueryVariables>(ListProductsDocument, options);
+        }
+export type ListProductsQueryHookResult = ReturnType<typeof useListProductsQuery>;
+export type ListProductsLazyQueryHookResult = ReturnType<typeof useListProductsLazyQuery>;
+export type ListProductsQueryResult = Apollo.QueryResult<ListProductsQuery, ListProductsQueryVariables>;
 export const GetAccountDocument = gql`
     query getAccount($id: uuid!) {
   accounts(where: {user_id: {_eq: $id}}) {
@@ -1081,19 +3031,22 @@ export function useGetAccountLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions
 export type GetAccountQueryHookResult = ReturnType<typeof useGetAccountQuery>;
 export type GetAccountLazyQueryHookResult = ReturnType<typeof useGetAccountLazyQuery>;
 export type GetAccountQueryResult = Apollo.QueryResult<GetAccountQuery, GetAccountQueryVariables>;
-export const ListAccountDocument = gql`
-    query listAccount($last_login: timestamptz!) {
-  accounts(where: {last_login: {_gt: $last_login}}, limit: 10) {
+export const ListAccountsDocument = gql`
+    query listAccounts($name: String, $lastLogin: timestamptz) {
+  accounts(
+    where: {profile: {name: {_ilike: $name}, _or: {account: {last_login: {_gt: $lastLogin}}}}}
+    limit: 10
+  ) {
     user_id
     email
     role
-    last_login
     profile {
-      locked
       name
+      locked
       created_at
       updated_at
     }
+    last_login
     profile_pictures {
       picture_url
       primary
@@ -1103,32 +3056,33 @@ export const ListAccountDocument = gql`
     `;
 
 /**
- * __useListAccountQuery__
+ * __useListAccountsQuery__
  *
- * To run a query within a React component, call `useListAccountQuery` and pass it any options that fit your needs.
- * When your component renders, `useListAccountQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * To run a query within a React component, call `useListAccountsQuery` and pass it any options that fit your needs.
+ * When your component renders, `useListAccountsQuery` returns an object from Apollo Client that contains loading, error, and data properties
  * you can use to render your UI.
  *
  * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
  *
  * @example
- * const { data, loading, error } = useListAccountQuery({
+ * const { data, loading, error } = useListAccountsQuery({
  *   variables: {
- *      last_login: // value for 'last_login'
+ *      name: // value for 'name'
+ *      lastLogin: // value for 'lastLogin'
  *   },
  * });
  */
-export function useListAccountQuery(baseOptions: Apollo.QueryHookOptions<ListAccountQuery, ListAccountQueryVariables>) {
+export function useListAccountsQuery(baseOptions?: Apollo.QueryHookOptions<ListAccountsQuery, ListAccountsQueryVariables>) {
         const options = {...defaultOptions, ...baseOptions}
-        return Apollo.useQuery<ListAccountQuery, ListAccountQueryVariables>(ListAccountDocument, options);
+        return Apollo.useQuery<ListAccountsQuery, ListAccountsQueryVariables>(ListAccountsDocument, options);
       }
-export function useListAccountLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<ListAccountQuery, ListAccountQueryVariables>) {
+export function useListAccountsLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<ListAccountsQuery, ListAccountsQueryVariables>) {
           const options = {...defaultOptions, ...baseOptions}
-          return Apollo.useLazyQuery<ListAccountQuery, ListAccountQueryVariables>(ListAccountDocument, options);
+          return Apollo.useLazyQuery<ListAccountsQuery, ListAccountsQueryVariables>(ListAccountsDocument, options);
         }
-export type ListAccountQueryHookResult = ReturnType<typeof useListAccountQuery>;
-export type ListAccountLazyQueryHookResult = ReturnType<typeof useListAccountLazyQuery>;
-export type ListAccountQueryResult = Apollo.QueryResult<ListAccountQuery, ListAccountQueryVariables>;
+export type ListAccountsQueryHookResult = ReturnType<typeof useListAccountsQuery>;
+export type ListAccountsLazyQueryHookResult = ReturnType<typeof useListAccountsLazyQuery>;
+export type ListAccountsQueryResult = Apollo.QueryResult<ListAccountsQuery, ListAccountsQueryVariables>;
 export const GetProfilePictureDocument = gql`
     query getProfilePicture($id: uuid!) {
   profile_pictures(where: {account_id: {_eq: $id}}) {

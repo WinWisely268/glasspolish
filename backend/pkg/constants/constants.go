@@ -7,8 +7,8 @@ const (
 	HasuraEndpoint         = Prefix + "HasuraEndpoint"
 	HasuraAdminSecret      = Prefix + "HasuraAdminSecret"
 	UserPoolId             = Prefix + "UserPoolId"
-	SSMKeyId               = Prefix + "Cloudfront/KeyId"
-	SSMPrivateKey          = Prefix + "Cloudfront/PrivateKey"
+	SSMKeyId               = Prefix + "CloudFront/KeyId"
+	SSMPrivateKey          = Prefix + "CloudFront/PrivateKey"
 	DefaultGraphQLEndpoint = "https://api.glasspolish.store/v1/graphql"
 	DefaultRegion          = "ap-southeast-1"
 

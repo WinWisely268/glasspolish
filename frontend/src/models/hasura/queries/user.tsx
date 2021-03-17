@@ -1,4 +1,4 @@
-import gql from 'graphql-tag'
+import { gql } from '@apollo/client'
 
 export const GET_ACCOUNT = gql`
     query getAccount($id: uuid!) {
@@ -21,24 +21,25 @@ export const GET_ACCOUNT = gql`
 `
 
 export const LIST_ACCOUNTS = gql`
-    query listAccount($last_login: timestamptz!) {
-        accounts(where: { last_login: { _gt: $last_login } }, limit: 10) {
+    query listAccounts($name: String, $lastLogin: timestamptz) {
+        accounts(where: {profile: {name: {_ilike: $name}, _or: {account: {last_login: {_gt: $lastLogin}}}}}, limit: 10) {
             user_id
             email
             role
-            last_login
             profile {
-                locked
                 name
+                locked
                 created_at
                 updated_at
             }
+            last_login
             profile_pictures {
                 picture_url
                 primary
             }
         }
     }
+
 `
 
 export const GET_USER_AVATAR = gql`

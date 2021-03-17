@@ -15,7 +15,9 @@ export interface UploadButtonProps {
   id: string
   tableName: string
   tableFieldName: string
+  tablePrimaryField: string
   uploadMetadata: UploadMetadata | null
+  onUploadDone: Function
 }
 
 const useStyles = makeStyles(() => ({
@@ -37,10 +39,13 @@ const UploadButton: React.FC<UploadButtonProps> = ({
                                                      id,
                                                      tableName,
                                                      tableFieldName,
-                                                     uploadMetadata
+                                                     tablePrimaryField,
+                                                     uploadMetadata,
+                                                     onUploadDone
                                                    }) => {
   const classes = useStyles()
   const [errMsg, setErrMsg] = useState('')
+  const [isUploading, setIsUploading] = useState<boolean>(false)
   const { getRootProps, getInputProps } = useS3Upload({
     accountId: accountId,
     apiUrl: Config.awsUploadEndpoint + '/upload-url',
@@ -49,10 +54,13 @@ const UploadButton: React.FC<UploadButtonProps> = ({
     height: uploadMetadata?.height,
     tableData: {
       tableField: tableFieldName,
-      tableName: tableName
+      tableName: tableName,
+      tablePrimaryField: tablePrimaryField
     },
     onError: (e: any) => setErrMsg(e),
-    onUploadReady: () => console.log('upload ready')
+    onUploadReady: () => onUploadDone(),
+    isUploading: isUploading,
+    setIsUploading: setIsUploading
   })
 
   return (
@@ -65,12 +73,13 @@ const UploadButton: React.FC<UploadButtonProps> = ({
       <input {...getInputProps()} />
       <label htmlFor='icon-button-file' className={classes.btnCenter}>
         <Button
-          color='primary'
+          disabled={isUploading}
+          color={'primary'}
           fullWidth
           aria-label='Upload'
           component='span'
         >
-          Upload Gambar
+          {isUploading ? 'Uploading...' : 'Upload Gambar'}
         </Button>
       </label>
     </div>

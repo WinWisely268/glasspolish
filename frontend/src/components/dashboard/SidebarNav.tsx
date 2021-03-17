@@ -33,13 +33,13 @@ const sidebarMenus = [
     icon: <ProductsIcon />,
     items: [
       {
-        name: 'menu.products.categories',
-        link: '/dashboard/products/categories',
+        name: 'kategori',
+        link: AllRoutesStr.Dashboard.tags,
         hasIcon: false
       },
       {
-        name: 'menu.products.products',
-        link: '/dashboard/products/products',
+        name: 'produk',
+        link: AllRoutesStr.Dashboard.products,
         hasIcon: false
       },
       {

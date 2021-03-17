@@ -4,6 +4,7 @@ import (
 	"context"
 	"encoding/json"
 	"fmt"
+	"github.com/aws/aws-sdk-go-v2/aws"
 	"github.com/winwisely268/glasspolish-triggers/pkg/constants"
 	"github.com/winwisely268/glasspolish-triggers/pkg/secret"
 	"time"
@@ -62,6 +63,17 @@ func (a *API) DeleteUserAccount(event *models.Event) (*cip.AdminDeleteUserOutput
 	newCtx, cancel := context.WithTimeout(context.Background(), constants.ContextTimeoutSeconds)
 	defer cancel()
 	return a.CognitoClient.AdminDeleteUser(newCtx, &userDeletionParam)
+}
+
+func (a *API) AddUserToDefaultGroup(event *events.CognitoEventUserPoolsPostConfirmation) (*cip.AdminAddUserToGroupOutput, error) {
+	userAddToGroupInput := &cip.AdminAddUserToGroupInput{
+		GroupName:  aws.String("users"),
+		UserPoolId: &event.UserPoolID,
+		Username:   &event.UserName,
+	}
+	newCtx, cancel := context.WithTimeout(context.Background(), constants.ContextTimeoutSeconds)
+	defer cancel()
+	return a.CognitoClient.AdminAddUserToGroup(newCtx, userAddToGroupInput)
 }
 
 func (a *API) UpdateUserRole(event *models.Event) (*cip.AdminAddUserToGroupOutput, error) {

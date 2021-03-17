@@ -6,8 +6,12 @@ import UserProfile from '../pages/UserProfile'
 import SettingsPage from '../components/profile/Settings'
 import { ApolloProvider } from '@apollo/client'
 import { authGQLClient } from '../providers/ApolloClient'
-// import UsersPage from '../pages/UsersPage'
 import { AllRoutesStr } from './constants'
+import TagPage, { TagDetails } from '../pages/TagPage'
+import { MasterDetail } from '../components/MasterDetail'
+import DashboardLayout from '../layouts/DashboardLayout'
+import UsersPage from '../pages/Users'
+import Products from '../pages/Products'
 
 export interface DashboardProps {
 }
@@ -20,7 +24,23 @@ const DashboardAll: React.FC<DashboardProps> = () => {
           <Route exact path={AllRoutesStr.Dashboard.root} component={Dashboard} />
           <Route exact path={AllRoutesStr.Dashboard.profile} component={UserProfile} />
           <Route exact path={AllRoutesStr.Dashboard.settings} component={SettingsPage} />
-          {/*<Route exact path={AllRoutesStr.Dashboard.users} component={UsersPage}/>*/}
+          <Route path={AllRoutesStr.Dashboard.tags}
+                 render={props => (
+                   <DashboardLayout>
+                     <MasterDetail MasterType={TagPage} masterProps={{}}
+                                   DetailType={TagDetails} detailProps={{}} />
+                   </DashboardLayout>
+                 )}
+          />
+          <Route path={AllRoutesStr.Dashboard.users}
+                 render={props => (
+                   <DashboardLayout>
+                     <MasterDetail MasterType={UsersPage} masterProps={{}}
+                                   DetailType={UsersPage} detailProps={{}} />
+                   </DashboardLayout>
+                 )}
+          />
+          <Route exact path={AllRoutesStr.Dashboard.products} component={Products} />
         </Switch>
       </ApolloProvider>
     </React.Fragment>
