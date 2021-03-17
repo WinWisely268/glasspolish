@@ -16,8 +16,8 @@ github.com/aws/aws-sdk-go-v2/feature/cloudfront/sign v1.0.2 h1:zCDOwf+VHLHJfIU+d
 github.com/aws/aws-sdk-go-v2/feature/cloudfront/sign v1.0.2/go.mod h1:WsRKX9GxjR+v2QusPYd1yGVxu5ygKP7MXdd+iP0hh/A=
 github.com/aws/aws-sdk-go-v2/feature/ec2/imds v1.0.2 h1:EtEU7WRaWliitZh2nmuxEXrN0Cb8EgPUFGIoTMeqbzI=
 github.com/aws/aws-sdk-go-v2/feature/ec2/imds v1.0.2/go.mod h1:3hGg3PpiEjHnrkrlasTfxFqUsZ2GCk/fMUn4CbKgSkM=
-github.com/aws/aws-sdk-go-v2/service/cloudfront v1.1.1 h1:Qhi6EdWHqYvqKXZBZ55YHNR6RL9JJTi65ndbqPKRdpM=
-github.com/aws/aws-sdk-go-v2/service/cloudfront v1.1.1/go.mod h1:xNq//oorX26+SRydd//Rqk3iPLoKzoYmAGDm6p3wpzc=
+github.com/aws/aws-sdk-go-v2/service/cloudfront v1.1.2 h1:AeLWpXkm6c1EsOBXWH2fCyQbQHcJvBEfKBHVKDxCIbE=
+github.com/aws/aws-sdk-go-v2/service/cloudfront v1.1.2/go.mod h1:71I7dqlx0GqfHY5G8JfzgT9GtZiK/MIHE+rMODYhIzI=
 github.com/aws/aws-sdk-go-v2/service/cognitoidentityprovider v1.1.1 h1:HoHckIJOdxpS4RSEqnPXp9+gFjixFH97pT46Q4buxhA=
 github.com/aws/aws-sdk-go-v2/service/cognitoidentityprovider v1.1.1/go.mod h1:/yhD37TwPeVuZZ8qx1n7H65O0+a2Mh3gEF4TTB4Sn24=
 github.com/aws/aws-sdk-go-v2/service/internal/accept-encoding v1.0.1 h1:q+3dVb1s3piv/Q/Ft0+OjU5iKItBRfCvU5wNLQUyIbA=
