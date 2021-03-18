@@ -1,5 +1,5 @@
 import React, { ChangeEvent, useEffect, useState } from 'react'
-import { ProductQueryResult } from '../../types/products'
+import { ProductQueryResult } from '../../types'
 import { v4 } from 'uuid'
 import { useStyles } from '../../layouts/DashboardLayout'
 import { useInsertProductMutation, useListProductTagsQuery, useUpdateProductMutation } from '../../service/graphql'
@@ -96,7 +96,6 @@ export const NewProduct: React.FC<NewProductProps> = ({
   const [avatarErr, setAvatarErr] = useState<string>('')
 
   useEffect(() => {
-    console.log(`tag id: ${values.product_tag?.id} tag name: ${values.product_tag?.name}`)
     setButtonDisable(
       !(
         values.id &&
@@ -270,7 +269,7 @@ export const NewProduct: React.FC<NewProductProps> = ({
         <AutoCompleteField values={listTagsData?.product_tags} setSelected={handleChangeTagId}
                            label={'Pilih Tag'} defaultValue={values.product_tag?.id} />
         <Box display='flex' justifyContent='space-around' p={4}>
-          {insertProductLoading ? (
+          {insertProductLoading || updateProductLoading ? (
             <CircularProgress size={30} />
           ) : (
             <div>

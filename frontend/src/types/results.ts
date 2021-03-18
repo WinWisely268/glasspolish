@@ -1,4 +1,4 @@
-import { Maybe, Product_Pictures, Product_Tags, Products } from '../service/graphql'
+import { Maybe, Product_Pictures, Product_Tags, Products, Warehouses } from '../service/graphql'
 
 export type ProductQueryResult = (
   { __typename?: 'products' }
@@ -13,3 +13,9 @@ export type ProductQueryResult = (
     )>
 }
   )
+
+export type WarehouseQueryResult = (
+  {__typename?: 'warehouses'}
+  & Pick<Warehouses, 'id' | 'name' | 'address' | 'max_cap' | 'created_at' | 'updated_at'>
+  &{}
+)

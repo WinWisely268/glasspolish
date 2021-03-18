@@ -12,6 +12,7 @@ import { MasterDetail } from '../components/MasterDetail'
 import DashboardLayout from '../layouts/DashboardLayout'
 import UsersPage from '../pages/Users'
 import Products from '../pages/Products'
+import Warehouses from '../pages/Warehouses'
 
 export interface DashboardProps {
 }
@@ -41,6 +42,7 @@ const DashboardAll: React.FC<DashboardProps> = () => {
                  )}
           />
           <Route exact path={AllRoutesStr.Dashboard.products} component={Products} />
+          <Route exact path={AllRoutesStr.Dashboard.warehouse} component={Warehouses} />
         </Switch>
       </ApolloProvider>
     </React.Fragment>

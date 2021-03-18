@@ -599,6 +599,7 @@ export type Mutation_RootUpdate_Profiles_By_PkArgs = {
 
 /** mutation root */
 export type Mutation_RootUpdate_WarehousesArgs = {
+  _inc?: Maybe<Warehouses_Inc_Input>;
   _set?: Maybe<Warehouses_Set_Input>;
   where: Warehouses_Bool_Exp;
 };
@@ -606,6 +607,7 @@ export type Mutation_RootUpdate_WarehousesArgs = {
 
 /** mutation root */
 export type Mutation_RootUpdate_Warehouses_By_PkArgs = {
+  _inc?: Maybe<Warehouses_Inc_Input>;
   _set?: Maybe<Warehouses_Set_Input>;
   pk_columns: Warehouses_Pk_Columns_Input;
 };
@@ -2196,6 +2198,7 @@ export type Warehouses = {
   address: Scalars['String'];
   created_at: Scalars['timestamptz'];
   id: Scalars['uuid'];
+  max_cap?: Maybe<Scalars['numeric']>;
   name: Scalars['String'];
   updated_at: Scalars['timestamptz'];
 };
@@ -2210,9 +2213,17 @@ export type Warehouses_Aggregate = {
 /** aggregate fields of "warehouses" */
 export type Warehouses_Aggregate_Fields = {
   __typename?: 'warehouses_aggregate_fields';
+  avg?: Maybe<Warehouses_Avg_Fields>;
   count: Scalars['Int'];
   max?: Maybe<Warehouses_Max_Fields>;
   min?: Maybe<Warehouses_Min_Fields>;
+  stddev?: Maybe<Warehouses_Stddev_Fields>;
+  stddev_pop?: Maybe<Warehouses_Stddev_Pop_Fields>;
+  stddev_samp?: Maybe<Warehouses_Stddev_Samp_Fields>;
+  sum?: Maybe<Warehouses_Sum_Fields>;
+  var_pop?: Maybe<Warehouses_Var_Pop_Fields>;
+  var_samp?: Maybe<Warehouses_Var_Samp_Fields>;
+  variance?: Maybe<Warehouses_Variance_Fields>;
 };
 
 
@@ -2220,6 +2231,12 @@ export type Warehouses_Aggregate_Fields = {
 export type Warehouses_Aggregate_FieldsCountArgs = {
   columns?: Maybe<Array<Warehouses_Select_Column>>;
   distinct?: Maybe<Scalars['Boolean']>;
+};
+
+/** aggregate avg on columns */
+export type Warehouses_Avg_Fields = {
+  __typename?: 'warehouses_avg_fields';
+  max_cap?: Maybe<Scalars['Float']>;
 };
 
 /** Boolean expression to filter rows from the table "warehouses". All fields are combined with a logical 'AND'. */
@@ -2230,6 +2247,7 @@ export type Warehouses_Bool_Exp = {
   address?: Maybe<String_Comparison_Exp>;
   created_at?: Maybe<Timestamptz_Comparison_Exp>;
   id?: Maybe<Uuid_Comparison_Exp>;
+  max_cap?: Maybe<Numeric_Comparison_Exp>;
   name?: Maybe<String_Comparison_Exp>;
   updated_at?: Maybe<Timestamptz_Comparison_Exp>;
 };
@@ -2242,11 +2260,17 @@ export enum Warehouses_Constraint {
   WarehousesPkey = 'warehouses_pkey'
 }
 
+/** input type for incrementing numeric columns in table "warehouses" */
+export type Warehouses_Inc_Input = {
+  max_cap?: Maybe<Scalars['numeric']>;
+};
+
 /** input type for inserting data into table "warehouses" */
 export type Warehouses_Insert_Input = {
   address?: Maybe<Scalars['String']>;
   created_at?: Maybe<Scalars['timestamptz']>;
   id?: Maybe<Scalars['uuid']>;
+  max_cap?: Maybe<Scalars['numeric']>;
   name?: Maybe<Scalars['String']>;
   updated_at?: Maybe<Scalars['timestamptz']>;
 };
@@ -2257,6 +2281,7 @@ export type Warehouses_Max_Fields = {
   address?: Maybe<Scalars['String']>;
   created_at?: Maybe<Scalars['timestamptz']>;
   id?: Maybe<Scalars['uuid']>;
+  max_cap?: Maybe<Scalars['numeric']>;
   name?: Maybe<Scalars['String']>;
   updated_at?: Maybe<Scalars['timestamptz']>;
 };
@@ -2267,6 +2292,7 @@ export type Warehouses_Min_Fields = {
   address?: Maybe<Scalars['String']>;
   created_at?: Maybe<Scalars['timestamptz']>;
   id?: Maybe<Scalars['uuid']>;
+  max_cap?: Maybe<Scalars['numeric']>;
   name?: Maybe<Scalars['String']>;
   updated_at?: Maybe<Scalars['timestamptz']>;
 };
@@ -2292,6 +2318,7 @@ export type Warehouses_Order_By = {
   address?: Maybe<Order_By>;
   created_at?: Maybe<Order_By>;
   id?: Maybe<Order_By>;
+  max_cap?: Maybe<Order_By>;
   name?: Maybe<Order_By>;
   updated_at?: Maybe<Order_By>;
 };
@@ -2310,6 +2337,8 @@ export enum Warehouses_Select_Column {
   /** column name */
   Id = 'id',
   /** column name */
+  MaxCap = 'max_cap',
+  /** column name */
   Name = 'name',
   /** column name */
   UpdatedAt = 'updated_at'
@@ -2320,8 +2349,33 @@ export type Warehouses_Set_Input = {
   address?: Maybe<Scalars['String']>;
   created_at?: Maybe<Scalars['timestamptz']>;
   id?: Maybe<Scalars['uuid']>;
+  max_cap?: Maybe<Scalars['numeric']>;
   name?: Maybe<Scalars['String']>;
   updated_at?: Maybe<Scalars['timestamptz']>;
+};
+
+/** aggregate stddev on columns */
+export type Warehouses_Stddev_Fields = {
+  __typename?: 'warehouses_stddev_fields';
+  max_cap?: Maybe<Scalars['Float']>;
+};
+
+/** aggregate stddev_pop on columns */
+export type Warehouses_Stddev_Pop_Fields = {
+  __typename?: 'warehouses_stddev_pop_fields';
+  max_cap?: Maybe<Scalars['Float']>;
+};
+
+/** aggregate stddev_samp on columns */
+export type Warehouses_Stddev_Samp_Fields = {
+  __typename?: 'warehouses_stddev_samp_fields';
+  max_cap?: Maybe<Scalars['Float']>;
+};
+
+/** aggregate sum on columns */
+export type Warehouses_Sum_Fields = {
+  __typename?: 'warehouses_sum_fields';
+  max_cap?: Maybe<Scalars['numeric']>;
 };
 
 /** update columns of table "warehouses" */
@@ -2333,10 +2387,30 @@ export enum Warehouses_Update_Column {
   /** column name */
   Id = 'id',
   /** column name */
+  MaxCap = 'max_cap',
+  /** column name */
   Name = 'name',
   /** column name */
   UpdatedAt = 'updated_at'
 }
+
+/** aggregate var_pop on columns */
+export type Warehouses_Var_Pop_Fields = {
+  __typename?: 'warehouses_var_pop_fields';
+  max_cap?: Maybe<Scalars['Float']>;
+};
+
+/** aggregate var_samp on columns */
+export type Warehouses_Var_Samp_Fields = {
+  __typename?: 'warehouses_var_samp_fields';
+  max_cap?: Maybe<Scalars['Float']>;
+};
+
+/** aggregate variance on columns */
+export type Warehouses_Variance_Fields = {
+  __typename?: 'warehouses_variance_fields';
+  max_cap?: Maybe<Scalars['Float']>;
+};
 
 export type UpdateProductTagMutationVariables = Exact<{
   tagId: Scalars['uuid'];
@@ -2455,6 +2529,54 @@ export type UpsertProfileMutation = (
   )> }
 );
 
+export type InsertWarehouseMutationVariables = Exact<{
+  maxCap?: Maybe<Scalars['numeric']>;
+  name: Scalars['String'];
+  address?: Maybe<Scalars['String']>;
+}>;
+
+
+export type InsertWarehouseMutation = (
+  { __typename?: 'mutation_root' }
+  & { insert_warehouses_one?: Maybe<(
+    { __typename?: 'warehouses' }
+    & Pick<Warehouses, 'id' | 'name' | 'address' | 'created_at' | 'updated_at' | 'max_cap'>
+  )> }
+);
+
+export type UpdateWarehouseMutationVariables = Exact<{
+  id: Scalars['uuid'];
+  name?: Maybe<Scalars['String']>;
+  address?: Maybe<Scalars['String']>;
+  maxCap?: Maybe<Scalars['numeric']>;
+}>;
+
+
+export type UpdateWarehouseMutation = (
+  { __typename?: 'mutation_root' }
+  & { update_warehouses?: Maybe<(
+    { __typename?: 'warehouses_mutation_response' }
+    & Pick<Warehouses_Mutation_Response, 'affected_rows'>
+    & { returning: Array<(
+      { __typename?: 'warehouses' }
+      & Pick<Warehouses, 'id' | 'name' | 'address' | 'created_at' | 'updated_at' | 'max_cap'>
+    )> }
+  )> }
+);
+
+export type DeleteWarehouseMutationVariables = Exact<{
+  id: Scalars['uuid'];
+}>;
+
+
+export type DeleteWarehouseMutation = (
+  { __typename?: 'mutation_root' }
+  & { delete_warehouses?: Maybe<(
+    { __typename?: 'warehouses_mutation_response' }
+    & Pick<Warehouses_Mutation_Response, 'affected_rows'>
+  )> }
+);
+
 export type ListProductTagsQueryVariables = Exact<{
   query: Scalars['String'];
 }>;
@@ -2554,6 +2676,32 @@ export type GetProfilePictureQuery = (
   & { profile_pictures: Array<(
     { __typename?: 'profile_pictures' }
     & Pick<Profile_Pictures, 'id' | 'picture_url' | 'primary'>
+  )> }
+);
+
+export type ListWarehousesQueryVariables = Exact<{
+  query: Scalars['String'];
+}>;
+
+
+export type ListWarehousesQuery = (
+  { __typename?: 'query_root' }
+  & { warehouses: Array<(
+    { __typename?: 'warehouses' }
+    & Pick<Warehouses, 'id' | 'name' | 'address' | 'created_at' | 'updated_at' | 'max_cap'>
+  )> }
+);
+
+export type GetWarehouseQueryVariables = Exact<{
+  id: Scalars['uuid'];
+}>;
+
+
+export type GetWarehouseQuery = (
+  { __typename?: 'query_root' }
+  & { warehouses: Array<(
+    { __typename?: 'warehouses' }
+    & Pick<Warehouses, 'id' | 'name' | 'address' | 'created_at' | 'updated_at' | 'max_cap'>
   )> }
 );
 
@@ -2847,6 +2995,128 @@ export function useUpsertProfileMutation(baseOptions?: Apollo.MutationHookOption
 export type UpsertProfileMutationHookResult = ReturnType<typeof useUpsertProfileMutation>;
 export type UpsertProfileMutationResult = Apollo.MutationResult<UpsertProfileMutation>;
 export type UpsertProfileMutationOptions = Apollo.BaseMutationOptions<UpsertProfileMutation, UpsertProfileMutationVariables>;
+export const InsertWarehouseDocument = gql`
+    mutation insertWarehouse($maxCap: numeric, $name: String!, $address: String) {
+  insert_warehouses_one(
+    object: {name: $name, address: $address, max_cap: $maxCap}
+  ) {
+    id
+    name
+    address
+    created_at
+    updated_at
+    max_cap
+  }
+}
+    `;
+export type InsertWarehouseMutationFn = Apollo.MutationFunction<InsertWarehouseMutation, InsertWarehouseMutationVariables>;
+
+/**
+ * __useInsertWarehouseMutation__
+ *
+ * To run a mutation, you first call `useInsertWarehouseMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useInsertWarehouseMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [insertWarehouseMutation, { data, loading, error }] = useInsertWarehouseMutation({
+ *   variables: {
+ *      maxCap: // value for 'maxCap'
+ *      name: // value for 'name'
+ *      address: // value for 'address'
+ *   },
+ * });
+ */
+export function useInsertWarehouseMutation(baseOptions?: Apollo.MutationHookOptions<InsertWarehouseMutation, InsertWarehouseMutationVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useMutation<InsertWarehouseMutation, InsertWarehouseMutationVariables>(InsertWarehouseDocument, options);
+      }
+export type InsertWarehouseMutationHookResult = ReturnType<typeof useInsertWarehouseMutation>;
+export type InsertWarehouseMutationResult = Apollo.MutationResult<InsertWarehouseMutation>;
+export type InsertWarehouseMutationOptions = Apollo.BaseMutationOptions<InsertWarehouseMutation, InsertWarehouseMutationVariables>;
+export const UpdateWarehouseDocument = gql`
+    mutation updateWarehouse($id: uuid!, $name: String, $address: String, $maxCap: numeric) {
+  update_warehouses(
+    where: {id: {_eq: $id}}
+    _set: {name: $name, address: $address, max_cap: $maxCap}
+  ) {
+    affected_rows
+    returning {
+      id
+      name
+      address
+      created_at
+      updated_at
+      max_cap
+    }
+  }
+}
+    `;
+export type UpdateWarehouseMutationFn = Apollo.MutationFunction<UpdateWarehouseMutation, UpdateWarehouseMutationVariables>;
+
+/**
+ * __useUpdateWarehouseMutation__
+ *
+ * To run a mutation, you first call `useUpdateWarehouseMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useUpdateWarehouseMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [updateWarehouseMutation, { data, loading, error }] = useUpdateWarehouseMutation({
+ *   variables: {
+ *      id: // value for 'id'
+ *      name: // value for 'name'
+ *      address: // value for 'address'
+ *      maxCap: // value for 'maxCap'
+ *   },
+ * });
+ */
+export function useUpdateWarehouseMutation(baseOptions?: Apollo.MutationHookOptions<UpdateWarehouseMutation, UpdateWarehouseMutationVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useMutation<UpdateWarehouseMutation, UpdateWarehouseMutationVariables>(UpdateWarehouseDocument, options);
+      }
+export type UpdateWarehouseMutationHookResult = ReturnType<typeof useUpdateWarehouseMutation>;
+export type UpdateWarehouseMutationResult = Apollo.MutationResult<UpdateWarehouseMutation>;
+export type UpdateWarehouseMutationOptions = Apollo.BaseMutationOptions<UpdateWarehouseMutation, UpdateWarehouseMutationVariables>;
+export const DeleteWarehouseDocument = gql`
+    mutation deleteWarehouse($id: uuid!) {
+  delete_warehouses(where: {id: {_eq: $id}}) {
+    affected_rows
+  }
+}
+    `;
+export type DeleteWarehouseMutationFn = Apollo.MutationFunction<DeleteWarehouseMutation, DeleteWarehouseMutationVariables>;
+
+/**
+ * __useDeleteWarehouseMutation__
+ *
+ * To run a mutation, you first call `useDeleteWarehouseMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useDeleteWarehouseMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [deleteWarehouseMutation, { data, loading, error }] = useDeleteWarehouseMutation({
+ *   variables: {
+ *      id: // value for 'id'
+ *   },
+ * });
+ */
+export function useDeleteWarehouseMutation(baseOptions?: Apollo.MutationHookOptions<DeleteWarehouseMutation, DeleteWarehouseMutationVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useMutation<DeleteWarehouseMutation, DeleteWarehouseMutationVariables>(DeleteWarehouseDocument, options);
+      }
+export type DeleteWarehouseMutationHookResult = ReturnType<typeof useDeleteWarehouseMutation>;
+export type DeleteWarehouseMutationResult = Apollo.MutationResult<DeleteWarehouseMutation>;
+export type DeleteWarehouseMutationOptions = Apollo.BaseMutationOptions<DeleteWarehouseMutation, DeleteWarehouseMutationVariables>;
 export const ListProductTagsDocument = gql`
     query listProductTags($query: String!) {
   product_tags(where: {name: {_ilike: $query}}) {
@@ -3120,3 +3390,83 @@ export function useGetProfilePictureLazyQuery(baseOptions?: Apollo.LazyQueryHook
 export type GetProfilePictureQueryHookResult = ReturnType<typeof useGetProfilePictureQuery>;
 export type GetProfilePictureLazyQueryHookResult = ReturnType<typeof useGetProfilePictureLazyQuery>;
 export type GetProfilePictureQueryResult = Apollo.QueryResult<GetProfilePictureQuery, GetProfilePictureQueryVariables>;
+export const ListWarehousesDocument = gql`
+    query listWarehouses($query: String!) {
+  warehouses(where: {name: {_ilike: $query}, _or: {address: {_ilike: $query}}}) {
+    id
+    name
+    address
+    created_at
+    updated_at
+    max_cap
+  }
+}
+    `;
+
+/**
+ * __useListWarehousesQuery__
+ *
+ * To run a query within a React component, call `useListWarehousesQuery` and pass it any options that fit your needs.
+ * When your component renders, `useListWarehousesQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useListWarehousesQuery({
+ *   variables: {
+ *      query: // value for 'query'
+ *   },
+ * });
+ */
+export function useListWarehousesQuery(baseOptions: Apollo.QueryHookOptions<ListWarehousesQuery, ListWarehousesQueryVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useQuery<ListWarehousesQuery, ListWarehousesQueryVariables>(ListWarehousesDocument, options);
+      }
+export function useListWarehousesLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<ListWarehousesQuery, ListWarehousesQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useLazyQuery<ListWarehousesQuery, ListWarehousesQueryVariables>(ListWarehousesDocument, options);
+        }
+export type ListWarehousesQueryHookResult = ReturnType<typeof useListWarehousesQuery>;
+export type ListWarehousesLazyQueryHookResult = ReturnType<typeof useListWarehousesLazyQuery>;
+export type ListWarehousesQueryResult = Apollo.QueryResult<ListWarehousesQuery, ListWarehousesQueryVariables>;
+export const GetWarehouseDocument = gql`
+    query getWarehouse($id: uuid!) {
+  warehouses(where: {id: {_eq: $id}}) {
+    id
+    name
+    address
+    created_at
+    updated_at
+    max_cap
+  }
+}
+    `;
+
+/**
+ * __useGetWarehouseQuery__
+ *
+ * To run a query within a React component, call `useGetWarehouseQuery` and pass it any options that fit your needs.
+ * When your component renders, `useGetWarehouseQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useGetWarehouseQuery({
+ *   variables: {
+ *      id: // value for 'id'
+ *   },
+ * });
+ */
+export function useGetWarehouseQuery(baseOptions: Apollo.QueryHookOptions<GetWarehouseQuery, GetWarehouseQueryVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useQuery<GetWarehouseQuery, GetWarehouseQueryVariables>(GetWarehouseDocument, options);
+      }
+export function useGetWarehouseLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<GetWarehouseQuery, GetWarehouseQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useLazyQuery<GetWarehouseQuery, GetWarehouseQueryVariables>(GetWarehouseDocument, options);
+        }
+export type GetWarehouseQueryHookResult = ReturnType<typeof useGetWarehouseQuery>;
+export type GetWarehouseLazyQueryHookResult = ReturnType<typeof useGetWarehouseLazyQuery>;
+export type GetWarehouseQueryResult = Apollo.QueryResult<GetWarehouseQuery, GetWarehouseQueryVariables>;

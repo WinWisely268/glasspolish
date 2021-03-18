@@ -1,4 +1,4 @@
-import {gql, useMutation } from '@apollo/client'
+import {gql } from '@apollo/client'
 
 export const INSERT_PRODUCT = gql`
     mutation insertProduct(

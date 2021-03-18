@@ -43,8 +43,8 @@ const sidebarMenus = [
         hasIcon: false
       },
       {
-        name: 'menu.products.warehouse',
-        link: '/dashboard/products/warehouse',
+        name: 'warehouse',
+        link: AllRoutesStr.Dashboard.warehouse,
         hasIcon: false
       }
     ]
