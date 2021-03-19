@@ -7,8 +7,6 @@ import SearchBar from '../components/SearchBar'
 import { CircularProgress, Typography } from '@material-ui/core'
 import MasterCard from '../components/shared/MasterCard'
 import AvatarComponent from '../components/Avatar'
-import CloseIcon from '@material-ui/icons/Close'
-import UserAvatar from '../components/dashboard/UserAvatar'
 import Details from '../components/shared/Details'
 
 export interface UsersPageProps {
