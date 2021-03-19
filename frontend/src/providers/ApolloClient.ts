@@ -85,8 +85,7 @@ const commonApolloOptions = {
 
 export const authGQLClient = new ApolloClient({
   cache: new InMemoryCache(),
-  // link: splitLink(httpLink, wsLink),
-  link: wsLink,
+  link: splitLink(httpLink, wsLink),
   ...commonApolloOptions
 })
 
