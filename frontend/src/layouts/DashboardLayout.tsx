@@ -117,7 +117,6 @@ export const useStyles = makeStyles((theme: Theme = useTheme()) =>
     inner: {
       marginLeft: '0.2rem',
       padding: '8px 8px 8px 0',
-      borderBottom: '1px solid #CCC'
     },
     masterUl: {
       padding: '0px',
@@ -127,7 +126,7 @@ export const useStyles = makeStyles((theme: Theme = useTheme()) =>
       display: 'block',
       padding: '10px 1rem 0'
     },
-    activeMasterNavLink: {
+    activeMaster: {
       display: 'block',
       backgroundColor: '#3f51b5',
       color: 'white',
@@ -152,6 +151,18 @@ export const useStyles = makeStyles((theme: Theme = useTheme()) =>
     avatar: {
       height: 100,
       width: 100
+    },
+    avatarSmall: {
+      height: 60,
+      width: 60,
+    },
+    controls: {
+      display: 'flex',
+      alignItems: 'center',
+      justifyContent: 'center',
+      paddingLeft: theme.spacing(1),
+      paddingBottom: theme.spacing(1),
+      width: '100px',
     }
   })
 )

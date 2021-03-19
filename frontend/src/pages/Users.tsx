@@ -1,10 +1,15 @@
 import React, { useState } from 'react'
 import { useStyles } from '../layouts/DashboardLayout'
-import { NavLink, RouteProps, useRouteMatch } from 'react-router-dom'
-import { useListAccountsQuery } from '../service/graphql'
+import { RouteProps, useParams, useRouteMatch } from 'react-router-dom'
+import { useGetAccountQuery, useListAccountsQuery } from '../service/graphql'
 import SnackBar from '../components/shared/Snackbar'
 import SearchBar from '../components/SearchBar'
-import { CircularProgress } from '@material-ui/core'
+import { CircularProgress, Typography } from '@material-ui/core'
+import MasterCard from '../components/shared/MasterCard'
+import AvatarComponent from '../components/Avatar'
+import CloseIcon from '@material-ui/icons/Close'
+import UserAvatar from '../components/dashboard/UserAvatar'
+import Details from '../components/shared/Details'
 
 export interface UsersPageProps {
 }
@@ -61,23 +66,82 @@ const UsersPage: React.FC<UsersPageProps> = () => {
           </ul>
           : <ul className={classes.masterUl}>
             {listAccountsData?.accounts.map((item, idx) => <li key={item.user_id}>
-              <NavLink exact to={`${path}/detail/${item.user_id}`} className={classes.masterNavLink}
-                       activeClassName={classes.activeMasterNavLink}>
-                <div>
-                  <div className={classes.inner}>
-                    <h3 data-test='ListItemHeading'>
-                      {item.profile?.name}
-                    </h3>
-                    <p>
-                      {item.role}
-                    </p>
-                  </div>
-                </div>
-              </NavLink>
+              <MasterCard
+                detailPath={`${path}/detail/${item.user_id}`}
+                mediaContent={
+                  <AvatarComponent loading={listAccountsLoading} error={listAccountsError} setError={setErrMsg}
+                                   picture_urls={item.profile_pictures} avatarClass={classes.avatarSmall} />
+                }
+              >
+                <h3 data-test='ListItemHeading'>
+                  {item.profile?.name}
+                </h3>
+                <p>
+                  Group: {item.role}
+                </p>
+              </MasterCard>
             </li>)}
           </ul>
         }
       </div>
+    </React.Fragment>
+  )
+}
+
+interface UserDetailsProps {
+
+}
+
+interface UserDetailsState {
+
+}
+
+export const UserDetailsPage: React.FC<UserDetailsProps> = (...props) => {
+  const { id } = useParams<{ id: string }>()
+  const classes = useStyles()
+  const {
+    data,
+    loading,
+    error,
+    refetch
+  } = useGetAccountQuery({
+    variables: {
+      id
+    }
+  })
+
+  const [errMsg, setErrMsg] = useState('')
+
+  if (id === null || id === undefined) {
+    return <Typography variant={'h4'} className={classes.notFound}>
+      Tidak ada User yang dipilih
+    </Typography>
+  }
+
+  return (
+    <React.Fragment>
+      <SnackBar variant='error' message={errMsg}
+                setMessage={(message) => setErrMsg(error != null ? error.message : message)} />
+      {
+        loading
+          ? <CircularProgress className={classes.center} />
+          : <Details
+            avatarComponent={
+              <AvatarComponent 
+                loading={loading} error={error} setError={setErrMsg}
+                picture_urls={data?.accounts[0].profile_pictures} avatarClass={classes.avatar}
+              />
+            }
+            details={new Map<string, string>(
+             [
+               ["Nama", data?.accounts[0]?.profile?.name || ''],
+               ["Email", data?.accounts[0]?.email || ''],
+               ["Grup", data?.accounts[0]?.role || ''],
+               ["Login Terakhir", data?.accounts[0].last_login || '']
+             ]
+            )}
+          />
+      }
     </React.Fragment>
   )
 }

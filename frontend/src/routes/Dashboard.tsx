@@ -10,7 +10,7 @@ import { AllRoutesStr } from './constants'
 import TagPage, { TagDetails } from '../pages/TagPage'
 import { MasterDetail } from '../components/MasterDetail'
 import DashboardLayout from '../layouts/DashboardLayout'
-import UsersPage from '../pages/Users'
+import UsersPage, { UserDetailsPage } from '../pages/Users'
 import Products from '../pages/Products'
 import Warehouses from '../pages/Warehouses'
 
@@ -37,7 +37,7 @@ const DashboardAll: React.FC<DashboardProps> = () => {
                  render={props => (
                    <DashboardLayout>
                      <MasterDetail MasterType={UsersPage} masterProps={{}}
-                                   DetailType={UsersPage} detailProps={{}} />
+                                   DetailType={UserDetailsPage} detailProps={{}} />
                    </DashboardLayout>
                  )}
           />

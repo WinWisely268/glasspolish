@@ -51,7 +51,6 @@ export const ActionButton: React.FC<ActionButtonProps> = ({ ...props }) => {
   return (
     <div>
       <IconButton
-        className={classes.rightIcons}
         onClick={handleClickOpen}
         disabled={false}
       >

@@ -2,8 +2,8 @@ import React, { useEffect, useState } from 'react'
 import SnackBar from '../components/shared/Snackbar'
 import { useStyles } from '../layouts/DashboardLayout'
 import { useGetProductTagQuery, useListProductTagsQuery } from '../service/graphql'
-import { NavLink, useRouteMatch, useParams, RouteProps, useHistory } from 'react-router-dom'
-import { Box, CircularProgress, Typography } from '@material-ui/core'
+import { useRouteMatch, useParams, RouteProps, useHistory } from 'react-router-dom'
+import { Box, CircularProgress, Grid, Typography } from '@material-ui/core'
 import SearchBar from '../components/SearchBar'
 import { ActionButton } from '../components/shared/DialogForm'
 import { TagNew } from '../components/tag/NewTag'
@@ -12,6 +12,7 @@ import EditIcon from '@material-ui/icons/Edit'
 import DeleteTagAction from '../components/tag/DeleteTag'
 import DeleteIcon from '@material-ui/icons/DeleteOutline'
 import { AllRoutesStr } from '../routes/constants'
+import MasterCard from '../components/shared/MasterCard'
 
 export interface TagPageProps {
 }
@@ -56,10 +57,6 @@ const TagPage: React.FC<TagPageProps> = () => {
         setMessage={(message) => setErrMsg(listTagsError != null ? listTagsError.message : message)}
       />
       <div className={classes.content}>
-        <ActionButton
-          title={'Tambah Tag Baru'}
-          content={<TagNew refetchAction={() => listTagsRefetch()} />}
-          icon={<AddIcon />} />
         <SearchBar
           onSubmit={handleSearch}
           handleChangeQueryString={handleChangeSearchQuery}
@@ -71,16 +68,14 @@ const TagPage: React.FC<TagPageProps> = () => {
           </ul>
           : <ul className={classes.masterUl}>
             {listTagsData?.product_tags.map((item, idx) => <li key={item.id}>
-              <NavLink exact to={`${path}/detail/${item.id}`} className={classes.masterNavLink}
-                       activeClassName={classes.activeMasterNavLink}>
-                <div>
-                  <div className={classes.inner}>
-                    <h2 data-test='ListItemHeading'>
-                      {item.name}
-                    </h2>
-                    <p>
-                      {item.description}
-                    </p>
+              <MasterCard
+                detailPath={`${path}/detail/${item.id}`}
+                controlContent={
+                  <div className={classes.controls}>
+                    <ActionButton
+                      title={'Tambah Tag Baru'}
+                      content={<TagNew refetchAction={() => listTagsRefetch()} />}
+                      icon={<AddIcon />} />
                     <ActionButton title={'Hapus'} content={
                       <DeleteTagAction id={item.id}
                                        refetch={() => {
@@ -90,8 +85,16 @@ const TagPage: React.FC<TagPageProps> = () => {
 
                     />
                   </div>
-                </div>
-              </NavLink>
+
+                }
+              >
+                <h2 data-test='ListItemHeading'>
+                  {item.name}
+                </h2>
+                <p>
+                  {item.description}
+                </p>
+              </MasterCard>
             </li>)}
           </ul>
         }
