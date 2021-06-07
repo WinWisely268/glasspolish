@@ -5,10 +5,11 @@ go 1.16
 require (
 	github.com/anthonynsimon/bild v0.13.0
 	github.com/aws/aws-lambda-go v1.23.0
-	github.com/aws/aws-sdk-go-v2 v1.2.1
+	github.com/aws/aws-sdk-go-v2 v1.6.0
 	github.com/aws/aws-sdk-go-v2/config v1.1.2
 	github.com/aws/aws-sdk-go-v2/feature/cloudfront/sign v1.0.3
-	github.com/aws/aws-sdk-go-v2/service/cloudfront v1.1.2
+	github.com/aws/aws-sdk-go-v2/internal/ini v1.0.0 // indirect
+	github.com/aws/aws-sdk-go-v2/service/cloudfront v1.5.2
 	github.com/aws/aws-sdk-go-v2/service/cognitoidentityprovider v1.1.2
 	github.com/aws/aws-sdk-go-v2/service/s3 v1.2.1
 	github.com/aws/aws-sdk-go-v2/service/ssm v1.1.2
