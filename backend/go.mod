@@ -12,7 +12,7 @@ require (
 	github.com/aws/aws-sdk-go-v2/service/cognitoidentityprovider v1.1.2
 	github.com/aws/aws-sdk-go-v2/service/s3 v1.2.1
 	github.com/aws/aws-sdk-go-v2/service/ssm v1.1.2
-	github.com/google/uuid v1.2.0
+	github.com/google/uuid v1.3.0
 	github.com/machinebox/graphql v0.2.2
 	github.com/matryer/is v1.4.0 // indirect
 	github.com/pkg/errors v0.9.1
